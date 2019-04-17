@@ -1,0 +1,20 @@
+<div class="inner-view" ng-controller="addLoanCtrl">
+        <div class="container">
+            <h4>Add Loan Application</h4>
+            <div class="single-form"  ng-show="account_no">
+                <label>Customer Account No</label>
+                <input type="number" ng-model="loanApp.account_no">
+    
+                <div class="btn-div"><button ng-click="continue()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+            </div>
+
+            <div class="loan-details single-form" ng-show="loan_details">
+                <div class="btn-div"><button ng-click="back()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                <h5>Loan Details</h5> 
+                <label>Amount Applied For</label>
+                <input type="text" ng-model="loanApp.loan.amount">
+                
+                <div class="btn-div"><button ng-click="submit()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Submit</button></div>
+            </div>
+        </div>
+    </div>

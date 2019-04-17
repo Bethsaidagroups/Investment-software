@@ -1,0 +1,88 @@
+<div class="inner-view" ng-controller="targetInvoiceCtrl">
+        <div id="modal-box" style="display:none">
+            <div class="wrapper">
+                    <button type="button" class="close close-modal" onclick="$('#modal-box').toggle()"><span >&times;</span></button>
+                    <h4>Pay Invoice: <span>{{selected_invoice.id}}</span></h4>
+                    <p>Amount: &#8358;{{selected_invoice.amount | number}}</p>
+                    <hr>
+                    <label>Deposit Channel</label>
+                    <select ng-model="selected_invoice.channel">
+                        <option value="savings">Savings</option>
+                        <option value="transfer">Transfer</option>
+                        <option value="cheque">Cheque</option>
+                        <option value="cash">Cash</option>
+                    </select>  
+                    <label>Status</label>
+                     <select ng-model="selected_invoice.status">
+                               <option value="paid">Paid</option>
+                               <option value="unpaid">Unpaid</option>
+                        </select>
+                    <hr>
+                    <button class="btn-primary" ng-click="payBtn()" onclick="$('#modal-box').toggle()"><i class="fa fa-exchange"></i> Pay</button>
+            </div>
+        </div>
+        <div class="container">
+            <h4>Target Savings Invoices</h4>
+
+            <div class="search-bar">
+                    <form name="search"></form>
+                        <label>Search By:</label>
+                        <select ng-model="key" ng-change="keyChange()">
+                            <option ng-repeat="(key,key_value) in keys" value="{{key}}">{{key_value}}</option>
+                        </select>
+                        <input type="text" ng-model="value" ng-show="value_input" placeholder="Enter {{selected_key}}">
+                        <select ng-model="value" ng-show="value_select">
+                            <option ng-repeat="(key,selected) in list" value="{{selected.id}}">{{selected.location}} | {{selected.description}}</option>
+                        </select>
+                        <select ng-model="value" ng-show="value_status">
+                               <option value="paid">Paid</option>
+                               <option value="unpaid">Unpaid</option>
+                        </select>
+                        <button ng-click="searchBtn()" class="btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </form>
+            </div>
+            <div class="data-table">
+                    <table class="table table-bordered table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Invoice Id</th>
+                                    <th>Reference No</th>
+                                    <th>Account No</th>
+                                    <th>Amount</th>
+                                    <th>Deposit Channel</th>
+                                    <th>Rate</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Office</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="(index,data) in invoice">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.ref_no}}</td>
+                                        <td>{{data.account_no}}</td>
+                                        <td>&#8358;{{data.amount | number}}</td>
+                                        <td>{{data.channel}}</td>
+                                        <td>{{data.rate | number}}%</td>
+                                        <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                                        <td>{{data.due_date | moment: 'format':'MMMM Do YYYY'}}</td>
+                                        <td>{{data.office | database: 'office'}}</td>
+                                        <td>
+                                            <button class="btn-primary" ng-click="editBtn(index)" title="Pay {{data.id}}" onclick="$('#modal-box').toggle()"><i class="fa fa-money"></i></button>
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+            </div>
+
+            <div id="pagination">
+                    <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                    <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(".data-table").overlayScrollbars({ });
+        </script>
+    </div>

@@ -1,0 +1,54 @@
+<div class="inner-view" ng-controller="profileCtrl">
+        <div class="container">
+            <h4>User Profile</h4>
+            <div class="not-editable">
+                <div class="profile-img">
+                    <img src="{{image_url}}" alt="Profile Image">
+                </div>
+                <p>Username: <span>{{user.username}}</span></p>
+                        
+                <p>Last Login:  <span>{{user.last_login | moment: 'format':'MMMM Do YYYY, h:mm:ss a'}}</span></p>
+            </div>
+            <hr>
+            <div class="password">
+                <h5>Change Password</h5>
+                <label>Old Password</label>
+                <input type="text" ng-model="pwd.old">
+                <label>New Password</label>
+                <input type="password" ng-model="pwd.new">
+                <label>Verify New Password</label>
+                <input type="password" ng-model="verify_pwd">
+                <div class="btn-div"><button ng-click="update(user.id)" class="btn-primary" ><i class="fa fa-save"></i> Change Password</button></div>
+            </div>
+            <hr>
+            <div class="editables">
+                    <label>Username</label>
+                    <input type="text" ng-model="user.username" disabled="disabled">
+                    <label>User Type</label>
+                    <select ng-model="user.user_type" disabled="disabled">
+                        <option ng-repeat="(index, type) in types" value="{{type.id}}">{{type.name}}</option>
+                    </select>
+                    <label>Gender</label>
+                    <select ng-model="user.access" disabled="disabled">
+                        <option value="1">Open</option>
+                        <option value="0">Restricted</option>
+                    </select>
+                    <label>Office Location</label>
+                    <select ng-model="user.office" disabled="disabled">
+                            <option ng-repeat="(key, office) in offices" value="{{office.id}}">{{office.location}} | {{office.description}}</option>
+                    </select>
+                    <label>First Name</label>
+                    <input type="text" ng-model="user.meta.first_name" disabled="disabled">
+                    <label>Last Name</label>
+                    <input type="text" ng-model="user.meta.last_name" disabled="disabled">
+                    <label>Gender</label>
+                    <select ng-model="user.meta.gender" disabled="disabled">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <label>Mobile</label>
+                    <input type="text" ng-model="user.meta.mobile" disabled="disabled">
+    
+            </div>
+        </div>
+    </div>

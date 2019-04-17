@@ -1,0 +1,88 @@
+<div class="inner-view" ng-controller="manageTargetCtrl">
+<div id="modal-box" style="display:none">
+            <div class="wrapper">
+                    <button type="button" class="close close-modal" onclick="$('#modal-box').toggle()"><span >&times;</span></button>
+                    <h4>Cash Out Target Savings: <span>{{selected_target.id}}</span></h4>
+                    <p>Paid Amount: &#8358;<span>{{selected_target.paid_amount | number}}</span></p>
+                    <p>{{msg}}</p>
+                    <hr>
+                    <label ng-show="penalty">Penalty Charge</label>
+                    <input  ng-show="penalty" type="text" ng-model="selected_target.penalty" placeholder="eg. 1000">
+                    <label>Deposit Channel</label>
+                    <select ng-model="selected_target.channel">
+                        <option value="transfer">Transfer</option>
+                        <option value="cheque">Cheque</option>
+                        <option value="cash">Cash</option>
+                    </select>  
+                    <hr>
+                    <button class="btn-primary" ng-click="comfirmCashOut()" onclick="$('#modal-box').toggle()"><i class="fa fa-exchange"></i> Cash Out</button>
+            </div>
+        </div>
+        <div class="container">
+            <h4>Target Savings</h4>
+            <div class="search-bar">
+                    <form name="search"></form>
+                        <label>Search By:</label>
+                        <select ng-model="key" ng-change="keyChange()">
+                            <option ng-repeat="(key,key_value) in keys" value="{{key}}">{{key_value}}</option>
+                        </select>
+                        <input type="text" ng-model="value" ng-show="value_input" placeholder="Enter {{selected_key}}">
+                        <select ng-model="value" ng-show="value_select">
+                            <option ng-repeat="(key,selected) in list" value="{{selected.id}}">{{selected.location}} | {{selected.description}}</option>
+                        </select>
+                        <button ng-click="searchBtn()" class="btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </form>
+            </div>
+            <div class="data-table">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Reference No</th>
+                            <th>Account No</th>
+                            <th>Target Amount</th>
+                            <th>Rate</th>
+                            <th>ROI</th>
+                            <th>Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Paid Amount</th>
+                            <th>Office</th>
+                            <th>Registered By</th>
+                            <th>Date Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(index,data) in deposits">
+                            <td>{{data.id}}</td>
+                            <td>{{data.ref_no}}</td>
+                            <td>{{data.account_no}}</td>
+                            <td>&#8358;{{data.target_amount | number}}</td>
+                            <td>{{data.rate | number}}%</td>
+                            <td>{{data.roi | number}}</td>
+                            <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                            <td>{{data.start_date| moment: 'format':'MMMM Do YYYY'}}</td>
+                            <td>{{data.end_date | moment: 'format':'MMMM Do YYYY'}}</td>
+                            <td>&#8358;{{data.paid_amount | number}}</td>
+                            <td>{{data.office | database: 'office'}}</td>
+                            <td>{{data.registered_by}}</td>
+                            <td>{{data.timestamp | moment: 'format':'MMMM Do YYYY'}}</td>
+                            <td>
+                                <button class="btn-primary" ng-click="viewBtn(data.ref_no)" title="Invoices {{data.ref_no}}"><i class="fa fa-eye"></i></button>
+                                <button class="btn-primary" ng-click="cashOutBtn(index, data.status)"  onclick="$('#modal-box').toggle()" title="Cash Out {{data.account_no}}"><i class="fa fa-money"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+             <div id="pagination">
+                        <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                        <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+                </div>
+        </div>
+
+        <script type="text/javascript">
+            $(".data-table").overlayScrollbars({ });
+        </script>
+    </div>

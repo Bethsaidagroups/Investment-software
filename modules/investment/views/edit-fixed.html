@@ -1,0 +1,21 @@
+<div class="inner-view" ng-controller="editFixedCtrl">
+        <div class="container">
+            <h4>Edit Fixed Deposit</h4>
+            <div class="fixed-details">  
+                    <label>Rate</label>
+                    <input type="text" ng-model="fixed.rate">
+                    <label>Start Date (yyyy-mm-dd)</label>
+                    <input type="text" ng-model="fixed.start_date" placeholder="yyyy-mm-dd" class="datepicker">
+                    <label>End Date (yyyy-mm-dd)</label>
+                    <input type="text" ng-model="fixed.end_date" placeholder="yyyy-mm-dd" class="datepicker">
+                    
+                    <div class="btn-div"><button ng-click="submit()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Submit</button></div>
+                </div>
+        </div>
+
+        <script type="text/javascript">
+            $(function() {
+                    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" }).val()
+            });
+        </script>
+</div>

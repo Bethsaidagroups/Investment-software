@@ -1,0 +1,143 @@
+<!--The module index file that is the main page for the system-->
+<html ng-app="user">
+    <!--Preloader-->
+        <div id="all-loader">
+            <p id="loader-text">Bethsaida Groups - Loading Application Modules...</p>
+            <img src="../contents/images/customloader.gif">
+        </div>
+        <style>
+               #all-loader{
+                   position: absolute;
+                   width: 100%;
+                   height: 100%;
+                   z-index: 500;
+                   background-color: #f6f6f8;
+                   padding-top: 20%;
+                   text-align: center;
+                   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                   font-size: 17px;
+                   font-weight: 300;
+               } 
+               #loader-text{
+                   color:rgb(6, 145, 64);
+               }
+        </style>
+        <script>
+            window.onload = function(){
+                document.getElementById('all-loader').style = 'display:none';
+            }
+        </script>
+    <!--End of preloader-->
+    <head>
+        <title>Bethsaida Group - Application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <!--Import all css file-->
+        <link href="../view-lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../view-lib/jquery/jquery-ui.min.css" rel="stylesheet">
+        <link href="../view-lib/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="../view-lib/wload/css/jquery.Wload.css" rel="stylesheet">
+        <link href="../view-lib/overlayscrollbar/OverlayScrollbars.min.css" rel="stylesheet">
+        <link rel='stylesheet' href='../view-lib/calendar/fullcalendar.min.css'>
+        <!--Import css custom file-->
+        <link href="../modules/css/app.css" rel="stylesheet">
+    </head>
+    <body ng-controller="mainCtrl">
+        <!--Include alert message model-->
+        <div class="alert-header">
+                <div class="alert alert-success alert-dismissible" role="alert" style="display: none">
+                        <strong><i class="fa fa-check-square-o"></i></strong> <span id="success-msg"></span>
+                        <button type="button" class="close close-alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="alert alert-warning alert-dismissible " role="alert" style="display: none">
+                        <strong><i class="fa fa-exclamation-circle"></i></strong> <span id="warning-msg"></span>
+                        <button type="button" class="close close-alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="alert alert-danger alert-dismissible" role="alert" style="display: none">
+                        <strong><i class="fa fa-exclamation-triangle"></i></strong> <span id="danger-msg"></span>
+                        <button type="button" class="close close-alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+        </div>
+        <!--Header and side navigation-->
+            <div id="mySidenav" class="sidenav" data-simplebar>
+                <a class="closebtn" style="display: none" id="closebtn" onclick="closeNav()">&times;</a>
+        
+                <div class="menu-link dashboard">
+                    <i class="menu-icon dashboard fa fa-dashboard"  title="Dashboard"></i>
+                    <span  class="menu-text dashboard">Dashboard</span>
+                </div>
+                <hr>
+                <div class="menu-link" ng-repeat="menu in menus">
+                    <i class="menu-icon {{menu.icon}}" ng-click="link(menu.key)" title="{{menu.text}}"></i>
+                    <span class="menu-text" ng-click="link(menu.key)">{{menu.text}}</span>
+                </div >
+            </div>
+        
+            <div id="container">
+                <div class = "nav-toggle">
+                    <span class="head-icon"><i class="fa fa-user"></i><a ng-click="profile()"> {{username}}</a></span>
+                    <span class="head-icon"><i class="fa fa-id-badge"></i> {{module}}</span>
+                    <span class="head-icon"><i class="fa fa-map-marker"></i> {{office}}</span>
+                    <span class="head-icon"><button class="btn-primary" ng-click="refresh()"><i class="fa fa-refresh"></i> Refresh</button></span>
+                    <span class="head-icon"><button class="btn-primary delete" ng-click="logout()"><i class="fa fa-sign-out"></i> Logout</button></span>
+                </div>
+
+                <!--Display Container-->
+                <div id="display-container">
+                    <div id="loader"></div>
+                    <div id="display-pane">
+                        <div ng-view id="pane"></div>
+                    </div>
+                </div>
+            </div>
+    </body>
+    <!--Import Javascript Library-->
+    <script src="../view-lib/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="../view-lib/jquery/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="../view-lib/wload/js/jquery.Wload.js" type="text/javascript"></script>
+    <script src="../view-lib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../view-lib/moment/moment.js" type="text/javascript"></script>
+    <script src="../view-lib/angularjs/angular.min.js" type="text/javascript"></script>
+    <script src="../view-lib/angularjs/angular-route.min.js" type="text/javascript"></script>
+    <script src="../view-lib/overlayscrollbar/jquery.overlayScrollbars.min.js" type="text/javascript"></script>
+    <script src='../view-lib/calendar/fullcalendar.min.js'></script>
+    <!--Import Javascript custom scripts-->
+    <script src="../modules/js/home.js" type="text/javascript"></script>
+    <script src="../modules/js/app.js" type="text/javascript"></script>
+    <script src="../modules/js/config.js" type="text/javascript"></script>
+    <script src="../modules/js/run.js" type="text/javascript"></script>
+    <script src="../modules/js/filters.js" type="text/javascript"></script>
+    <script src="../modules/js/services.js" type="text/javascript"></script>
+    <script src="../modules/js/directives.js" type="text/javascript"></script>
+    <!--Import Controllers-->
+    <script src="../modules/js/controllers/main.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/users.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/office.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/activity-log.js" type="text/javascript"></script>
+
+    <script src="../modules/js/controllers/customers.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/savings-account.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/fixed-account.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/target-savings.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/target-invoice.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/account-trans.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/loan-app.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/loan-invoice.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/awaiting-trans.js" type="text/javascript"></script>
+
+    <script src="../modules/js/controllers/pending-trans.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/declined-trans.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/debit-trans.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/credit-trans.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/quick-access.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/trans-report.js" type="text/javascript"></script>
+    <script src="../modules/js/controllers/default.js" type="text/javascript"></script>
+
+</html>

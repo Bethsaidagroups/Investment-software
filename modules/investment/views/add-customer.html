@@ -1,0 +1,295 @@
+<div class="inner-view" ng-controller="addCustomerCtrl">
+        <div class="container">
+            <h4>Add Customer</h4>
+            <div class="single-form" ng-show="marketer">
+                <label>MARKETER'S NAME</label>
+                <input type="text" ng-model="form.marketer">
+
+                <div class="btn-div"><button ng-click="nextMarketer()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+            </div>
+            <div class="bio-data"  ng-show="bio_data">
+                <div class="btn-div"><button ng-click="backBio()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                <h5>Bio - Data</h5>
+                    <table class="table-form">
+                        <tr>
+                            <td class="title">CATEGORY</td>
+                            <td>
+                                <td><input type="radio" name="category" ng-model="form.category" value="individual">Individual</td>
+                                <td><input type="radio" name="category" ng-model="form.category" value="cooperate">Cooperate</td>
+                            </td>
+                            <td class="title">GENDER</td>
+                            <td>
+                                <td><input type="radio" name="gender" ng-model="form.bio_data.gender" value="male">Male</td>
+                                <td><input type="radio" name="gender" ng-model="form.bio_data.gender" value="female">Female</td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td title="title">COMPANY NAME</td>
+                            <td><input type="text" ng-model="form.bio_data.company_name"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">SURNAME</td>
+                            <td><input type="text" ng-model="form.bio_data.surname"></td>
+                            <td title="title">FIRST NAME</td>
+                            <td><input type="text" ng-model="form.bio_data.first_name"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">OTHER NAMES</td>
+                            <td><input type="text" ng-model="form.bio_data.other_name"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">RESIDENTIAL ADDRESS</td>
+                            <td><input type="text" ng-model="form.bio_data.residential_address"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">MAILING ADDRESS</td>
+                            <td><input type="text" ng-model="form.bio_data.mailing_address"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">OUTSIDE NIGERIA</td>
+                            <td><input type="text" ng-model="form.bio_data.outside_nigeria"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">DATE OF BIRTH</td>
+                            <td><input type="textt" ng-model="form.bio_data.birthday" placeholder="yyyy-mm-dd" class="datepicker"></td>
+                            <td title="title">PLACE AND COUNTRY OF BIRTH</td>
+                            <td><input type="text" ng-model="form.bio_data.birth_place"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">MARITAL STATUS</td>
+                            <td>
+                                <input type="radio" name="marital_status" ng-model="form.bio_data.marital_status" value="single">Single
+                            </td>
+                            <td>
+                                <input type="radio" name="marital_status" ng-model="form.bio_data.marital_status" value="married">Married
+                            </td>
+                            <td>
+                                <input type="radio" name="marital_status" ng-model="form.bio_data.marital_status" value="widowed">Widowed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td title="title">RELIGION</td>
+                            <td><input type="text" ng-model="form.bio_data.religion"></td>
+                            <td title="title">MOTHERS MAIDEN NAME</td>
+                            <td><input type="text" ng-model="form.bio_data.mother_maiden_name"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">EMAIL ADDRESS</td>
+                            <td><input type="email" ng-model="form.bio_data.email"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">MOBILE PHONE 1</td>
+                            <td><input type="tel" ng-model="form.bio_data.mobile1"></td>
+                            <td title="title">MOBILE PHONE 2</td>
+                            <td><input type="tel" ng-model="form.bio_data.mobile2"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">STATE OF ORIGIN</td>
+                            <td><input type="text" ng-model="form.bio_data.state_of_origin"></td>
+                            <td title="title">LGA OF STATE OF ORIGIN</td>
+                            <td><input type="text" ng-model="form.bio_data.lga"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">NATIONALITY</td>
+                            <td><input type="text" ng-model="form.bio_data.nationality"></td>
+                        </tr>
+                    </table>
+                <div class="btn-div"><button ng-click="nextBio()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+            </div>
+            <div class="id-data" ng-show="id_data">
+                <div class="btn-div"><button ng-click="backId()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                <h5>Identification Data</h5>
+                <table class="table-form">
+                        <tr>
+                            <td class="title">ID TYPE</td>
+                            <td>
+                                <input type="radio" name="id_type" ng-model="form.id_data.type" value="international passport">International Passport
+                            </td>
+                            <td>
+                                <input type="radio" name="id_type" ng-model="form.id_data.type" value="drivers licence">Drivers Licence
+                            </td>
+                            <td>
+                                <input type="radio" name="id_type" ng-model="form.id_data.type" value="national id">National ID Card
+                            </td>
+                            <td>
+                                <input type="radio" name="id_type" ng-model="form.id_data.type" value="voters card">Parmanent Voters Card
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">IF OTHERS PLEASE SPECIFY</td>
+                            <td><input type="text" ng-model="form.id_data.other_id"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">PLACE OF ISSUE</td>
+                            <td><input type="text" ng-model="form.id_data.place_issue"></td>
+                            <td title="title">ID NUMBER</td>
+                            <td><input type="text" ng-model="form.id_data.id_no"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">ISSUE DATE</td>
+                            <td><input type="text" ng-model="form.id_data.issue_date" placeholder="yyyy-mm-dd" class="datepicker"></td>
+                            <td title="title">EXPIRY DATE</td>
+                            <td><input type="text" ng-model="form.id_data.expiry_date" placeholder="yyyy-mm-dd" class="datepicker"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">PREFERED MODE FOR CORRESPONDECE</td>
+                            <td>
+                                <input type="radio" name="crp_mode" ng-model="form.crp_mode" value="post">Post
+                            </td>
+                            <td>
+                                <input type="radio" name="crp_mode" ng-model="form.crp_mode" value="email">Email
+                            </td>
+                            <td>
+                                <input type="radio" name="crp_mode" ng-model="form.crp_mode" value="in person">In Person
+                            </td>
+                            <td>
+                                <input type="radio" name="crp_mode" ng-model="form.crp_mode" value="holdmail">Holdmail
+                            </td>
+                        </tr>
+                </table>
+                <div class="btn-div"><button ng-click="nextId()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+            </div>
+            <div class="employment-data" ng-show="employment_data">
+                    <div class="btn-div"><button ng-click="backEmploy()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                    <h5>Employment Details</h5>
+                <table class="table-form">
+                    <tr>
+                            <td class="title">EMPLOYMENT STATUS</td>
+                            <td>
+                                <input type="radio" name="status" ng-model="form.employment_data.status" value="salaried employment">Salaried Employment
+                            </td>
+                            <td>
+                                <input type="radio" name="status" ng-model="form.employment_data.status" value="self employed">Self Employed
+                            </td>
+                            <td>
+                                <input type="radio" name="status" ng-model="form.employment_data.status" value="retired">Retired
+                            </td>
+                            <td>
+                                <input type="radio" name="status" ng-model="form.employment_data.status" value="unemployed">Unemployed
+                            </td>
+                        </tr>
+                        <tr>
+                            <td title="title">DATE OF EMPLOYMENT</td>
+                            <td><input type="text" ng-model="form.employment_data.date_employed" placeholder="yyyy-mm-dd" class="datepicker"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">OCCUPATION</td>
+                            <td><input type="text" ng-model="form.employment_data.occupation"></td>
+                            <td title="title">INDUSTRY</td>
+                            <td><input type="text" ng-model="form.employment_data.industry"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">EMPLOYERS NAME</td>
+                            <td><input type="text" ng-model="form.employment_data.employers_name"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">EMPLOYERS ADDRESS</td>
+                            <td><input type="text" ng-model="form.employment_data.employers_address"></td>
+                        </tr>
+                          <tr>
+                            <td class="title">ANNUAL INCOME</td>
+                            <td>
+                                <input type="radio" name="annual_income" ng-model="form.employment_data.annual_income" value="10,000 - 50,000">10,000 - 50,000
+                            </td>
+                            <td>
+                                <input type="radio" name="annual_income" ng-model="form.employment_data.annual_income" value="51,000 - 100,000">51,000 - 100,000
+                            </td>
+                            <td>
+                                <input type="radio" name="annual_income" ng-model="form.employment_data.annual_income" value="101,000 - 500,000">101,000 - 500,000
+                            </td>
+                            <td>
+                                <input type="radio" name="annual_income" ng-model="form.employment_data.annual_income" value="501,000 - 1,000,000">501,000 - 1,000,000
+                            </td>
+                            <td>
+                                <input type="radio" name="annual_income" ng-model="form.employment_data.annual_income" value="1,000,000 and above">1,000,000 And Above
+                            </td>
+                        </tr>
+                        <tr>
+                            <td title="title">OFFICE PHONE NUMBER</td>
+                            <td><input type="tel" ng-model="form.employment_data.office_phone"></td>
+                        </tr>
+                </table>
+                <div class="btn-div"><button ng-click="nextEmploy()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+            </div>
+            <div class="next-kin" ng-show="kin_data">
+                <div class="btn-div"><button ng-click="backKin()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                <h5>Next of Kin</h5>
+                <table class="table-form">
+                    <tr>
+                    <td title="title">TITLE</td>
+                    <td><input type="text" ng-model="form.kin_data.title"></td>
+                    <td></td>
+                    <td class="title">GENDER</td>
+                    <td>
+                        <input type="radio" name="kin_gender" ng-model="form.kin_data.gender" value="male">Male
+                    </td>
+                    <td>
+                        <input type="radio" name="kin_gender" ng-model="form.kin_data.gender" value="female">Female
+                    </td>
+                    <td title="title">DATE OF BIRTH</td>
+                    <td><input type="text" ng-model="form.kin_data.birthday" placeholder="yyyy-mm-dd" class="datepicker"></td>
+                </tr>
+                <tr>
+                        <td title="title">SURNAME</td>
+                        <td><input type="text" ng-model="form.kin_data.surname"></td>
+                        <td title="title">FIRST NAME</td>
+                        <td><input type="text" ng-model="form.kin_data.first_name"></td>
+                    </tr>
+                    <tr>
+                        <td title="title">OTHER NAMES</td>
+                        <td><input type="text" ng-model="form.kin_data.other_name"></td>
+                        <td title="title">RELATIONSHIP</td>
+                        <td><input type="text" ng-model="form.kin_data.relationship"></td>
+                    </tr>
+                    <tr>
+                            <td title="title">MOBILE PHONE</td>
+                            <td><input type="tel" ng-model="form.kin_data.mobile"></td>
+                            <td title="title">EMAIL ADDRESS</td>
+                            <td><input type="email" ng-model="form.kin_data.email"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">STATE OFF ORIGIN</td>
+                            <td><input type="text" ng-model="form.kin_data.state_of_origin"></td>
+                            <td title="title">LGA OF STATE OF ORIGIN</td>
+                            <td><input type="text" ng-model="form.kin_data.lga"></td>
+                        </tr>
+                        <tr>
+                            <td title="title">CONTACT ADDRESS</td>
+                            <td><input type="text" ng-model="form.kin_data.address"></td>
+                        </tr>
+                </table>
+                <div class="btn-div"><button ng-click="nextKin()" class="btn-primary right">Next <i class="fa fa-chevron-right"></i></button></div>
+                
+            </div>
+            <div class="savings-plan" ng-show="savings_plan">
+                    <div class="btn-div"><button ng-click="backPlan()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                    <h5>Customers Savings Plan</h5>
+                    <table class="table-form">
+                            <tr>
+                                    <td class="title">SAVINGS PLAN</td>
+                                    <td>
+                                        <input type="radio" name="plan" ng-model="form.plan.category" value="silver">Silver
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="plan" ng-model="form.plan.category" value="gold">Gold
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="plan" ng-model="form.plan.category" value="platinium">platinium
+                                    </td>
+                                </tr>
+                        <tr>
+                            <td title="title">Amount</td>
+                            <td><input type="number" ng-model="form.plan.amount"></td>
+                        </tr>
+                    </table>
+
+                    <div class="btn-div"><button ng-click="submit()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Submit</button></div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(function() {
+                    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" }).val()
+            });
+        </script>
+    </div>

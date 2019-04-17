@@ -1,0 +1,23 @@
+<div class="inner-view" ng-controller="cashOutFixedCtrl">
+        <div class="container">
+            <h4>Cash Out Fixed Deposit</h4>
+            <p>Account No: <span>{{fixed.account_no}}</span></p>
+            <p>Start Date: <span>{{fixed.start_date}}</span></p>
+            <p>End Date: <span>{{fixed.end_date}}</span></p>
+            <p>Status: <span>{{fixed.status}}</span></p>
+            <p>Amount: <span>&#8358;{{fixed.amount | number}}</span></p>
+            <p>ROI: <span>&#8358;{{roi | number}}</span></p>
+            <p>Witholding Tax: <span>&#8358;{{tax | number}}</span></p>
+            <p>Total: <span>&#8358;{{total | number}}</span></p>
+            <div class="fixed-details">  
+                    <label>Withdrawal Channel</label>
+                    <select ng-model="channel">
+                        <option value="savings" selected="selected">Savings Account</option>
+                        <option value="transfer">Transfer</option>
+                        <option value="cheque">Cheque</option>
+                        <option value="cash">Cash</option>
+                    </select>   
+                <div class="btn-div"><button ng-click="submit(fixed.id)" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Submit</button></div>
+            </div>
+        </div>
+</div>

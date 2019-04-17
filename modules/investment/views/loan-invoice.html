@@ -1,0 +1,74 @@
+<div class="inner-view" ng-controller="loanInvoiceCtrl">
+        <div class="container">
+            <h4>Approve Eligible Loans</h4>
+
+        <div class="loan-invoice-details" ng-show="invoice_details">
+            <p>Reference No: <span>{{loan.ref_no}}</span></p>
+            <p>Account No: <span>{{loan.account_no}}</span></p>
+            <p>Amount Approved: <span>{{loan.amount_approved | number}}</span></p>
+            <p>Status: <span>{{loan.status}}</span></p>
+
+            <label>Repayment Plan</label>
+            <select ng-model="invoice.plan">
+                <option value="week">Weekly</option>
+                <option value="month">Monthly</option>
+            </select>
+            <label>Plan No of Weeks/Months</label>
+            <input type="number" ng-model="invoice.plan_no">
+
+            <label>Loan Interest Rate</label>
+            <input type="text" ng-model="invoice.rate">
+
+            <div class="btn-div"><button ng-click="generate()" class="btn-primary" ><i class="fa fa-repeat"></i> Generate Invoice</button></div>
+        </div>
+
+        <div class="invoice-list data-table" ng-show="invoice_list">
+                <h4>Repayment Invoice Generated Preview</h4>
+            <table class="table table-bordered table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Week/Month</th>
+                        <th>Amount</th>
+                        <th>Rate</th>
+                        <th>Default Charge</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                        <th>Amount Paid</th>
+                        <th>Roll Over</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(index,data) in invoice">
+                            <td>{{selected_plan}} {{index}}</td>
+                            <td>&#8358; {{data.amount | number}}</td>
+                            <td>{{data.rate | number}}</td>
+                            <td>&#8358; {{data.default_charge | number}}</td>
+                            <td>&#8358; {{data.total_amount | number}}</td>
+                            <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                            <td>{{data.due_date | moment: 'format':'MMMM Do YYYY'}}</td>
+                            <td>&#8358; {{data.amount_paid | number}}</td>
+                            <td>&#8358; {{data.roll_over | number}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <div ng-show="loan_channel">
+            <label>Loan Payout Channel</label>
+            <select ng-model="channel">
+                <option value="savings" selected="selected">Savings Account</option>
+                <option value="transfer">Transfer</option>
+                <option value="cheque">Cheque</option>
+                <option value="cash">Cash</option>
+            </select> 
+            
+        <div class="btn-div"><button ng-click="confirm()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Confirm</button></div>
+    
+    </div>
+    </div>
+
+    <script type="text/javascript">
+        $(".data-table").overlayScrollbars({ });
+    </script>
+</div>
+            

@@ -1,0 +1,21 @@
+<div class="inner-view" ng-controller="defaultCtrl">
+        <div class="container">
+                <div class="calendar-box">
+                        <div id="calendar"></div>
+                </div>
+        </div>
+        <script>
+                $(function() {
+               
+               // page is now ready, initialize the calendar...
+               
+               $('#calendar').fullCalendar({
+                        // put your options and callbacks here
+                        aspectRatio: 2.25,
+                        left:   'title',
+
+               })
+               
+               });
+        </script>
+</div>

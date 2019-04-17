@@ -1,0 +1,59 @@
+<div class="inner-view" ng-controller="manageCustomerCtrl">
+        <div class="container">
+            <h4>Registerd Customers</h4>
+            <div class="search-bar">
+                    <form name="search"></form>
+                        <label>Search By:</label>
+                        <select ng-model="key" ng-change="keyChange()">
+                            <option ng-repeat="(key,key_value) in keys" value="{{key}}">{{key_value}}</option>
+                        </select>
+                        <input type="text" ng-model="value" ng-show="value_input" placeholder="Enter {{selected_key}}">
+                        <select ng-model="value" ng-show="value_select">
+                            <option ng-repeat="(key,selected) in list" value="{{selected.id}}">{{selected.location}} | {{selected.description}}</option>
+                        </select>
+                        <button ng-click="searchBtn()" class="btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </form>
+            </div>
+            <div class="data-table">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Account No</th>
+                            <th>Category</th>
+                            <th>Full Name</th>
+                            <th>Office</th>
+                            <th>Registered By</th>
+                            <th>Marketer</th>
+                            <th>Registration Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in customers">
+                            <td>{{page + $index}}</td>
+                            <td>{{data.account_no}}</td>
+                            <td>{{data.category}}</td>
+                            <td>{{data.bio_data.surname}} {{data.bio_data.first_name}}</td>
+                            <td>{{data.office | database: 'office'}}</td>
+                            <td>{{data.registered_by}}</td>
+                            <td>{{data.marketer}}</td>
+                            <td>{{data.registration_data | moment: 'format':'MMMM Do YYYY'}}</td>
+                            <td>
+                                <button class="btn-primary" ng-click="editBtn(data.id)" title="Edit {{data.account_no}}"><i class="fa fa-edit"></i></button>
+                                <button class="btn-primary" ng-click="viewBtn(data.account_no)" title="Savings {{data.account_no}}"><i class="fa fa-exchange"></i></button>
+                                <button class="btn-primary delete" ng-click="deleteBtn(data.id)" title="Delete {{data.account_no}}"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="pagination">
+                    <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                    <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(".data-table").overlayScrollbars({ });
+        </script>
+    </div>

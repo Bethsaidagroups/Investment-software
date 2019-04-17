@@ -1,0 +1,62 @@
+<div class="inner-view" ng-controller="manageTransCtrl">
+        <div class="container">
+            <h4>Account Transaction History</h4>
+            <div class="search-bar">
+                    <form name="search"></form>
+                        <label>Search By:</label>
+                        <select ng-model="key" ng-change="keyChange()">
+                            <option ng-repeat="(key,key_value) in keys" value="{{key}}">{{key_value}}</option>
+                        </select>
+                        <input type="text" ng-model="value" ng-show="value_input" placeholder="Enter {{selected_key}}">
+                        <select ng-model="value" ng-show="value_select">
+                            <option ng-repeat="(key,selected) in list" value="{{selected.id}}">{{selected.location}} | {{selected.description}}</option>
+                        </select>
+                        <button ng-click="searchBtn()" class="btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </form>
+            </div>
+            <div class="data-table">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Account No</th>
+                            <th>category</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Channel</th>
+                            <th>Authorization</th>
+                            <th>Office</th>
+                            <th>Status</th>
+                            <th>Timestamp</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in trans">
+                            <td>{{data.id}}</td>
+                            <td>{{data.account_no}}</td>
+                            <td>{{data.category}}</td>
+                            <td class="type {{data.type}}">{{data.type}}</td>
+                            <td>&#8358;{{data.amount | number}}</td>
+                            <td>{{data.channel}}</td>
+                            <td><p ng-repeat="(key,value) in data.authorized_by">{{key}}: {{value}}</p></td>
+                            <td>{{data.office | database: 'office'}}</td>
+                            <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                            <td>{{data.timestamp | moment: 'format':'MMMM Do YYYY h:mm:ss a'}}</td>
+                            <td>
+                                <button class="btn-primary" ng-click="print(data.id)" title="Generate Reciept: {{data.account_no}}"><i class="fa fa-print"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="pagination">
+                    <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                    <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(".data-table").overlayScrollbars({ });
+        </script>
+    </div>

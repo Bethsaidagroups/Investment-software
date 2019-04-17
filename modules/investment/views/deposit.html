@@ -1,0 +1,32 @@
+<div class="inner-view" ng-controller="depositCtrl">
+        <div class="container">
+            <h4>Make Deposit</h4>
+            <div class="account-no single-form"  ng-show="account_no">
+                <label>Customer Account No</label>
+                <input type="number" ng-model="deposit.account_no">
+    
+                <div class="btn-div"><button ng-click="continue()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+            </div>
+
+            <div class="deposit-details" ng-show="deposit_details">
+                    <div class="btn-div"><button ng-click="back()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                <h5>Savings Account Details</h5>
+                <p>Account No: <span>{{customer.account_no}}</span></p>
+                <p>Account Name: <span>{{customer.bio_data.surname}} {{customer.bio_data.first_name}}</span></p>
+                <label>Deposit Channel</label>
+                <select ng-model="deposit.channel">
+                    <option value="transfer">Transfer</option>
+                    <option value="cheque">Cheque</option>
+                    <option value="cash">Cash</option>
+                </select>  
+                <label>Amount</label>
+                <input type="text" ng-model="deposit.amount">
+                <label>Depositor Name</label>
+                <input type="text" ng-model="deposit.meta_data.name">
+                <label>Depositor Mobile Number</label>
+                <input type="text" ng-model="deposit.meta_data.mobile">
+                
+                <div class="btn-div"><button ng-click="submit()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Submit</button></div>
+            </div>
+        </div>
+    </div>

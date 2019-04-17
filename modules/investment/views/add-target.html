@@ -1,0 +1,63 @@
+<div class="inner-view" ng-controller="addTargetCtrl">
+        <div class="container">
+            <h4>Add Target Savings</h4>
+            <div class="single-form"  ng-show="account_no">
+                <label>Customer Account No</label>
+                <input type="number" ng-model="target.account_no">
+    
+                <div class="btn-div"><button ng-click="continue()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+            </div>
+
+            <div class="fixed-details" ng-show="target_details">
+                <div class="btn-div"><button ng-click="back()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+                <h5>Target Savings Parameters</h5>  
+                <label>Amount</label>
+                <input type="text" ng-model="target.target_amount">
+                <label>Rate</label>
+                <input type="text" ng-model="target.rate">
+                <label>Start Date (yyyy-mm-dd)</label>
+                <input type="text" ng-model="target.start_date" placeholder="yyyy-mm-dd" class="datepicker">
+                <label>Number of Days</label>
+                <input type="text" ng-model="target.date_no" placeholder="Number of days">
+                
+                <div class="btn-div"><button ng-click="preview()" class="btn-primary" ><i class="fa fa-check-square-o"></i> Preview</button></div>
+            </div>
+
+            <div class="fixed-preview" ng-show="target_preview">
+                <h4>Savings Invoice Generated Preview</h4>
+            <div class="data-table">
+            <table class="table table-bordered table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Account No</th>
+                        <th>Amount</th>
+                        <th>Rate</th>
+                        <th>ROI</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(index,data) in invoice">
+                            <td>{{data.account_no}}</td>
+                            <td>&#8358; {{data.amount | number}}</td>
+                            <td>{{data.rate | number}}</td>
+                            <td>&#8358;{{data.roi | number}}</td>
+                            <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                            <td>{{data.due_date | moment: 'format':'MMMM Do YYYY'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="btn-div"><button ng-click="submit()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Submit</button></div>
+            </div>
+        </div>
+
+        
+    <script type="text/javascript">
+        $(".data-table").overlayScrollbars({ });
+        $(function() {
+                $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" }).val()
+        });
+    </script>
+    </div>

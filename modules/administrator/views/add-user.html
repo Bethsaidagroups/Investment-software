@@ -1,0 +1,38 @@
+<div class="inner-view" ng-controller="addUserCtrl">
+    <div class="container">
+        <h4>Add User</h4>
+        <div class="user-login"  ng-show="user_login">
+            <h5>Login Details</h5>
+            <label>Username</label>
+            <input type="text" ng-model="user.username">
+            <label>User Type</label>
+            <select ng-model="user.user_type">
+                <option ng-repeat="(index, type) in types" value="{{type.id}}">{{type.name}}</option>
+            </select>
+            <label>Office Location</label>
+            <select ng-model="user.office">
+                    <option ng-repeat="(key, office) in offices" value="{{office.id}}">{{office.location}} | {{office.description}}</option>
+            </select>
+            <label>Password</label>
+            <input type="{{pass_text}}" ng-model="user.password"><i class="fa fa-eye-open"></i>
+            <div class="btn-div"><button ng-click="continue()" class="btn-primary right" >Next <i class="fa fa-chevron-right"></i></button></div>
+        </div>
+        <div class="user-bio" ng-show="user_bio">
+            <div class="btn-div"><button ng-click="back()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+            <h5>Bio-Data</h5>
+            <label>First Name</label>
+            <input type="text" ng-model="user.meta.first_name">
+            <label>Last Name</label>
+            <input type="text" ng-model="user.meta.last_name">
+            <label>Gender</label>
+            <select ng-model="user.meta.gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <label>Mobile</label>
+            <input type="text" ng-model="user.meta.mobile">
+            
+            <div class="btn-div"><button ng-click="submit()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Submit</button></div>
+        </div>
+    </div>
+</div>

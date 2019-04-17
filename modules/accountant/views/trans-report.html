@@ -1,0 +1,64 @@
+<div class="inner-view" ng-controller="transReportCtrl">
+        <div class="container">
+            <h4>Filtered Transaction Report</h4>
+
+            <div class="trans-report">
+                <label>Generate Report For:</label>
+                <select ng-model="unit" ng-change="reportUnit()">
+                    <option value="invest">Investment</option>
+                    <option value="eng">Engineering</option>
+                    <option value="estate">Real Estate Management</option>
+                </select>  
+                <hr>
+                <div class="location">
+                        <h5>Office Branch/Location</h5>
+                        <select ng-model="office">
+                            <option ng-repeat="(key,selected) in list" value="{{selected.id}}">{{selected.location}} | {{selected.description}}</option>
+                        </select>
+                </div>
+                <div class="filter" ng-show="invest">
+                        <h5>Fiter By</h5>
+                        <select ng-model="key" ng-change="keyChange()">
+                            <option ng-repeat="(key,key_value) in keys" value="{{key}}">{{key_value}}</option>
+                        </select>
+                        <input type="text" ng-model="value" ng-show="value_input" placeholder="Enter {{selected_key}}">
+                        <select ng-model="value" ng-show="category_select">
+                                <option ng-repeat="(key,selected) in categories" value="{{key}}">{{selected}}</option>
+                        </select>
+                        <select ng-model="value" ng-show="type_select">
+                                <option ng-repeat="(key,selected) in types" value="{{key}}">{{selected}}</option>
+                        </select>
+                        <select ng-model="value" ng-show="channel_select">
+                                <option ng-repeat="(key,selected) in channels" value="{{key}}">{{selected}}</option>
+                        </select>
+                        <select ng-model="value" ng-show="status_select">
+                                <option ng-repeat="(key,selected) in statuses" value="{{key}}">{{selected}}</option>
+                        </select>
+                </div>
+                <hr>
+                <div class="timeframe">
+                    <h5>Set Time Frame</h5>
+                    <div class="date-range">
+                            <label>From</label>
+                            <input ng-model="frame.from_date" placeholder="yyyy-mm-dd" class="datepicker">
+                            <label>To</label>
+                            <input ng-model="frame.to_date" placeholder="yyyy-mm-dd" class="datepicker">
+                        </div>
+
+                        <button ng-click="getBtn()" class="btn-primary"><i class="fa fa-area-chart"></i> Get Summary</button>
+                </div>
+                <hr>
+                <div class="report" ng-show="report">
+                    <p>Total Transactions: <span>{{total_trans | number}}</span></p>
+                    <p>Total Amount: <span>&#8358;{{total_amount | number}}</span></p>
+                </div>
+                <div  id="space"></div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(function() {
+                $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" }).val()
+            });
+        </script>
+</div>

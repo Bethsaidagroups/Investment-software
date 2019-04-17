@@ -1,0 +1,14 @@
+<div class="inner-view" ng-controller="editLoanCtrl">
+        <div class="container">
+            <h4>Edit Loan Application</h4>
+
+            <div class="loan-details">
+                <h5>Loan Details</h5> 
+                <label>Amount Applied For</label>
+                <input type="text" ng-model="loanApp.loan.amount">
+                <label>Amount Approved</label>
+                <input type="text" ng-model="loanApp.amount_approved">
+                <div class="btn-div"><button ng-click="update(loanApp.id)" class="btn-primary right" ><i class="fa fa-save"></i> Update</button></div>
+            </div>
+        </div>
+    </div>

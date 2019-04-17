@@ -1,0 +1,46 @@
+<div class="inner-view" ng-controller="editUserCtrl">
+    <div class="container">
+        <h4>Edit User</h4>
+        <div class="not-editable">
+            <div class="profile-img">
+                    <img ng-src="{{image_url}}" alt="Profile Image">
+                    <input type = "file" file-model = "profile_img" id="selected-file" style="display:none;" onchange="angular.element(this).scope().getFileName()">
+                    <div>
+                        <button class="btn-primary" onclick="document.getElementById('selected-file').click();"><i class="fa fa-file-image-o" ></i> Select Image</button> <span class="file_name">{{file_name}}</span>
+                        <button class="btn-primary alt" ng-click = "doUpload()"><i class="fa fa-upload" ></i> Upload Image</button>
+                    </div>
+            </div>
+            <p>Username: <span>{{user.username}}</span></p>
+                    
+            <p>Last Login:  <span>{{user.last_login | moment: 'format':'MMMM Do YYYY, h:mm:ss a'}}</span></p>
+        </div>
+        <div class="editables">
+                <label>User Type</label>
+                <select ng-model="user.user_type">
+                    <option ng-repeat="(index, type) in types" value="{{type.id}}">{{type.name}}</option>
+                </select>
+                <label>Access</label>
+                <select ng-model="user.access">
+                    <option value="1">Open</option>
+                    <option value="0">Restricted</option>
+                </select>
+                <label>Office Location</label>
+                <select ng-model="user.office">
+                        <option ng-repeat="(key, office) in offices" value="{{office.id}}">{{office.location}} | {{office.description}}</option>
+                </select>
+                <label>First Name</label>
+                <input type="text" ng-model="user.meta.first_name">
+                <label>Last Name</label>
+                <input type="text" ng-model="user.meta.last_name">
+                <label>Gender</label>
+                <select ng-model="user.meta.gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <label>Mobile</label>
+                <input type="text" ng-model="user.meta.mobile">
+
+                <div class="btn-div"><button ng-click="update(user.id)" class="btn-primary right" ><i class="fa fa-save"></i> Update</button></div>
+        </div>
+    </div>
+</div>

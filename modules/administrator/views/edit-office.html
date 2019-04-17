@@ -1,0 +1,18 @@
+<div class="inner-view" ng-controller="editOfficeCtrl">
+        <div class="container">
+                <h4>Edit Office Location</h4>
+            <div class="editables">
+                    <label>Location</label>
+                    <input type="text" ng-model="officeList.location">
+                    <label>Type</label>
+                    <select ng-model="officeList.type">
+                        <option value="head">Head Office</option>
+                        <option value="branch">Branch Office</option>
+                    </select>
+                    <label>Description</label>
+                    <textarea ng-model="officeList.description"></textarea>
+    
+                    <div class="btn-div"><button ng-click="update(officeList.id)" class="btn-primary right" ><i class="fa fa-save"></i> Update</button></div>
+            </div>
+        </div>
+    </div>
