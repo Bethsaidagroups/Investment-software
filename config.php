@@ -97,7 +97,7 @@ define('DB_PREFIX', 'ls_');
 			return $this->conn;
 		}
 		catch ( PDOException $e ){
-			//What to do when an invalid access to the data base is detected.
+			//What to do when an invalid access to the data base is spoted
 			die($e);
 		}
 
