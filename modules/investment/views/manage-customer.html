@@ -38,7 +38,7 @@
                             <td>{{data.office | database: 'office'}}</td>
                             <td>{{data.registered_by}}</td>
                             <td>{{data.marketer}}</td>
-                            <td>{{data.registration_data | moment: 'format':'MMMM Do YYYY'}}</td>
+                            <td>{{data.registration_date | moment: 'format':'MMMM Do YYYY'}}</td>
                             <td>
                                 <button class="btn-primary" ng-click="editBtn(data.id)" title="Edit {{data.account_no}}"><i class="fa fa-edit"></i></button>
                                 <button class="btn-primary" ng-click="viewBtn(data.account_no)" title="Savings {{data.account_no}}"><i class="fa fa-exchange"></i></button>

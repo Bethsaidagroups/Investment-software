@@ -67,7 +67,7 @@ $klein->with('/api', function () use ($klein) {
      */
     
     //user profile routes
-    $klein->respond(array('POST','GET'),'/user/profile/get/[a:username]', function ($request, $response) {
+    $klein->respond(array('POST','GET'),'/user/profile/get/[*:username]', function ($request, $response) {
         //To upload profile images
         $action = 'get';
         $username = $request->username;

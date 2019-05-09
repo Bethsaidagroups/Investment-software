@@ -57,13 +57,14 @@ if(http_response_code() === 200){
                     $target->close();
 
                     //Add new target savings to the savings invoice
-                    if(($data->date_no%30) > 0){
+                    if($data->date_no < 90){
                         //date is not in multiple of 30 days
                         http_response_code(400);
-                        echo '{"error":"Date is not in multiples of 30 days"}';
+                        echo '{"error":"Duration can not be less than 90 days"}';
                         exit();
                     }
-                    $counter = $data->date_no/30;
+                    $counter =  floor($data->date_no/30);
+                    $date_left = $data->date_no%30;
                     $invoice = array();
                     for($i=1; $i<=$counter; $i++){
                         $invoice[$i]['account_no'] = $data->account_no;
@@ -73,7 +74,12 @@ if(http_response_code() === 200){
                         $invoice[$i]['rate'] = $data->rate;
                         $invoice[$i]['roi'] = ((abs($data->target_amount) * (abs($data->rate)/100) * abs($data->date_no))/365)/$counter;
                         $invoice[$i]['status'] = 'unpaid';
-                        $date_offset = 30 * $i;
+                        if($i == $counter){
+                            $date_offset = (30 * $i) + $date_left;
+                        }
+                        else{
+                            $date_offset = 30 * $i;
+                        }
                         $invoice[$i]['due_date'] = date('Y-m-d', strtotime($data->start_date . " + $date_offset days"));
                         $invoice[$i]['office'] = $GLOBALS['office'];
                     }
@@ -97,13 +103,14 @@ if(http_response_code() === 200){
     }
     elseif($action == "preview"){
         //generate invoice and send it to the user for final review
-        if(($data->date_no%30) > 0){
+        if($data->date_no < 90){
             //date is not in multiple of 30 days
             http_response_code(400);
-            echo '{"error":"Date is not in multiples of 30 days"}';
+            echo '{"error":"Duration can not be less than 90 days"}';
             exit();
         }
-        $counter = $data->date_no/30;
+        $counter =  floor($data->date_no/30);
+        $date_left = $data->date_no%30;
         $invoice = array();
         for($i=1; $i<=$counter; $i++){
             $invoice[$i]['account_no'] = $data->account_no;
@@ -111,7 +118,12 @@ if(http_response_code() === 200){
             $invoice[$i]['rate'] = $data->rate;
             $invoice[$i]['roi'] = ((abs($data->target_amount) * (abs($data->rate)/100) * abs($data->date_no))/365)/$counter;
             $invoice[$i]['status'] = 'unpaid';
-            $date_offset = 30 * $i;
+            if($i == $counter){
+                $date_offset = (30 * $i) + $date_left;
+            }
+            else{
+                $date_offset = 30 * $i;
+            }
             $invoice[$i]['due_date'] = date('Y-m-d', strtotime($data->start_date . " + $date_offset days"));
             $invoice[$i]['office'] = $GLOBALS['office'];
         }
