@@ -51,6 +51,12 @@ if(http_response_code() === 200){
         //Edit a selected user
         $trans = new database\AccountTransactionAccess(new database\SQLHandler($db->conn), $id);
         $result = $trans->select_single();
+        //check for branch matching
+        if(strcasecmp($GLOBALS['office'], $result['office']) !== 0){
+            http_response_code(400);
+            echo '{"error":"Can not update status of transaction initiated from different office location"}';
+            exit();
+        }
         if(strcasecmp($result['status'], 'awaiting') == 0){
             if(strcasecmp($data->status, 'confirm') == 0){
                 //check if category is savings withdrawal

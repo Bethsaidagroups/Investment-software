@@ -27,8 +27,7 @@ if($action == "view"){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $log = new database\ActivityLogAccess(new database\SQLHandler($db->conn));
             $result = $log->select_multiple(null,$search,$cmd);
@@ -38,8 +37,7 @@ if($action == "view"){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $log = new database\ActivityLogAccess(new database\SQLHandler($db->conn));
             $result = $log->select_multiple(null,null,$cmd);
             $log->close();

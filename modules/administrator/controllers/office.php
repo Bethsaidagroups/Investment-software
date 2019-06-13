@@ -42,8 +42,7 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $office = new database\OfficeAccess(new database\SQLHandler($db->conn));
             $result = $office->select_multiple(null,$search,$cmd);
@@ -53,8 +52,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $office = new database\OfficeAccess(new database\SQLHandler($db->conn));
             $result = $office->select_multiple(null,null,$cmd);
             $office->close();

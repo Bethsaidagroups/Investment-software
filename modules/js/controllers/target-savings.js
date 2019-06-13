@@ -215,6 +215,9 @@ user.controller("manageTargetCtrl", function($scope, $location, $route, httpReq,
         $scope.selected_target = new Object;
         $scope.selected_target.id = $scope.deposits[index].id;
         $scope.selected_target.paid_amount = $scope.deposits[index].paid_amount;
+        $scope.loader_roi = "Fetching ROI..."
+        $scope.loader_total = "Computing..."
+        fetchROI($scope.deposits[index].id);
         $scope.selected_target.status = $scope.deposits[index].status;
         if($scope.selected_target.status == 'cashed'){
 
@@ -225,7 +228,7 @@ user.controller("manageTargetCtrl", function($scope, $location, $route, httpReq,
             $scope.msg = '';
         }
         else{
-            $scope.msg = 'This target savings is yet to be completed. if you continue penalty charge will apply';
+            $scope.msg = 'This target savings is yet to be completed. if you continue penalty charge may apply';
             $scope.penalty = true;
         }
     }
@@ -242,7 +245,7 @@ user.controller("manageTargetCtrl", function($scope, $location, $route, httpReq,
         }
 
         var cash_out = function(id){
-            if(confirm('By clicking submit, means you have reviewed the fix details and you are satisfied')){
+            if(confirm('By clicking submit, means you have reviewed the target savings details and you are satisfied')){
                 var url = "/target/cashout/" + id;
                 var data = JSON.stringify($scope.selected_target);
                 httpReq.send(url,data,'POST',
@@ -290,80 +293,36 @@ user.controller("manageTargetCtrl", function($scope, $location, $route, httpReq,
             $location.url('/manage-target?page=' + new_page);
         }
     }
-});
 
-//Cash Out Fixed Deposit controller
-user.controller("cashOutTargetCtrl", function($scope, $location, $route, httpReq, showAlert){
-    //get customer from database
-    var url = "/target/" + $location.search().id;
-    httpReq.send(url,null,'POST',
-        {
-            success: function(response){
-                if(response.status === 200){
-                    $scope.fixed = response.data;
-
-                    if(response.data.status == 'cashed'){
-                        showAlert.warning("This deposit has been cashed out already");
-                        $location.url('/manage-fixed');
-                    }
-                    else if(response.data.status == 'completed'){
-                        $scope.roi = response.data.roi;
-                        $scope.tax = response.data.roi * 10 / 100;
-                        $scope.total = parseFloat(response.data.amount) + parseFloat(response.data.roi) - $scope.tax;
-                    }
-                    else{
-                        $scope.tax = '0.00';
-                        $scope.roi = '0.00';
-                        $scope.total = response.data.amount;
-                    }
-                }
-            },
-            error: function(response){
-                switch(response.status){
-                    case 400:{
-                        showAlert.warning(response.data.error);
-                        break;
-                    }
-                    case 403:{
-                        showAlert.danger(response.data.auth + ' | ' + response.data.access);
-                        break;
-                    }
-                    default:{
-                        showAlert.warning("unknown internal error, workspace might be empty. Hint: Reload browser window");
-                    }
-                }
-            }
-        });
-    
-    //Update button action performed
-    $scope.submit = function(id){
-        if(confirm('By clicking submit, means you have reviewed the fixed deposit details and you are satisfied')){
-            var url = "/fixed/cashout/" + id;
-            var data = JSON.stringify({channel:$scope.channel});
-            httpReq.send(url,data,'POST',
-            {
-                success: function(response){
-                    if(response.status === 200){
-                        showAlert.success("Transaction completed successfully. Sent to Accountant for finalization");
-                        $route.reload();
-                    }
-                },
-                error: function(response){
-                    switch(response.status){
-                        case 400:{
-                            showAlert.warning(response.data.error);
-                            break;
+    var fetchROI = function(id){
+        var url = "/target/getroi/" + id;
+                var data = JSON.stringify($scope.selected_target);
+                httpReq.send(url,data,'POST',
+                {
+                    success: function(response){
+                        if(response.status === 200){
+                            $scope.loader_roi = ""
+                            $scope.loader_total = ""
+                            $scope.selected_target.accrued_roi = response.data.roi
+                            $scope.selected_target.total_amount = parseFloat($scope.selected_target.paid_amount) + parseFloat(response.data.roi);
                         }
-                        case 403:{
-                            showAlert.danger(response.data.auth + ' | ' + response.data.access);
-                            break;
-                        }
-                        default:{
-                            showAlert.warning("unknown internal error, workspace might be empty. Hint: Reload browser window");
+                    },
+                    error: function(response){
+                        switch(response.status){
+                            case 400:{
+                                $scope.loader_roi = "Not Available"
+                                $scope.loader_total = "Not Available"
+                                break;
+                            }
+                            case 403:{
+                                showAlert.danger(response.data.auth + ' | ' + response.data.access);
+                                break;
+                            }
+                            default:{
+                                showAlert.warning("unknown internal error, workspace might be empty. Hint: Reload browser window");
+                            }
                         }
                     }
-                }
-            });
-        }
+                });
     }
 });

@@ -76,8 +76,7 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"registration_date", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"registration_date", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $customer = new database\CustomerAccess(new database\SQLHandler($db->conn));
             $filters = null;
@@ -88,8 +87,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"registration_date", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"registration_date", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $customer = new database\CustomerAccess(new database\SQLHandler($db->conn));
             $filters = null;
             $clause = array("office"=>$GLOBALS["office"]);
@@ -100,25 +98,15 @@ if(http_response_code() === 200){
     }
     elseif($action == "upload"){
         //Upload profile image
-        try {
-			$dir = ROOT_URL ."/contents/images/customers/";
-			$final_name = $dir .$account_no. ".jpg";
-			move_uploaded_file($_FILES["file"]["tmp_name"], $final_name);
-		}
-		catch(Exception $e){
-            http_response_code(400);
-            echo '{"error":"Unabale to upload image"}';
-            exit();
-		}
+        http_response_code(400);
+        echo '{"error":"You do not have permission to perform this action"}';
+        exit();
         
     }
     elseif($action == "edit"){
-        //Edit a selected user
-        $customer = new database\CustomerAccess(new database\SQLHandler($db->conn), $id);
-        $customer->update( new database\models\Customer($data));
-        $customer->close();
-
-        addLog( ["activity" => "update", "meta" => ["title" => "user updated customer","customer_id" => $id]]);
+        http_response_code(400);
+        echo '{"error":"You do not have permission to perform this action"}';
+        exit();       
     }
     elseif($action == "delete"){
         //delete a seleted user

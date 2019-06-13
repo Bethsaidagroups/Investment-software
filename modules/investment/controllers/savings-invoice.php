@@ -27,12 +27,11 @@ if(http_response_code() === 200){
             $savings->close();
             echo utilities\JSONHandler::arrayToJSON($result);
         }
-        //fixed deposit id is not set check for next condition
+        //Target Savings id is not set check for next condition
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $savings = new database\SavingsInvoiceAccess(new database\SQLHandler($db->conn));
             $filters = null;
@@ -43,8 +42,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $savings = new database\SavingsInvoiceAccess(new database\SQLHandler($db->conn));
             $filters = null;
             $clause = array("office"=>$GLOBALS["office"]);
@@ -54,7 +52,7 @@ if(http_response_code() === 200){
         }
     }
     elseif($action == "edit"){
-        //Edit a selected loan
+        //Edit a selected savings
         $savings = new database\SavingsInvoiceAccess(new database\SQLHandler($db->conn), $id);
         $result = $savings->select_single();
         $status = $result['status'];
@@ -91,6 +89,7 @@ if(http_response_code() === 200){
                          $sms = new utilities\SmsService($bio_meta->mobile1, $msg);
                          $sms->send(); //send sms here
                      }
+
                 }
             }
 

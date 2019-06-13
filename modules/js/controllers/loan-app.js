@@ -328,7 +328,7 @@ user.controller("loansCtrl", function($scope, $location, $route, httpReq, showAl
     //search action performed
     $scope.searchBtn = function(){
         if($scope.key != null && $scope.value != null){
-            $location.url('/manage-loan?key=' + $scope.key + '&value=' + $scope.value);
+            $location.url('/loans?key=' + $scope.key + '&value=' + $scope.value);
         }
         else{
             showAlert.warning("Select correct search parameters");

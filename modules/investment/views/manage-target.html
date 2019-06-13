@@ -1,15 +1,18 @@
 <div class="inner-view" ng-controller="manageTargetCtrl">
 <div id="modal-box" style="display:none">
-            <div class="wrapper">
+            <div class="wrapper" style="margin-top: 50px">
                     <button type="button" class="close close-modal" onclick="$('#modal-box').toggle()"><span >&times;</span></button>
                     <h4>Cash Out Target Savings: <span>{{selected_target.id}}</span></h4>
                     <p>Paid Amount: &#8358;<span>{{selected_target.paid_amount | number}}</span></p>
-                    <p>{{msg}}</p>
+                    <p>ROI: &#8358;<span>{{selected_target.accrued_roi | number}}</span> <span style="font-size:11px;color:blue;">{{loader_roi}}</span></p>
+                    <p>Total Amount: &#8358;<span>{{selected_target.total_amount | number}}</span> <span style="font-size:11px;color:blue;">{{loader_total}}</span></p>
+                    <p style="font-size:13px;color:red;">{{msg}}</p>
                     <hr>
                     <label ng-show="penalty">Penalty Charge</label>
                     <input  ng-show="penalty" type="text" ng-model="selected_target.penalty" placeholder="eg. 1000">
-                    <label>Deposit Channel</label>
+                    <label>Channel</label>
                     <select ng-model="selected_target.channel">
+                        <option value="savings">Savings</option>
                         <option value="transfer">Transfer</option>
                         <option value="cheque">Cheque</option>
                         <option value="cash">Cash</option>
@@ -43,7 +46,7 @@
                             <th>Target Amount</th>
                             <th>Rate</th>
                             <th>ROI</th>
-                            <th>Status</th>
+                            <th>Status</th>s
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Paid Amount</th>

@@ -119,8 +119,7 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $fixed = new database\FixedDepositAccess(new database\SQLHandler($db->conn));
             $filters = null;
@@ -131,8 +130,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $fixed = new database\FixedDepositAccess(new database\SQLHandler($db->conn));
             $filters = null;
             $clause = array("office"=>$GLOBALS["office"]);

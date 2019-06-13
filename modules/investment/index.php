@@ -156,7 +156,7 @@ $klein->with('/api', function () use ($klein) {
             exit();
         }
     });
-    $klein->respond(array('POST','GET'),'/[a:ctrl]/[delete|edit|cashout|deposit|withdraw:action]/[i:id]', function ($request, $response) {
+    $klein->respond(array('POST','GET'),'/[a:ctrl]/[delete|edit|cashout|getroi|deposit|withdraw:action]/[i:id]', function ($request, $response) {
         //perform action on a single  with id
         $id = $request->id;
         $action = $request->action;

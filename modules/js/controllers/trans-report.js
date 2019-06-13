@@ -3,7 +3,7 @@
  */
 'use strict';
 
-user.controller("transReportCtrl", function($scope, $location, $route, httpReq, showAlert){
+user.controller("transReportCtrl", function($scope, $window, $route, httpReq, showAlert){
     //set default search keys
     var keyParams = {all:'All', accountQQno:'Savings Account No',category:'Transaction Category',status:'Transaction Status', type:'Transaction Type', channel:'Transaction Channel'};
     var categories = ['Savings Deposit', 'Savings Withdrawal', 'Loan Payout', 'Loan Excess', 'Invoice Payment', 'Fixed Deposit', 'Savings Invoice Payment', 'Target Savings'];
@@ -134,5 +134,11 @@ user.controller("transReportCtrl", function($scope, $location, $route, httpReq, 
         else{
             showAlert.warning('Invalid report parameter. Make sure you select appropriate parameters');
         }
+    }
+
+    //download report button
+    $scope.downloadBtn = function(){
+        var url = '/download/report/' + $scope.office + '/' + $scope.unit + '/' + $scope.key + '/' + $scope.value + '/' + $scope.frame.from_date + 'HH' + $scope.frame.to_date
+        $window.location.href = 'http://localhost/laser/modules/'+localStorage.getItem("module")+'/api' + url
     }
 });

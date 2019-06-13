@@ -144,8 +144,7 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $target = new database\TargetSavingsAccess(new database\SQLHandler($db->conn));
             $filters = null;
@@ -156,8 +155,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $target = new database\TargetSavingsAccess(new database\SQLHandler($db->conn));
             $filters = null;
             $clause = array("office"=>$GLOBALS["office"]);
@@ -185,7 +183,7 @@ if(http_response_code() === 200){
             exit();
         }
         else{
-            //get all roii from invoices
+            //get all roi from invoices
             $all_invoices = new database\SavingsInvoiceAccess(new database\SQLHandler($db->conn));
             $invoice_result = $all_invoices->selectWithClause(null, array('ref_no' => $result['ref_no']));
             $single_roi = $result['roi']/count($invoice_result);
@@ -220,6 +218,23 @@ if(http_response_code() === 200){
         $trans->close();
 
         addLog( ["activity" => "cash out", "meta" => ["title" => "A Target Savings has been withdrawn","id" => $id]]);
+    }
+    elseif($action == "getroi"){
+        //Cash out selected Target Savings
+        $target = new database\TargetSavingsAccess(new database\SQLHandler($db->conn), $id);
+        $result = $target->select_single();
+            //get all roi from invoices
+            $all_invoices = new database\SavingsInvoiceAccess(new database\SQLHandler($db->conn));
+            $invoice_result = $all_invoices->selectWithClause(null, array('ref_no' => $result['ref_no']));
+            $single_roi = $result['roi']/count($invoice_result);
+            $total_roi = 0;
+            for($i=0; $i<count($invoice_result); $i++){
+                if($invoice_result[$i]['status'] == 'paid'){
+                    $total_roi += $single_roi;
+                }
+            }
+            echo json_encode(array('roi'=>$total_roi));
+            exit();
     }
 }
  else{

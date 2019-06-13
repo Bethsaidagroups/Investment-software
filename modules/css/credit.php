@@ -25,7 +25,8 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
+            $stop = ($list_size * abs($page));
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
             $search = array($key => $value, "type" => "credit", "status" => "completed");
             $login = new database\AccountTransactionAccess(new database\SQLHandler($db->conn));
             $filters = null;
@@ -36,7 +37,8 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
+            $stop = ($list_size * abs($page));
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
             $login = new database\AccountTransactionAccess(new database\SQLHandler($db->conn));
             $filters = null;
             $search = array("type" => "credit", "office" => $GLOBALS['office'], "status" => "completed");

@@ -25,8 +25,7 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value, "status" => "pending");
             $login = new database\AccountTransactionAccess(new database\SQLHandler($db->conn));
             $filters = null;
@@ -37,8 +36,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $login = new database\AccountTransactionAccess(new database\SQLHandler($db->conn));
             $filters = null;
             $search = array("status" => "pending", "office" => $GLOBALS['office']);
@@ -74,8 +72,9 @@ if(http_response_code() === 200){
                          //Notify users via SMS
                         $balance = number_format($account_data["balance"] - $result['amount'], 2);
                         $amt = number_format($result['amount'], 2);
-                        $msg = "Debit>>>Amt:NGN $amt Acc:" . $result['account_no'] . " Desc:" . $result['channel'] . "/" . $result['id']. " Date:" . $result['timestamp'] . " PMBal:NGN $balance";
+                        $msg = "Debit>>>Amt:NGN $amt Acc:" . $result['account_no'] . " Desc:" . $result['channel'] . ">" . $result['id']. " Date:" . $result['timestamp'] . " PMBal:NGN $balance";
                         //Get users mobile number.
+                        echo $msg;
                         $customer = new database\CustomerAccess(new database\SQLHandler($db->conn));
                         $bio_data = $customer->select_single('bio_data',array("account_no" => $result['account_no']));
                         $bio_meta = json_decode($bio_data['bio_data']);
@@ -106,6 +105,19 @@ if(http_response_code() === 200){
 
                     $trans->column_update(array("status" => "completed"));
                     $trans->column_update(array("authorized_by" => json_encode($authorizers)));
+
+                    //Notify users via SMS
+                    $balance = number_format($account_data["balance"] + $result['amount'], 2);
+                    $amt = number_format($result['amount'], 2);
+                    $msg = "Credit>>>Amt:NGN $amt Acc:" . $result['account_no'] . " Desc:" . 'Loan Payout' . ">" . $result['id']. " Date:" . $result['timestamp'] . " PMBal:NGN $balance";
+                    //Get users mobile number.
+                    $customer = new database\CustomerAccess(new database\SQLHandler($db->conn));
+                    $bio_data = $customer->select_single('bio_data',array("account_no" => $result['account_no']));
+                    $bio_meta = json_decode($bio_data['bio_data']);
+                    if(!empty($bio_meta->mobile1)){
+                        $sms = new utilities\SmsService($bio_meta->mobile1, $msg);
+                        $sms->send(); //send sms here
+                    }
                 }
                 elseif((strcasecmp($result['category'], 'Fixed Deposit') == 0) && (strcasecmp($result['channel'], 'savings') == 0)){
                     //it is a credit transaction
@@ -123,6 +135,49 @@ if(http_response_code() === 200){
 
                     $trans->column_update(array("status" => "completed"));
                     $trans->column_update(array("authorized_by" => json_encode($authorizers)));
+
+                    //Notify users via SMS
+                    $balance = number_format($account_data["balance"] + $result['amount'], 2);
+                    $amt = number_format($result['amount'], 2);
+                    $msg = "Credit>>>Amt:NGN $amt Acc:" . $result['account_no'] . " Desc:" . 'Fixed Deposit' . ">" . $result['id']. " Date:" . $result['timestamp'] . " PMBal:NGN $balance";
+                    //Get users mobile number.
+                    $customer = new database\CustomerAccess(new database\SQLHandler($db->conn));
+                    $bio_data = $customer->select_single('bio_data',array("account_no" => $result['account_no']));
+                    $bio_meta = json_decode($bio_data['bio_data']);
+                    if(!empty($bio_meta->mobile1)){
+                        $sms = new utilities\SmsService($bio_meta->mobile1, $msg);
+                        $sms->send(); //send sms here
+                    }
+                }
+                elseif((strcasecmp($result['category'], 'Target Savings') == 0) && (strcasecmp($result['channel'], 'savings') == 0)){
+                    //it is a credit transaction
+                    $savings = new database\SavingsAccountAccess(new database\SQLHandler($db->conn));
+                    $account_data = $savings->select_single(null,array("account_no" => $result['account_no']));
+                    $savings->close();
+
+                    $savings = new database\SavingsAccountAccess(new database\SQLHandler($db->conn),  $account_data["id"]);
+                    $savings->column_update(array("balance" => $account_data["balance"] + $result['amount']));
+                    $savings->close();
+
+                     //update transaction status to completed
+                    $authorizers = json_decode($result['authorized_by'], true);
+                    $authorizers['final'] = $GLOBALS['username'];
+
+                    $trans->column_update(array("status" => "completed"));
+                    $trans->column_update(array("authorized_by" => json_encode($authorizers)));
+
+                    //Notify users via SMS
+                    $balance = number_format($account_data["balance"] + $result['amount'], 2);
+                    $amt = number_format($result['amount'], 2);
+                    $msg = "Credit>>>Amt:NGN $amt Acc:" . $result['account_no'] . " Desc:" . 'Target Savings' . ">" . $result['id']. " Date:" . $result['timestamp'] . " PMBal:NGN $balance";
+                    //Get users mobile number.
+                    $customer = new database\CustomerAccess(new database\SQLHandler($db->conn));
+                    $bio_data = $customer->select_single('bio_data',array("account_no" => $result['account_no']));
+                    $bio_meta = json_decode($bio_data['bio_data']);
+                    if(!empty($bio_meta->mobile1)){
+                        $sms = new utilities\SmsService($bio_meta->mobile1, $msg);
+                        $sms->send(); //send sms here
+                    }
                 }
                 else{
                     $trans->column_update(array("status" => "completed"));

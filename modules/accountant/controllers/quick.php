@@ -33,8 +33,7 @@ if(http_response_code() === 200){
                 $categories = ['Savings Deposit', 'Savings Withdrawal', 'Loan Payout', 'Loan Excess', 'Invoice Payment', 'Fixed Deposit', 'Savings Invoice Payment', 'Target Savings'];
                 $list_size = 15;
                 $start = ($list_size * abs($page)) - $list_size;
-                $stop = ($list_size * abs($page));
-                $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+                $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
                 $search = array($key => $categories[$value]);
                 $login = new database\AccountTransactionAccess(new database\SQLHandler($db->conn));
                 $filters = null;
@@ -45,8 +44,7 @@ if(http_response_code() === 200){
             else{
                 $list_size = 15;
                 $start = ($list_size * abs($page)) - $list_size;
-                $stop = ($list_size * abs($page));
-                $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+                $cmd = array("order_by" =>"timestamp", "order_in"=>"DESC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
                 $search = array($key => $value);
                 $login = new database\AccountTransactionAccess(new database\SQLHandler($db->conn));
                 $filters = null;

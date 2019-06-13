@@ -251,5 +251,18 @@ $klein->with('/api', function () use ($klein) {
         require_once 'controllers/report.php';
     });
 
+    /**
+     * Api Route block for reports download
+     */
+    $klein->respond(array('POST','GET'),'/download/report/[i:office]/[a:unit]/[a:filter]/[a:key]/[*:timeframe]', function ($request, $response) {
+        
+        $office = $request->office;
+        $unit = $request->unit;
+        $filter =  str_replace('QQ', '_', $request->filter);;
+        $key = $request->key;
+        $timeframe = $request->timeframe;
+        require_once 'controllers/download-report.php';
+    });
+
 });
 $klein->dispatch($request);

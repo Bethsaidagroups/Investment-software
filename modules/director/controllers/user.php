@@ -24,6 +24,7 @@ if(http_response_code() === 200){
                     echo '{"error":"Cannot add more than one Managing Director"}';
                     exit();
                 }
+                //die($data->user_type);
                 $result = $login->select_single(null, array("username" => $data->username));
                 if(empty($result)){
                     //create Login model to hold new user data and reset some inner properties
@@ -32,6 +33,7 @@ if(http_response_code() === 200){
                     $model->set_lastLogin(date("Y-m-d H:i:s"));
                     $model->set_access("0");
                     //now add it to logins relation
+                    $login = new database\LoginAccess(new database\SQLHandler($db->conn));
                     $login->add($model);
                     $login->close();
 
@@ -63,8 +65,7 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $login = new database\LoginAccess(new database\SQLHandler($db->conn));
             $filters = "id,username,user_type,access,office,meta,last_login";
@@ -75,8 +76,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $login = new database\LoginAccess(new database\SQLHandler($db->conn));
             $filters = "id,username,user_type,access,office,meta,last_login";
             $result = $login->select_multiple($filters,null,$cmd);

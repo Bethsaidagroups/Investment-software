@@ -65,8 +65,7 @@ if(http_response_code() === 200){
         elseif(isset($key) && isset($value)){
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $search = array($key => $value);
             $login = new database\LoginAccess(new database\SQLHandler($db->conn));
             $filters = "id,username,user_type,access,office,meta,last_login";
@@ -77,8 +76,7 @@ if(http_response_code() === 200){
         else{
             $list_size = 15;
             $start = ($list_size * abs($page)) - $list_size;
-            $stop = ($list_size * abs($page));
-            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$stop");
+            $cmd = array("order_by" =>"id", "order_in"=>"ASC", "limit_start"=>"$start", "limit_stop"=>"$list_size");
             $login = new database\LoginAccess(new database\SQLHandler($db->conn));
             $filters = "id,username,user_type,access,office,meta,last_login";
             $result = $login->select_multiple($filters,null,$cmd);
