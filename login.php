@@ -73,21 +73,24 @@ if(!empty($user)){
         $session_auth = ["token" => $token,
                          "user_id" => $user['id'],
                          "username" => $user['username'],
-                         "office"   => $user['office']
+                         "office"   => $user['office'],
+                         "user_type"=> $user['user_type']
                         ];
         utilities\Session::set($session_auth);
 
         //get user redirection module
         $type = new database\UsersTypeAccess(new database\SQLHandler($db->conn), $user["user_type"]);
         $type_name = $type->select_single("name");
+        $major_link = "http://localhost/laser/beta/app";
         if(strcasecmp($type_name['name'], 'administrator') === 0){
             $module = "administrator";
+            $major_link = "http://localhost/laser/modules";
         }
         elseif(strcasecmp($type_name['name'], 'accountant') === 0){
-            $module = "accountant";
+            $module = "Central Management Unit";
         }
         elseif(strcasecmp($type_name['name'], 'managing director') === 0){
-            $module = "director";
+            $module = "Central Management Unit";
         }
         elseif(strcasecmp($type_name['name'], 'engineering') === 0){
             $module = "engineering";
@@ -96,10 +99,10 @@ if(!empty($user)){
             $module = "estate";
         }
         elseif(strcasecmp($type_name['name'], 'investment') === 0){
-            $module = "investment";
+            $module = "Branch Manager";
         }
         elseif(strcasecmp($type_name['name'], 'secretary') === 0){
-            $module = "secretary";
+            $module = "Branch Secretary";
         }
         else{
             $module = "none";
@@ -110,7 +113,8 @@ if(!empty($user)){
                      "success" => "Login successful, Loading Workspace...",
                      "module" => $module,
                      "username" => $user["username"],
-                     "office" => $location["location"]
+                     "office" => $location["location"] .', '.$location["description"],
+                     "link"=> $major_link
                     ];
         echo json_encode($response);
         exit();

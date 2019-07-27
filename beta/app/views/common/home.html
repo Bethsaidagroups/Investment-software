@@ -1,0 +1,8 @@
+<div class="inner-view" ng-controller="homeCtrl">
+        <div class="container">
+            <!--Main Menu-->
+            <div ng-if="isLevel1" ng-include="'views/menu/main-menu-level-1.html'"></div>
+            <div ng-if="isLevel2" ng-include="'views/menu/main-menu-level-2.html'"></div>
+            <div ng-if="isLevel3" ng-include="'views/menu/main-menu-level-3.html'"></div>
+        </div>
+</div>

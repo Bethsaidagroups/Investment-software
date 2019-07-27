@@ -1,0 +1,37 @@
+<div class="work-summary">
+    <h4 class="home-head">Work Summary For Today: <span>{{summary.date | moment: 'format':'MMMM Do YYYY'}}</span></h4>
+    <div class="summary-box customer">
+        <div>
+            <span class="value">{{summary.customer | number}}</span><span class="tip">New Customers</span>
+        </div>
+    </div>
+    <div class="summary-box pending">
+        <div>
+            <span class="value">{{summary.pending | number}}</span><span class="tip">Pending Transactions</span>
+        </div>
+    </div>
+    <div class="summary-box approved">
+        <div>
+            <span class="value">{{summary.transaction | number}}</span><span class="tip">Transactions</span>
+        </div>
+    </div>
+</div>
+    <div class="icon-menu">
+        <div class="main-menu-icon" ng-click="iconMenu('/customer/register')">
+            <i class="fa fa-user-plus"></i>
+            <p>Register Customer</p>
+        </div>
+        <div class="main-menu-icon" ng-click="iconMenu('savings/init-withdrawal')">
+            <i class="fa fa-arrow-up"></i>
+            <p>Initiate Withdrawal</p>
+        </div>
+        <div class="main-menu-icon" ng-click="iconMenu('savings/init-deposit')">
+            <i class="fa fa-arrow-down"></i>
+            <p>Initiate Deposit</p>
+        </div>
+        <div class="main-menu-icon" ng-click="iconMenu('transaction/list')">
+            <i class="fa fa-history"></i>
+            <p>Transaction History</p>
+        </div>
+        
+    </div>

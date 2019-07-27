@@ -1,0 +1,149 @@
+<div class="soa modal-box" ng-show="show_soa_box">
+    <div class="modal-content">
+        <div class="fixed-header">
+            <button class="btn-primary" ng-click="printSoa()"><i class="fa fa-print"></i> Print</button>
+            <a ng-click="closeModalBox()" class="fa fa-times"></a>
+        </div>
+        <div id="print-area-soa">
+            <div class="soa-table-head">
+                <table class="table-bordered table-striped">
+                    <tr>
+                        <th>Statement Period</th>
+                        <td>{{period}}</td>
+                    </tr>
+                    <tr>
+                        <th>Account No.</th>
+                        <td>{{meta.account_no}}</td>
+                    </tr>
+                    <tr>
+                        <th>Currency</th>
+                        <td>Naira</td>
+                    </tr>
+                    <tr>
+                        <th>Current Balance.</th>
+                        <td>&#8358;{{meta.balance | number}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="soa-tittle-head">
+                <img src="/laser/contents/images/logo-soa.jpg">
+                <h6>CUSTOMER STATEMENT</h6>
+                <h5>{{meta.bio_data.surname}}, {{meta.bio_data.first_name}} {{meta.bio_data.other_ame}}</h5>
+            </div>
+            <div class="soa-data">
+                <table class="table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ref Id</th>
+                            <th>Value Date</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                            <th>Channel</th>
+                            <th>Naration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(index,data) in lists">
+                            <td>{{data.id}}</td>
+                            <td>{{data.timestamp | moment: 'format':'MMMM Do YYYY'}}</td>
+                            <td class="type {{data.type}}">{{data.type}}</td>
+                            <td>{{data.amount | number}}</td>
+                            <td>{{data.meta_data.balance | number}}</td>
+                            <td>{{data.channel}}</td>
+                            <td>{{data.meta_data.narration}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #print-area-soa{
+              width: 21cm;
+              min-height: 26.2cm;
+              border: 2px dotted rgb(66, 66, 66);
+              padding: 5px;
+              margin-top: 53px;
+              margin-bottom: 20px;
+              margin-left: 1cm;
+              border-radius: 5px;
+              background: #f7f7f7;
+              position: absolute;
+          }
+          .soa-table-head{
+              width: 50%;
+              float:left;
+              position: relative;
+          }
+          .soa-table-head tr td{
+              padding: 4px;
+          }
+          .soa-table-head td{
+            color:#811818;
+            font-weight: 600;
+          }
+          .soa-tittle-head{
+              width: 50%;
+              float: left;
+              position: relative;
+              text-align: right;
+          }
+          .soa-tittle-head img{
+              width: 150px;
+              height: 150px;
+              border-radius: 50%;
+          }
+          .soa-tittle-head h6{
+              font-size: 17px;
+              font-weight: 700;
+              margin-top: 5px;
+              color: #064b28;
+          }
+          .soa-tittle-head h5{
+              font-size: 21px;
+              font-weight: 700;
+              margin-top: 5px;
+              color: #232424;
+              text-transform: capitalize;
+          }
+          .soa-data table{
+              width: 100%;
+          }
+          .soa-data table th{
+              background: #083f50;
+              color: #f7f7f7;
+              height: 40px;
+              text-align: center;
+          }
+          .soa-data table tr td{
+              color: #353535;
+              height: 40px;
+              font-family: Georgia, 'Times New Roman', Times, serif;
+          }
+          /* Indicators color */
+.status.active, .status.approved, .status.paid, .status.completed, .type.credit{
+    color: #1abb35;
+    text-transform: capitalize;
+    font-weight: 500;
+
+}
+.status.inactive, .status.overdue, .status.declined, .type.debit{
+    color:#d11414;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.status.pending, .status.unpaid{
+    color:#d89e20;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.status.cashed, .status.eligible, .status.awaiting{
+    color:#093880;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+          
+                        </style>
+</div>

@@ -1,0 +1,34 @@
+<div class="inner-view" ng-controller="makeWithdrawalCtrl">
+    <div class="container">
+        <h4 class="section-head">Make Withdrawal</h4>
+        <div class="savings-inputs">
+            <label>Account Number</label>
+            <input type="text"  ng-model="account_no" value="" ng-change="getDetails()" maxlength="10">
+            <div class="spinner" ng-show="show_spinner"><img src="../../contents/images/spinner.gif"></div>
+            <div class="msg danger">{{msg}}</div>
+            <div class="active-details" ng-show="show_details">
+                <span>Name: {{account_name}}</span>  <span>Balance: &#8358;{{account_balance | number}}</span>
+            </div>
+            <label>Amount</label>
+            <input type="Amount" ng-model="amount" value="" ng-change="hideSummary()">
+            <label>Transaction Channel</label>
+            <select ng-model="channel" ng-change="hideSummary()">
+                <option value="cash">Cash</option>
+                <option value="transfer">Transfer</option>
+                <option value="cheque">Cheque</option>
+            </select>
+            <label>Naration</label>
+            <input type="text" value="" ng-model="narration" maxlength="25" ng-change="hideSummary()">
+            <button ng-click="continue()" class="btn-primary"><i class="fa fa-arrow-right"></i> Continue</button>
+        </div>
+        <div class="savings-summary" ng-show="show_summary">
+            <h5>Confirm Withdrawal Inputs</h5>
+            <p>Account Number: <span>{{summary.account_no}}</span></p>
+            <p>Account Name: <span>{{summary.account_name}}</span></p>
+            <p>Amount: <span>&#8358;{{summary.amount | number}}</span></p>
+            <p>Transaction Channel: <span>{{summary.channel}}</span></p>
+            <p>Narration: <span>{{summary.narration}}</span></p>
+            <button ng-click="confirm()" class="btn-primary"><i class="fa fa-check-square-o"></i> Confirm</button>
+        </div>
+    </div>
+</div>

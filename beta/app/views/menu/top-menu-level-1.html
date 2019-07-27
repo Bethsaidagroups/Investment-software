@@ -1,0 +1,30 @@
+<div class="menu-item">
+        <button class="drop-btn">Customers <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/customer/register')"><i class="fa fa-user-plus"></i> Register</li>
+                <li ng-click="dropDownMenuAction('/customer/list')"><i class="fa fa-eye"></i> View</li>
+                <li><input ng-model="search.customer" value="" placeholder="keyword"> <i ng-click="dropSearch('customer')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-item">
+        <button class="drop-btn">Savings Account <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/savings/init-withdrawal')"><i class="fa fa-arrow-up"></i> Initiate Withdrawal</li>
+                <li ng-click="dropDownMenuAction('/savings/init-deposit')"><i class="fa fa-arrow-down"></i> Initiate Deposit</li>
+                <li ng-click="dropDownMenuAction('/savings/list')"><i class="fa fa-eye"></i> View</li>
+                <li><input ng-model="search.savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('savings')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-item">
+        <button class="drop-btn">Transactions <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/transaction/list')"><i class="fa fa-history"></i> History</li>
+                <li><input ng-model="search.transaction" value="" placeholder="Reference Id"> <i ng-click="dropSearch('transaction')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>

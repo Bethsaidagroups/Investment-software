@@ -1,6 +1,6 @@
 <html>
   <?php
-    
+/**
 date_default_timezone_set("Africa/Lagos");
 $date = date('Y-m-d H:i:s');
 $date = strtotime($date);
@@ -103,3 +103,6 @@ var data_obj = {
     </script>
 </body>
 <html>
+*/
+
+//echo password_hash("protected@bethsaida5050",PASSWORD_DEFAULT);

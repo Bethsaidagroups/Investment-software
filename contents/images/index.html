@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V1</title>
+	<title>Bethsaida - Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -111,7 +111,7 @@
 			//check if form is not empty
 			if($('#username').val() != "" && $('#password').val() != ""){
 				show();
-				$.post("http://localhost/laser/login.php",
+				$.post("https://app.bethsaidagroups.org/login.php",
 					{
 					username: $('#username').val(),
 					password: $('#password').val()
@@ -128,7 +128,7 @@
 							localStorage.setItem('module', msg.module);
 							localStorage.setItem('username', msg.username);
 							localStorage.setItem('office', msg.office);
-							window.location = msg.link;
+							window.location = "https://app.bethsaidagroups.org/modules";
 						}
 						else{
 							alert("This service is not yet available");

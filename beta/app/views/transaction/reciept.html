@@ -1,0 +1,156 @@
+<style></style>
+<div class="soa modal-box" ng-show="show_reciept_box">
+        <div class="modal-content">
+            <div class="fixed-header">
+                <button class="btn-primary" ng-click="print()"><i class="fa fa-print"></i> Print</button>
+                <a ng-click="closeRecieptBox()" class="fa fa-times"></a>
+            </div>
+            <div id="print-area">
+                <div class="reciept-head">
+                        <img src="/laser/contents/images/logo-soa.jpg">
+                        <h5>TRANSACTION RECIEPT</h5>
+                </div>
+                <div class="reciept-sub-head">
+                    <span class="status">{{reciept.status}}</span>
+                    <span class="type">{{reciept.type}}</span>
+                </div>
+                <div class="reciept-body">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th>Account No.</th>
+                            <td>{{reciept.account_no}}</td>
+                        </tr>
+                        <tr>
+                            <th>Account Name</th>
+                            <td>{{reciept.bio_data.surname}} {{reciept.bio_data.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Category</th>
+                            <td>{{reciept.category}}</td>
+                        </tr>
+                        <tr>
+                            <th>Channel</th>
+                            <td>{{reciept.channel}}</td>
+                        </tr>
+                        <tr>
+                            <th>Ref Id</th>
+                            <td>{{reciept.id}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <td>{{reciept.timestamp | moment: 'format':'MMMM Do YYYY'}}</td>
+                        </tr>
+                        <tr>
+                            <th>Amount</th>
+                            <th>&#8358;{{reciept.amount | number}}</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="reciept-discaliamer">
+                        <p>*This reciept was auto-generated from Bethsaida Investment Partners 
+                            system and may be considered as evidence of a transaction</p>
+                    </div>
+                <div class="reciept-footer">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <p><span>Head Office: </span> No 5, Idowu Taylor Street, 
+                            3rd Floor, Okoi Arikpo House, (N.U.C BUILDING) Victorial Island, Lagos, Nigeria.</p>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <p><span>Magboro Branch Office: </span> No 3, Ahaji Agba Street, Glass House 
+                            3rd Floor off Lagos/Ibadan Expressway, Magboro, Ogun-State, Nigeria.</p>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <p><i class="fa fa-fax"></i> +234 802 263 7689</p>
+                            <p><i class="fa fa-envelope"></i> info@bethsaidaiplimited.com</p>
+                            <p><i class="fa fa-globe"></i> www.bethsaidaiplimited.com</p>
+                        </div>
+                    </div>
+                </div>
+                <style>
+#print-area{
+      width: 21cm;
+      height: 27.2cm;
+      border: 2px dotted rgb(66, 66, 66);
+      padding: 5px;
+      margin-top: 53px;
+      margin-bottom: 20px;
+      margin-left: 1cm;
+      border-radius: 5px;
+      background: #f7f7f7;
+      position: absolute;
+  }
+  .reciept-head{
+      text-align: right;
+  }
+  .reciept-head img{
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+  }
+  .reciept-head h5{
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 5px;
+      color: #064b28;
+  }
+  .reciept-sub-head{
+    margin-top: 1cm;
+  }
+  .reciept-body{
+    margin-top: 0.3cm;
+  }
+  .reciept-sub-head .status{
+    background: #d6dad9;
+    border: 1px solid #2c2c2c;
+    padding: 10px;
+    float: left;
+    color:#811818;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .reciept-sub-head .type{
+    background: #d6dad9;
+    border: 1px solid #2c2c2c;
+    padding: 10px;
+    float: right;
+    color:#811818;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .reciept-discaliamer p{
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 14px;
+      text-align: center;
+      color: #991717;
+  }
+  .reciept-body tr td{
+      text-transform: capitalize;
+  }
+  .reciept-footer{
+    background: #ffffff;
+      position: absolute;
+      margin-top: 6cm;
+      margin-left: 0px;
+      float: left;
+  }
+  .reciept-footer .row div{
+      width: 33.3%;
+  }
+  .reciept-footer p{
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 15px;
+      color: #2e2e2e;
+      font-weight: 600;
+  }
+  .reciept-footer p span{
+    color: #991717;
+  }
+                </style>
+            </div>
+        </div>
+</div>
+<script>
+//print result
+
+</script>

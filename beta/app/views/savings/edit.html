@@ -1,0 +1,36 @@
+<div class="inner-view" ng-controller="editSavingsCtrl">
+        <div class="container">
+            <h4>Edit Customer Savings Plan {{account_no}}</h4>
+            <div class="savings-plan">
+                    <table class="table-form">
+                         <tr>
+                            <td title="title">SAVINGS ACCOUNT STATUS</td>
+                            <td>
+                                <select ng-model="form.status" >
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </td>
+                        </tr>
+                            <tr>
+                                    <td class="title">SAVINGS PLAN</td>
+                                    <td>
+                                        <input type="radio" name="plan" ng-model="form.plan.category" value="silver">Silver
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="plan" ng-model="form.plan.category" value="gold">Gold
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="plan" ng-model="form.plan.category" value="platinium">platinium
+                                    </td>
+                                </tr>
+                        <tr>
+                            <td title="title">Amount</td>
+                            <td><input type="number" ng-model="form.plan.amount"></td>
+                        </tr>
+                    </table>
+
+                    <div class="btn-div"><button ng-click="update()" class="btn-primary right" ><i class="fa fa-save"></i> Update</button></div>
+            </div>
+        </div>
+</div>
