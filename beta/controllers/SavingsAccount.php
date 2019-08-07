@@ -47,6 +47,7 @@
             return $data_count;
         }
     }
+
     public function getPrimaryAccountDetails(){
         $this->authenticate(Permission::DEFAULT); //Authenticate with permission
         $data = $this->db->get(SavingsAccountModel::DB_TABLE,[
@@ -330,5 +331,102 @@
                 $this->response->addMessage('Can not perform any transaction on deactivated accounts');
                 $this->response->jsonResponse(null, 400);
             }
+    }
+    //get total customers
+    public function getCentralTotal($where){
+        //check if query was sent with the request
+        unset($where['LIMIT']);
+        $data_count = $this->db->db->count(SavingsAccountModel::DB_TABLE,'*',$where);
+        return $data_count;
+    }
+
+    //get balance for the current query set [for central management unit alone]
+    public function getCentralBalance($where){
+        unset($where['LIMIT']);
+        $balance = $this->db->db->sum(SavingsAccountModel::DB_TABLE,SavingsAccountModel::BALANCE,$where);
+        return $balance;
+    }
+
+    //used by central management
+    public function getCentralList(){
+        $this->authenticate(Permission::CENTRAL); //Authenticate with permission
+        $page = $this->request->getUrlParams()->page;
+        $rows = 15;
+        $offset = ($page * $rows) - $rows;
+        if(strcasecmp($this->request->getUrlParams()->office, 'all') === 0){
+            if(!empty($this->request->getUrlParams()->query)){
+                $where = [
+                    "MATCH" => [
+                        "columns" => [
+                            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::ACCOUNT_NO,
+                            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::STATUS,
+                        ],
+                        "keyword" => $this->request->getUrlParams()->query,
+                 
+                        // [optional] Search mode
+                        "mode" => "natural"
+                    ],
+                    'ORDER'=>SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+                
+            }
+            else{
+                $where = [
+                    'ORDER'=>SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+            }
+        }
+        else{
+            if(!empty($this->request->getUrlParams()->query)){
+                $where = [
+                    "MATCH" => [
+                        "columns" => [
+                            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::ACCOUNT_NO,
+                            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::STATUS,
+                        ],
+                        "keyword" => $this->request->getUrlParams()->query,
+                 
+                        // [optional] Search mode
+                        "mode" => "natural"
+                    ],
+                    'AND'=>[SavingsAccountModel::DB_TABLE.'.office'=>$this->request->getUrlParams()->office],
+                    'ORDER'=>SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+            }
+            else{
+                $where = [
+                    'AND'=>[SavingsAccountModel::DB_TABLE.'.office'=>$this->request->getUrlParams()->office],
+                    'ORDER'=>SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+            }
+        }
+        //fetch customers with $where clause
+        $data = $this->db->select(SavingsAccountModel::DB_TABLE,[
+            "[>]offices"=>["office"=>"id"],
+            "[>]customers"=>["account_no"=>"account_no"]
+        ],[
+            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::ACCOUNT_NO,
+            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::PLAN,
+            'offices.description',
+            'offices.location',
+            CustomerModel::DB_TABLE.'.'.CustomerModel::BIO_DATA,
+            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::BALANCE,
+            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::STATUS,
+        ],$where);
+        if(empty($data)){
+            $this->response->addMessage('Savings account record is empty, add some new customers and see them appear here');
+            $this->response->jsonResponse(null,400);
+        }
+        else{
+            $this->response->addMeta([
+            'balance'=>$this->getCentralBalance($where),
+            'total'=>$this->getCentralTotal($where),
+            'list_total'=>($rows * ($page - 1)) + count($data)]);
+            $this->response->jsonResponse($this->response->NormalizeMysqlArray($data));
+        }
     }
  }

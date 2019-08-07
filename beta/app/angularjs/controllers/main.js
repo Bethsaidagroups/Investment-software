@@ -67,10 +67,20 @@ user.controller("mainCtrl", function($scope, $location, $route, $window, httpReq
             $location.url('/savings/list?query='+$scope.search.savings);
         }
         if((ctrl == 'transaction') && $scope.search.transaction){
-            $location.url('/transaction/list?query='+$scope.search.transaction);
+            $location.url('/transaction/list?id='+$scope.search.transaction);
         }
         if((ctrl == 'report') && $scope.search.report){
             $location.url('/report/detailed?init='+$scope.search.report);
+        }
+
+        if((ctrl == 'customer') && $scope.search.central_customer){
+            $location.url('/customer/central/list?query='+ $scope.search.central_customer);
+        }
+        if((ctrl == 'savings') && $scope.search.central_savings){
+            $location.url('/savings/central/list?query='+$scope.search.central_savings);
+        }
+        if((ctrl == 'transaction') && $scope.search.central_transaction){
+            $location.url('/transaction/central/list?id='+$scope.search.central_transaction);
         }
     }
 });

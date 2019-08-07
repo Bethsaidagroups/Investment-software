@@ -1,0 +1,29 @@
+<div class="inner-view" ng-controller="dailyReportCtrl">
+    <div class="container">
+        <h4 class="home-head">Today's General Summary: <span>{{summary.date | moment: 'format':'MMMM Do YYYY'}}</span></h4>
+        <div class="data-table">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Branch Name</th>
+                            <th>Credit Transactions</th>
+                            <th><i class="fa fa-arrow-down"></i> Total Credit</th>
+                            <th>Debit Transactions</th>
+                            <th><i class="fa fa-arrow-up"></i> Total Debit</th>
+                            <th>Main Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in report">
+                            <td>{{data.office.description}}, {{data.office.location}}</td>
+                            <td>{{data.result.credit_no | number}}</td>
+                            <td>&#8358;{{data.result.credit | number}}</td>
+                            <td>{{data.result.debit_no | number}}</td>
+                            <td>&#8358;{{data.result.debit | number}}</td>
+                            <th>&#8358;{{data.result.balance | number}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>

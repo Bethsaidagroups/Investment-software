@@ -41,6 +41,14 @@ $router->map('GET|POST','/customer/edit/[i:account]',array(
     'class'=>'\controllers\Customer',
     'method'=>'update'
 ));
+$router->map('GET|POST','/customer/central/list/[*:office]/[*:query]/[i:page]',array(
+    'class'=>'\controllers\Customer',
+    'method'=>'getCentralList'
+));
+$router->map('GET|POST','/customer/central/list/[*:office]/[i:page]',array(
+    'class'=>'\controllers\Customer',
+    'method'=>'getCentralList'
+));
 $router->map('GET|POST','/savings/get/init/[i:account]',array(
     'class'=>'\controllers\SavingsAccount',
     'method'=>'getPrimaryAccountDetails'
@@ -77,6 +85,14 @@ $router->map('GET|POST','/savings/list/[i:page]',array(
     'class'=>'\controllers\SavingsAccount',
     'method'=>'getList'
 ));
+$router->map('GET|POST','/savings/central/list/[*:office]/[*:query]/[i:page]',array(
+    'class'=>'\controllers\SavingsAccount',
+    'method'=>'getCentralList'
+));
+$router->map('GET|POST','/savings/central/list/[*:office]/[i:page]',array(
+    'class'=>'\controllers\SavingsAccount',
+    'method'=>'getCentralList'
+));
 $router->map('GET|POST','/transaction/list/[*:query]/[i:page]',array(
     'class'=>'\controllers\Transaction',
     'method'=>'getList'
@@ -85,6 +101,10 @@ $router->map('GET|POST','/transaction/list/[i:page]',array(
     'class'=>'\controllers\Transaction',
     'method'=>'getList'
 ));
+$router->map('GET|POST','/transaction/get/[i:id]',array(
+    'class'=>'\controllers\Transaction',
+    'method'=>'getTransactionById'
+));
 $router->map('GET|POST','/transaction/confirm/[i:id]',array(
     'class'=>'\controllers\Transaction',
     'method'=>'confirm'
@@ -92,6 +112,14 @@ $router->map('GET|POST','/transaction/confirm/[i:id]',array(
 $router->map('GET|POST','/transaction/decline/[i:id]',array(
     'class'=>'\controllers\Transaction',
     'method'=>'decline'
+));
+$router->map('GET|POST','/transaction/central/list/[*:office]/[*:query]/[i:page]',array(
+    'class'=>'\controllers\Transaction',
+    'method'=>'getCentralList'
+));
+$router->map('GET|POST','/transaction/central/list/[*:office]/[i:page]',array(
+    'class'=>'\controllers\Transaction',
+    'method'=>'getCentralList'
 ));
 $router->map('GET|POST','/report/summary',array(
     'class'=>'\controllers\Report',
@@ -102,6 +130,14 @@ $router->map('GET|POST','/report/soa',array(
     'method'=>'getSOA'
 ));
 $router->map('GET|POST','/report/branch',array(
+    'class'=>'\controllers\Report',
+    'method'=>'getBranchReport'
+));
+$router->map('GET|POST','/report/daily',array(
+    'class'=>'\controllers\Report',
+    'method'=>'getCentralSummaryReport'
+));
+$router->map('GET|POST','/report/general',array(
     'class'=>'\controllers\Report',
     'method'=>'getBranchReport'
 ));

@@ -317,7 +317,7 @@ Top menu Navigation
      position: relative;
      width: 100%;
      min-width: 1100px;
-     height: 50px;
+     min-height: 50px;
      float: left;
      text-align: right;
  }
@@ -327,6 +327,15 @@ Top menu Navigation
      text-align: left;
  }
  .list-summary .search-bar input{
+    width: 400px;
+    height: 40px;
+    border:1px solid #ccc;
+    border-radius: 20px;
+    padding: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #302f2f;
+ }
+ .list-summary .search-bar select{
     width: 400px;
     height: 40px;
     border:1px solid #ccc;

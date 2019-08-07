@@ -124,20 +124,22 @@ namespace controllers;
             $this->authenticate(Permission::CENTRAL); //Authenticate with permission
             //fetch todays new customers
             $customer = $this->db->db->count(CustomerModel::DB_TABLE,'*',[]);
+            $offices = $this->db->select('offices','*',[]);
             $balance = $this->db->db->sum(SavingsAccount::DB_TABLE,SavingsAccount::BALANCE,[]);
             $this->response->addMessage('Branch Manger home summary');
-            $this->response->jsonResponse($this->response->NormalizeMysqlArray([
+            $this->response->jsonResponse([
                 'date'=>$this->date,
                 'customer'=>$customer,
-                'balance'=>$balance
-            ]));
+                'balance'=>$balance,
+                'offices'=>$this->response->NormalizeMysqlArray($offices)
+            ]);
         }
 
     }
 
     //get statement of account
     public function getSOA(){
-        $this->authenticate(Permission::MANAGER); //Authenticate with permission
+        $this->authenticate(Permission::LASER_HIGH); //Authenticate with permission
         $data = $this->request->getPost();
         //fetch customers details
         $meta = $this->db->get(CustomerModel::DB_TABLE,[
@@ -174,14 +176,20 @@ namespace controllers;
 
     //get branch report
     public function getBranchReport(){
-        $this->authenticate(Permission::MANAGER); //Authenticate with permission
+        $this->authenticate(Permission::LASER_HIGH); //Authenticate with permission
         $data = $this->request->getPost();
+        if(!empty($data->office)){
+            $office_id = $data->office;
+        }
+        else{
+            $office_id = Session::get("office");
+        }
         if($data->type == 'all'){
             $total_amount = $this->db->db->sum(AccountTransaction::DB_TABLE,AccountTransaction::AMOUNT,[
                 'AND'=>[
                     AccountTransaction::DATETIME."[<>]"=>[$data->from_date, date('Y-m-d', strtotime( "$data->to_date + 1 day" ))],
                     AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
-                    AccountTransaction::OFFICE=>Session::get("office"),
+                    AccountTransaction::OFFICE=>$office_id,
                     AccountTransaction::CATEGORY=>$data->category
                 ]
             ]);
@@ -191,7 +199,7 @@ namespace controllers;
                 'AND'=>[
                     AccountTransaction::DATETIME."[<>]"=>[$data->from_date, date('Y-m-d', strtotime( "$data->to_date + 1 day" ))],
                     AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
-                    AccountTransaction::OFFICE=>Session::get("office"),
+                    AccountTransaction::OFFICE=>$office_id,
                     AccountTransaction::CATEGORY=>$data->category,
                     AccountTransaction::TYPE=>$data->type
                 ]
@@ -204,7 +212,7 @@ namespace controllers;
                 'AND'=>[
                     AccountTransaction::DATETIME."[<>]"=>[$data->from_date, date('Y-m-d', strtotime( "$data->to_date + 1 day" ))],
                     AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
-                    AccountTransaction::OFFICE=>Session::get("office"),
+                    AccountTransaction::OFFICE=>$office_id,
                     AccountTransaction::CATEGORY=>$data->category
                 ],
                 'ORDER'=>[AccountTransaction::DB_TABLE.'.'.AccountTransaction::ID=>"ASC"]
@@ -215,7 +223,7 @@ namespace controllers;
                 'AND'=>[
                     AccountTransaction::DATETIME."[<>]"=>[$data->from_date, date('Y-m-d', strtotime( "$data->to_date + 1 day" ))],
                     AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
-                    AccountTransaction::OFFICE=>Session::get("office"),
+                    AccountTransaction::OFFICE=>$office_id,
                     AccountTransaction::CATEGORY=>$data->category,
                     AccountTransaction::TYPE=>$data->type
                 ],
@@ -228,7 +236,7 @@ namespace controllers;
             $this->response->jsonResponse(null,400);
         }
         else{
-            $office = $this->db->get("offices",'*',["id"=>Session::get("office")]);
+            $office = $this->db->get("offices",'*',["id"=>$office_id]);
             $this->response->addMessage('Branch Transaction Report');
             $this->response->addMeta([
                     'category'=>$data->category,
@@ -236,6 +244,72 @@ namespace controllers;
                     'total_amount'=>$total_amount]);
             $this->response->jsonResponse($this->response->NormalizeMysqlArray($result));
         }
+    }
+
+    //get single central summary report
+    private function getSingleCentralReport($office){
+        //get the office details
+        $credit = $this->db->db->sum(AccountTransaction::DB_TABLE,AccountTransaction::AMOUNT,[
+            'AND'=>[
+                AccountTransaction::OFFICE=>$office,
+                AccountTransaction::TYPE=>AccountTransaction::$types['credit'],
+                AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
+                AccountTransaction::DATETIME."[<>]" => [date("Y-m-d H:i:s",mktime(0,0,1,$this->month,$this->day,$this->year)), 
+                date("Y-m-d H:i:s",mktime(23,59,59,$this->month,$this->day,$this->year))]
+            ]
+        ]);
+        $credit_no = $this->db->db->count(AccountTransaction::DB_TABLE,'*',[
+            'AND'=>[
+                AccountTransaction::OFFICE=>$office,
+                AccountTransaction::TYPE=>AccountTransaction::$types['credit'],
+                AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
+                AccountTransaction::DATETIME."[<>]" => [date("Y-m-d H:i:s",mktime(0,0,1,$this->month,$this->day,$this->year)), 
+                date("Y-m-d H:i:s",mktime(23,59,59,$this->month,$this->day,$this->year))]
+            ]
+        ]);
+        $debit = $this->db->db->sum(AccountTransaction::DB_TABLE,AccountTransaction::AMOUNT,[
+            'AND'=>[
+                AccountTransaction::OFFICE=>$office,
+                AccountTransaction::TYPE=>AccountTransaction::$types['debit'],
+                AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
+                AccountTransaction::DATETIME."[<>]" => [date("Y-m-d H:i:s",mktime(0,0,1,$this->month,$this->day,$this->year)), 
+                date("Y-m-d H:i:s",mktime(23,59,59,$this->month,$this->day,$this->year))]
+            ]
+        ]);
+        $debit_no = $this->db->db->count(AccountTransaction::DB_TABLE,'*',[
+            'AND'=>[
+                AccountTransaction::OFFICE=>$office,
+                AccountTransaction::TYPE=>AccountTransaction::$types['debit'],
+                AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
+                AccountTransaction::DATETIME."[<>]" => [date("Y-m-d H:i:s",mktime(0,0,1,$this->month,$this->day,$this->year)), 
+                date("Y-m-d H:i:s",mktime(23,59,59,$this->month,$this->day,$this->year))]
+            ]
+        ]);
+        $balance = $this->db->db->sum(SavingsAccount::DB_TABLE,SavingsAccount::BALANCE,[
+            SavingsAccount::OFFICE=>$office
+        ]);
+        return [
+            'credit_no'=>$credit_no,
+            'credit'=>$credit,
+            'debit_no'=>$debit_no,
+            'debit'=>$debit,
+            'balance'=>$balance
+        ];
+    }
+    //for central management unit for summary report
+    public function getCentralSummaryReport(){
+        $this->authenticate(Permission::CENTRAL); //Authenticate with permission
+        $offices = $this->db->select("offices",['id','location','description'],[]); 
+        $result = array();
+        foreach($offices as $value){
+            $result[] = [
+                "office"=>$value,
+                "result"=>$this->getSingleCentralReport($value['id'])
+            ];
+        }
+        $this->response->addMessage('General Report');
+        $this->response->addMeta(['date'=>date('Y-m-d')]);
+        $this->response->jsonResponse($this->response->NormalizeMysqlArray($result));
     }
  }
  ?>

@@ -23,6 +23,9 @@ user.controller("homeCtrl", function($scope, $location, $route, $window, httpReq
             success: function(response){
                 if(response.status === 200){
                     $scope.summary = response.data.data
+                    if(response.data.data.offices){
+                        localStorage().setItem('offices',response.data.data.offices);
+                    }
                 }
             }
         });

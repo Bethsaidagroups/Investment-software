@@ -270,4 +270,95 @@ namespace controllers;
             }
         }
     }
+
+    //get total customers
+    public function getCentralTotal($where){
+        //check if query was sent with the request
+        unset($where['LIMIT']);
+        $data_count = $this->db->db->count(CustomerModel::DB_TABLE,'*',$where);
+        return $data_count;
+    }
+
+    //used by central management
+    public function getCentralList(){
+        $this->authenticate(Permission::CENTRAL); //Authenticate with permission
+        $page = $this->request->getUrlParams()->page;
+        $rows = 15;
+        $offset = ($page * $rows) - $rows;
+        if(strcasecmp($this->request->getUrlParams()->office, 'all') === 0){
+            if(!empty($this->request->getUrlParams()->query)){
+                $where = [
+                    "MATCH" => [
+                        "columns" => [
+                            CustomerModel::DB_TABLE.'.'.CustomerModel::ACCOUNT_NO,
+                            CustomerModel::DB_TABLE.'.'.CustomerModel::CATEGORY,
+                            CustomerModel::DB_TABLE.'.'.CustomerModel::MARKETER,
+                        ],
+                        "keyword" => $this->request->getUrlParams()->query,
+                 
+                        // [optional] Search mode
+                        "mode" => "natural"
+                    ],
+                    'ORDER'=>CustomerModel::DB_TABLE.'.'.CustomerModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+                
+            }
+            else{
+                $where = [
+                    'ORDER'=>CustomerModel::DB_TABLE.'.'.CustomerModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+            }
+        }
+        else{
+            if(!empty($this->request->getUrlParams()->query)){
+                $where = [
+                    "MATCH" => [
+                        "columns" => [
+                            CustomerModel::DB_TABLE.'.'.CustomerModel::ACCOUNT_NO,
+                            CustomerModel::DB_TABLE.'.'.CustomerModel::CATEGORY,
+                            CustomerModel::DB_TABLE.'.'.CustomerModel::MARKETER,
+                        ],
+                        "keyword" => $this->request->getUrlParams()->query,
+                 
+                        // [optional] Search mode
+                        "mode" => "natural"
+                    ],
+                    'AND'=>[CustomerModel::OFFICE=>$this->request->getUrlParams()->office],
+                    'ORDER'=>CustomerModel::DB_TABLE.'.'.CustomerModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+            }
+            else{
+                $where = [
+                    'AND'=>[CustomerModel::OFFICE=>$this->request->getUrlParams()->office],
+                    'ORDER'=>CustomerModel::DB_TABLE.'.'.CustomerModel::ACCOUNT_NO,
+                    'LIMIT'=>[$offset,$rows]
+                ];
+            }
+        }
+        //fetch customers with $where clause
+        $data = $this->db->select(CustomerModel::DB_TABLE,[
+            "[>]offices"=>["office"=>"id"]
+        ],[
+            CustomerModel::DB_TABLE.'.'.CustomerModel::ACCOUNT_NO,
+            CustomerModel::DB_TABLE.'.'.CustomerModel::CATEGORY,
+            'offices.description',
+            'offices.location',
+            CustomerModel::DB_TABLE.'.'.CustomerModel::BIO_DATA,
+            CustomerModel::DB_TABLE.'.'.CustomerModel::MARKETER,
+            CustomerModel::DB_TABLE.'.'.CustomerModel::DATE,
+        ],$where);
+        if(empty($data)){
+            $this->response->addMessage('Customers record is empty, add some new customers and see them appear here');
+            $this->response->jsonResponse(null,400);
+        }
+        else{
+            $this->response->addMeta([
+            'total'=>$this->getCentralTotal($where),
+            'list_total'=>($rows * ($page - 1)) + count($data)]);
+            $this->response->jsonResponse($this->response->NormalizeMysqlArray($data));
+        }
+    }
  }

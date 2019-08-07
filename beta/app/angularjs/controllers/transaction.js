@@ -30,7 +30,8 @@ user.controller("listTransactionCtrl", function($scope, $location, $route, httpR
     url = url + '/' + page;
     //get customers from database
     var list_data;
-    httpReq.send(url,null,'POST',
+    if($location.search().id){
+        httpReq.send('/transaction/get/'+$location.search().id,null,'POST',
         {
             success: function(response){
                 if(response.status === 200){
@@ -50,6 +51,29 @@ user.controller("listTransactionCtrl", function($scope, $location, $route, httpR
                     }
                 }
             }});
+    }
+    else{
+        httpReq.send(url,null,'POST',
+        {
+            success: function(response){
+                if(response.status === 200){
+                    list_data = response.data.data;
+                    $scope.total = response.data.meta.total
+                    $scope.showing = response.data.meta.list_total
+                    $scope.customers = response.data.data;
+                    $scope.page = page;
+                    //check the number of data in response data
+                    if(response.data.meta.list_total < response.data.meta.total){
+                        $scope.show_next = true;
+                        page > 1 ? $scope.show_prev = true : $scope.show_prev = false;
+                    }
+                    else {
+                        $scope.show_next = false;
+                        page > 1 ? $scope.show_prev = true : $scope.show_prev = false;
+                    }
+                }
+            }});
+    }
     //print action performed
     $scope.printBtn = function(index){
         $scope.reciept = list_data[index];
@@ -134,6 +158,125 @@ user.controller("listTransactionCtrl", function($scope, $location, $route, httpR
         }
         else{
             $location.url('/transaction/list?page=' + new_page);
+        }
+    }
+});
+
+//Central List Transaction controller
+user.controller("centralListTransactionCtrl", function($scope, $location, $route, httpReq, showAlert){
+    $scope.offices = '';
+    $scope.show_select_office = true;
+
+    //check if there is one or more query parameter
+    if($location.search().query){
+        $scope.query = $location.search().query;
+    }
+    if($location.search().office){
+        $scope.selected_office = $location.search().office;
+    }
+    else{
+        $scope.selected_office = 'all';
+    }
+    //get offices from localstorage
+    $scope.offices = JSON.parse(localStorage.getItem('offices'));
+    //search action performed
+    $scope.search = function(){
+        if($scope.query){
+            $location.url('/transaction/central/list?office='+$scope.selected_office+'&query='+$scope.query);
+        }
+        else{
+            $location.url('/transaction/central/list?office='+$scope.selected_office);
+        }
+    }
+    //build Parameters
+    var page = 1;
+    var url = '/transaction/central/list/'+$scope.selected_office;
+    if($location.search().page){
+        page = $location.search().page;
+    }
+    if($location.search().query){
+        url = url + '/'+$scope.selected_office +'/'+$scope.query;
+    }
+    url = url + '/' + page;
+    //get customers from database
+    var list_data;
+    if($location.search().id){
+        httpReq.send('/transaction/get/'+$location.search().id,null,'POST',
+        {
+            success: function(response){
+                if(response.status === 200){
+                    list_data = response.data.data;
+                    $scope.total = response.data.meta.total
+                    $scope.showing = response.data.meta.list_total
+                    $scope.customers = response.data.data;
+                    $scope.page = page;
+                    //check the number of data in response data
+                    if(response.data.meta.list_total < response.data.meta.total){
+                        $scope.show_next = true;
+                        page > 1 ? $scope.show_prev = true : $scope.show_prev = false;
+                    }
+                    else {
+                        $scope.show_next = false;
+                        page > 1 ? $scope.show_prev = true : $scope.show_prev = false;
+                    }
+                }
+            }});
+    }
+    else{
+        httpReq.send(url,null,'POST',
+        {
+            success: function(response){
+                if(response.status === 200){
+                    list_data = response.data.data;
+                    $scope.total = response.data.meta.total
+                    $scope.showing = response.data.meta.list_total
+                    $scope.customers = response.data.data;
+                    $scope.page = page;
+                    //check the number of data in response data
+                    if(response.data.meta.list_total < response.data.meta.total){
+                        $scope.show_next = true;
+                        page > 1 ? $scope.show_prev = true : $scope.show_prev = false;
+                    }
+                    else {
+                        $scope.show_next = false;
+                        page > 1 ? $scope.show_prev = true : $scope.show_prev = false;
+                    }
+                }
+            }});
+    }
+    //print action performed
+    $scope.printBtn = function(index){
+        $scope.reciept = list_data[index];
+        $scope.show_reciept_box = true;
+    }
+    $scope.print = function(){
+        $('#print-area').printThis({
+            importCSS: true,
+            importStyle: true,
+            loadCSS: "/laser/view-lib/bootstrap/css/bootstrap.min.css",
+            pageTitle: 'Bethsaida Investment Partners'
+        });
+    }
+    $scope.closeRecieptBox = function(){
+        $scope.show_reciept_box = false;
+    }
+    //Set next and previous action performed
+    $scope.next = function(){
+        var new_page = parseInt(page) + 1;
+        if($location.search().query){
+            $location.url('/transaction/central/list?query=' + $location.search().query  + "&office=" +  $scope.selected_office + "&page=" + new_page);
+        }
+        else{
+            $location.url('/transaction/central/list?office=' +  $scope.selected_office + "&page=" + new_page);
+        }
+    }
+    $scope.prev = function(){
+        var new_page = parseInt(page) - 1;
+        if($location.search().query){
+            $location.url('/transaction/central/list?query=' + $location.search().query   + "&office="  +  $scope.selected_office + "&page=" + new_page);
+        }
+        else{
+            $location.url('/transaction/central/list?office='  +  $scope.selected_office + "&page=" + new_page);
         }
     }
 });

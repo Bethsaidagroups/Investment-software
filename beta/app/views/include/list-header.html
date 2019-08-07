@@ -1,8 +1,13 @@
 <div class="list-summary">
         <div class="search-bar">
+            <select ng-model="$parent.selected_office" ng-show="show_select_office">
+                <option value="all">All</option>
+                <option ng-repeat="office in offices" value="{{office.id}}">{{office.description}}, {{office.location}}</option>
+            </select>
             <input type="text" ng-model="$parent.query" placeholder="Keyword">
             <button ng-click="search()" class="btn-primary"><i class="fa fa-search"></i> Search</button>
         </div>
+        <span class="tag-name" ng-show="show_balance">Balance: <span>{{balance | number}}</span></span>
         <span class="tag-name">Total: <span>{{total | number}}</span></span>
         <span class="tag-name">Shown: <span>{{showing | number}}</span></span>
 </div>

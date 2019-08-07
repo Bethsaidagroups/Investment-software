@@ -16,6 +16,8 @@
 
      const CENTRAL = ['Managing Director','Accountant'];
 
+     const LASER_HIGH = ['Managing Director','Accountant','Investment'];
+
      const MANAGER = ['Investment'];
 
      const SECRETARY = ['Secretary'];

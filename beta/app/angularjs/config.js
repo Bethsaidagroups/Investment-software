@@ -20,6 +20,10 @@ function ($routeProvider,$locationProvider){
         templateUrl: 'views/customer/list.html',
         controller:  'listCustomerCtrl'
     })
+    .when('/customer/central/list', {
+        templateUrl: 'views/customer/central-list.html',
+        controller:  'centralListCustomerCtrl'
+    })
     .when('/customer/edit', {
         templateUrl: 'views/customer/edit.html',
         controller:  'editCustomerCtrl'
@@ -48,9 +52,17 @@ function ($routeProvider,$locationProvider){
         templateUrl: 'views/savings/list.html',
         controller:  'listSavingsCtrl'
     })
+    .when('/savings/central/list', {
+        templateUrl: 'views/savings/central-list.html',
+        controller:  'centralListSavingsCtrl'
+    })
     .when('/transaction/list', {
         templateUrl: 'views/transaction/list.html',
         controller:  'listTransactionCtrl'
+    })
+    .when('/transaction/central/list', {
+        templateUrl: 'views/transaction/central-list.html',
+        controller:  'centralListTransactionCtrl'
     })
     .when('/user/profile', {
         templateUrl: 'views/user/profile.html',
@@ -59,6 +71,14 @@ function ($routeProvider,$locationProvider){
     .when('/report/detailed', {
         templateUrl: 'views/report/detailed.html',
         controller:  'detailedReportCtrl'
+    })
+    .when('/report/daily', {
+        templateUrl: 'views/report/daily.html',
+        controller:  'dailyReportCtrl'
+    })
+    .when('/report/central/detailed', {
+        templateUrl: 'views/report/central-detailed.html',
+        controller:  'centralDetailedReportCtrl'
     })
 
     $locationProvider.html5Mode(false).hashPrefix('!');

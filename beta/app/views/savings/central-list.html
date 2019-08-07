@@ -1,0 +1,40 @@
+<div class="inner-view" ng-controller="centralListSavingsCtrl">
+        <div class="container">
+            <h4 class="section-head">Customers</h4>
+            <div ng-include="'views/include/list-header.html'"></div>
+            <div class="data-table">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Account No</th>
+                                <th>Savings Plan</th>
+                                <th>Full Name</th>
+                                <th>Office</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in customers">
+                                <td>{{data.account_no}}</td>
+                                <td>{{data.plan.category}}</td>
+                                <td>{{data.bio_data.surname}} {{data.bio_data.first_name}}</td>
+                                <td>{{data.description}}, {{data.location}}</td>
+                                <th>&#8358;{{data.balance | number}}</th>
+                                <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                                <td class="overlay">
+                                    <div>
+                                        <button class="btn-primary" ng-click="viewBtn(data.account_no)" title="Profile {{data.account_no}}"><i class="fa fa-user"></i> View</button>
+                                        <button class="btn-primary" ng-click="soaBtn(data.account_no)" title="Statement of Account {{data.account_no}}"><i class="fa fa-list"></i> SoA</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="pagination">
+                        <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                        <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+                </div>
+        </div>
+    </div>

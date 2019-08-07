@@ -1,0 +1,51 @@
+<div class="inner-view" ng-controller="centralDetailedReportCtrl">
+        <div ng-include="'views/report/soa.html'"></div>
+        <div ng-include="'views/report/branch.html'"></div>
+    <div class="container"  style="margin-bottom: 150px;">
+        <div class="report soa">
+                <h4>Statement Of Account</h4>
+                <label>Account No</label>
+                <input type="text" ng-model="soa.account_no" maxlength="10">
+                <label>From</label>
+                <input type="text" ng-model="soa.from_date" placeholder="yyyy-mm-dd" class="datepicker">
+                <label>To</label>
+                <input type="text" ng-model="soa.to_date" placeholder="yyyy-mm-dd" class="datepicker">
+                <div class="btn-div"><button ng-click="generateSOA()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Generate</button></div>
+        </div>
+        <div class="report branch">
+                <h4>Branch Transaction Report</h4>
+                <label>Select Branch Office</label>
+                <select ng-model="branch.office">
+                        <option ng-repeat="value in offices" value="{{value.id}}">{{value.description}}, {{value.location}}</option>
+                    </select>
+                <label>Category</label>
+                <select ng-model="branch.category">
+                        <option value="savings">Savings</option>
+                        <option value="Savings Withdrawal">Savings Withdrawal - (deprecated)</option>
+                        <option value="Savings Deposit">Savings Deposit - (deprecated)</option>
+                        <option value="Target Savings">Target Savings - (deprecated)</option>
+                        <option value="Fixed Deposit">Fixed Deposit - (deprecated)</option>
+                        <option value="Target Savings Invoice">Target Savings Invoice - (deprecated)</option>
+                        <option value="Loan Payout">Loan Payout - (deprecated)</option>
+                        <option value="Loan Invoice">Loan Invoice - (deprecated)</option>
+                    </select>
+                <label>Tranacation Type</label>
+                    <select ng-model="branch.type">
+                        <option value="all">All</option>
+                        <option value="credit">Credit</option>
+                        <option value="debit">Debit</option>
+                    </select>    
+                <label>From</label>
+                <input type="text" ng-model="branch.from_date" placeholder="yyyy-mm-dd" class="datepicker">
+                <label>To</label>
+                <input type="text" ng-model="branch.to_date" placeholder="yyyy-mm-dd" class="datepicker">
+                <div class="btn-div"><button ng-click="generateBranchReport()" class="btn-primary right" ><i class="fa fa-check-square-o"></i> Generate</button></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+                $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" }).val()
+        });
+    </script>
+</div>
