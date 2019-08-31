@@ -10,7 +10,7 @@ namespace controllers;
  use includes\database\models\Customer as CustomerModel;
  use includes\database\models\Login;
  use includes\database\models\UserType;
- use includes\utilities\SmsService;
+ use includes\utilities\{SmsService,EmailService};
  use includes\auth\{Session,Permission};
  use includes\database\models\{AccountTransaction};
  use includes\BasicTransactions\SavingsAccount as SavingsAction;
@@ -215,23 +215,32 @@ namespace controllers;
                 //it is of category savings, act accordingly
                 if((strcasecmp($trans_data['type'],'debit') === 0)){
                     //it is a debit transaction
-                    $bio_data = $this->db->get(CustomerModel::DB_TABLE,CustomerModel::BIO_DATA,[
+                    $bio_data = json_decode($this->db->get(CustomerModel::DB_TABLE,CustomerModel::BIO_DATA,[
                         CustomerModel::ACCOUNT_NO=>$trans_data['account_no']
-                    ]);
-                    $mobile = json_decode($bio_data)->mobile1;
+                    ]));
                     if($savings_action->getBalance($trans_data["account_no"]) >= $trans_data["amount"]){
-                        if($savings_action->confirmWithdrawal($trans_id,
-                            function() use(&$trans_data,&$savings_action){
-                                $sms = new SmsService($mobile);
-                                $sms->sendNewDebitMessage([
-                                    'amount'=>number_format($trans_data['amount'],2),
-                                    'channel'=>$trans_data['channel'],
-                                    'account_number'=>$trans_data['account_no'],
-                                    'narration'=>json_decode($trans_data['meta_data'])->narration,
-                                    'datetime'=>date("Y-m-d H:i:s"),
-                                    'balance'=>number_format($savings_action->getBalance($trans_data['account_no']),2)
-                                ]);
-                            })){
+                        if($savings_action->confirmWithdrawal($trans_id)){
+                            //send sms
+                            $alert_data = [
+                                'amount'=>number_format($trans_data["amount"],2),
+                                'channel'=>$trans_data["channel"],
+                                'account_number'=>$trans_data["account_no"],
+                                'narration'=>json_decode($trans_data['meta_data'])->narration,
+                                'datetime'=>date("Y-m-d H:i:s"),
+                                'balance'=>number_format($savings_action->getBalance($trans_data["account_no"]),2),
+                                'type'=>'debit',
+                                'category'=>'Savings',
+                                'status'=>'completed',
+                                'name'=>$bio_data->surname." ".$bio_data->first_name,
+                                'email'=> empty($bio_data->email)? null : $bio_data->email
+                            ];
+                            $sms = new SmsService($bio_data->mobile1);
+                            $sms->sendNewDebitMessage($alert_data);
+
+                            //send mail 
+                            $mail = new EmailService((object)$alert_data);
+                            $mail->send();
+
                             $this->response->addMessage('Withdrawal transaction completed successfully');
                             $this->response->jsonResponse();
                         }
@@ -249,22 +258,30 @@ namespace controllers;
                 }
                 elseif((strcasecmp($trans_data['type'],'credit') === 0)){
                     //it is a debit transaction
-                    $bio_data = $this->db->get(CustomerModel::DB_TABLE,CustomerModel::BIO_DATA,[
+                    $bio_data = json_decode($this->db->get(CustomerModel::DB_TABLE,CustomerModel::BIO_DATA,[
                         CustomerModel::ACCOUNT_NO=>$trans_data['account_no']
-                    ]);
-                    $mobile = json_decode($bio_data)->mobile1;
-                        if($savings_action->confirmDeposit($trans_id,
-                            function() use(&$trans_data,&$savings_action){
-                                $sms = new SmsService($mobile);
-                                $sms->sendNewCreditMessage([
-                                    'amount'=>number_format($trans_data['amount'],2),
-                                    'channel'=>$trans_data['channel'],
-                                    'account_number'=>$trans_data['account_no'],
-                                    'narration'=>json_decode($trans_data['meta_data'])->narration,
-                                    'datetime'=>date("Y-m-d H:i:s"),
-                                    'balance'=>number_format($savings_action->getBalance($trans_data['account_no']),2)
-                                ]);
-                            })){
+                    ]));
+                        if($savings_action->confirmDeposit($trans_id)){
+                            //send sms
+                            $alert_data = [
+                                'amount'=>number_format($trans_data["amount"],2),
+                                'channel'=>$trans_data["channel"],
+                                'account_number'=>$trans_data["account_no"],
+                                'narration'=>json_decode($trans_data['meta_data'])->narration,
+                                'datetime'=>date("Y-m-d H:i:s"),
+                                'balance'=>number_format($savings_action->getBalance($trans_data["account_no"]),2),
+                                'type'=>'credit',
+                                'category'=>'Savings',
+                                'status'=>'completed',
+                                'name'=>$bio_data->surname." ".$bio_data->first_name,
+                                'email'=> empty($bio_data->email)? null : $bio_data->email
+                            ];
+                            $sms = new SmsService($bio_data->mobile1);
+                            $sms->sendNewCreditMessage($alert_data);
+                            //send mail 
+                            $mail = new EmailService((object)$alert_data);
+                            $mail->send();
+
                             $this->response->addMessage('Deposit transaction completed successfully');
                             $this->response->jsonResponse();
                         }

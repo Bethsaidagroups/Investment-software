@@ -106,7 +106,7 @@
      * @method: makeWithdrawal
      * @param: [amount, meta, callback]
      */
-    public function makeWithdrawal($amount, $meta, $callback){ 
+    public function makeWithdrawal($amount, $meta, $callback=null){ 
         if($this->isActive()){
             if($this->getBalance() >= $amount){
                 $new_balance = $this->getBalance() - abs($amount);
@@ -115,6 +115,14 @@
                 ],[
                     SavingsAccountModel::ACCOUNT_NO=>$this->account_no
                 ]);
+
+                //Highly recommended after sensitive operation {Good fix: Atomic transaction}
+                $db_state_error = $this->db->db->error();
+                if(!is_null($db_state_error[2])){
+                    //{Bad Fix} A fatal error has error has occured halt operation and call callback function
+                    exit();
+                }
+
                 //Add transaction to database
                 $meta_value = json_decode($meta['meta'],true);
                 $meta_value["balance"] = $new_balance;
@@ -133,7 +141,12 @@
                 ];
                 $this->registerTransaction($payload);
                 //initiate callback function
-                @call_user_func($callback);
+                if(is_null($callback)){
+                    //Do nothing
+                }
+                else{
+                    call_user_func($callback);
+                }
                 return true;
             }
         }
@@ -145,7 +158,7 @@
      * @method: comfirmWithdrawal
      * @param: [transaction_id, meta(nullable), callback]
      */
-    public function confirmWithdrawal($transaction_id, $callback){
+    public function confirmWithdrawal($transaction_id, $callback=null){
         //get transaction from database
         $data = $this->getSingleTransaction([AccountTransaction::ID=>$transaction_id]);
         $authorized_by = json_decode($data['authorized_by'],true);
@@ -158,6 +171,13 @@
                 ],[
                     SavingsAccountModel::ACCOUNT_NO=>$data['account_no']
                 ]);
+
+                //Highly recommended after sensitive operation {Good fix: Atomic transaction}
+                $db_state_error = $this->db->db->error();
+                if(!is_null($db_state_error[2])){
+                    //{Bad Fix} A fatal error has error has occured halt operation and call callback function
+                    exit();
+                }
                 //update transaction status
                 $meta_value = json_decode($data['meta_data'],true);
                 $meta_value["balance"] = $new_balance;
@@ -170,7 +190,12 @@
                     AccountTransaction::ID=>$transaction_id
                 ]);
                 //initiate callback
-                @call_user_func($callback);
+                if(is_null($callback)){
+                    //Do nothing
+                }
+                else{
+                    call_user_func($callback);
+                }
                 return true;
             }
         }
@@ -183,7 +208,7 @@
      * @method: makeDeposit
      * @param: [amount, meta, callback]
      */
-    public function makeDeposit($amount, $meta, $callback){ 
+    public function makeDeposit($amount, $meta, $callback=null){ 
         if($this->isActive()){
                 $new_balance = $this->getBalance() + abs($amount);
                 $this->db->update(SavingsAccountModel::DB_TABLE,[
@@ -191,6 +216,13 @@
                 ],[
                     SavingsAccountModel::ACCOUNT_NO=>$this->account_no
                 ]);
+                //Highly recommended after sensitive operation {Good fix: Atomic transaction}
+                $db_state_error = $this->db->db->error();
+                if(!is_null($db_state_error[2])){
+                    //{Bad Fix} A fatal error has error has occured halt operation and call callback function
+                    exit();
+                }
+                
                 //Add transaction to database
                 $meta_value = json_decode($meta['meta'],true);
                 $meta_value["balance"] = $new_balance;
@@ -209,7 +241,12 @@
                 ];
                 $this->registerTransaction($payload);
                 //initiate callback function
-                @call_user_func($callback);
+                if(is_null($callback)){
+                    //Do nothing
+                }
+                else{
+                    call_user_func($callback);
+                }
                 return true;
         }
         else{
@@ -220,7 +257,7 @@
      * @method: comfirmWithdrawal
      * @param: [transaction_id, meta(nullable), callback]
      */
-    public function confirmDeposit($transaction_id, $callback){
+    public function confirmDeposit($transaction_id, $callback=null){
         //get transaction from database
         $data = $this->getSingleTransaction(['id'=>$transaction_id]);
         $authorized_by = json_decode($data['authorized_by'],true);
@@ -244,7 +281,12 @@
                     AccountTransaction::ID=>$transaction_id
                 ]);
                 //initiate callback
-                @call_user_func($callback);
+                if(is_null($callback)){
+                    //Do nothing
+                }
+                else{
+                    call_user_func($callback);
+                }
                 return true;
             }
         else{

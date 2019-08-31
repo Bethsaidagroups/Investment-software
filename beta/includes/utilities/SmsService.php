@@ -48,7 +48,6 @@
             curl_close($this->curl);
         }
 
-
         public function sendNewAccountMessage(array $data){
             $this->message = 'We are happy to notify you... '.$data['surname'].' '.$data['first_name'].
             'that your account...'.$data['account_number'].' with Bethsaida Ivestment Patners has been opened successfully';
