@@ -1,0 +1,44 @@
+<div class="inner-view" ng-controller="centralListLoanCtrl">
+        <div class="container">
+            <h4 class="section-head">Loan Register (Advance)</h4>
+            <div ng-include="'views/include/list-header.html'"></div>
+            <div class="data-table">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Loan Id</th>
+                            <th>Account No</th>
+                            <th>Full Name</th>
+                            <th>Amount</th>
+                            <th>Approved By</th>
+                            <th>Status</th>
+                            <th>Office</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(index,data) in customers">
+                            <td>{{data.id}}</td>
+                            <td>{{data.account_no}}</td>
+                            <td>{{data.bio_data.surname}} {{data.bio_data.first_name}}</td>
+                            <th>&#8358;{{data.amount | number}}</th>
+                            <td>{{data.authorized_by}}</td>
+                            <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                            <td>{{data.description}}, {{data.location}}</td>
+                            <td>{{data.date | moment: 'format':'MMMM Do YYYY'}}</td>
+                            
+                            <td class="overlay" style="display: none">
+                                <div>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div id="pagination">
+                        <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                        <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+                </div>
+        </div>
+    </div>

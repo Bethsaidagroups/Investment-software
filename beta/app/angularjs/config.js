@@ -56,6 +56,18 @@ function ($routeProvider,$locationProvider){
         templateUrl: 'views/savings/central-list.html',
         controller:  'centralListSavingsCtrl'
     })
+    .when('/loan/add', {
+        templateUrl: 'views/loan/add.html',
+        controller:  'addLoanCtrl'
+    })
+    .when('/loan/list', {
+        templateUrl: 'views/loan/list.html',
+        controller:  'listLoanRecordCtrl'
+    })
+    .when('/loan/central/list', {
+        templateUrl: 'views/loan/central-list.html',
+        controller:  'centralListLoanCtrl'
+    })
     .when('/transaction/list', {
         templateUrl: 'views/transaction/list.html',
         controller:  'listTransactionCtrl'

@@ -6,7 +6,7 @@
  namespace includes\BasicTransactions;
 
  use includes\auth\{Session,Permission};
- use includes\database\models\{AccountTransaction, SavingsAccount as SavingsAccountModel};
+ use includes\database\models\{AccountTransaction, SavingsAccount as SavingsAccountModel, LoanRecord};
  use includes\BasicTransactions\BaseClasses\BaseTransaction;
 
  class SavingsAccount extends BaseTransaction{
@@ -39,7 +39,7 @@
     }
 
     /**
-     * @method: isActive
+     * @method: isRegistered
      * @param: [account_no]
      */
     public function isRegistered($account_no=null){
@@ -108,7 +108,7 @@
      */
     public function makeWithdrawal($amount, $meta, $callback=null){ 
         if($this->isActive()){
-            if($this->getBalance() >= $amount){
+            if($this->getBalance() >= abs($amount)){
                 $new_balance = $this->getBalance() - abs($amount);
                 $this->db->update(SavingsAccountModel::DB_TABLE,[
                     SavingsAccountModel::BALANCE=>$new_balance
@@ -164,7 +164,7 @@
         $authorized_by = json_decode($data['authorized_by'],true);
         $authorized_by['final'] = Session::get('username');
         if($this->isActive($data['account_no'])){
-            if($this->getBalance($data['account_no']) >= $data['amount']){
+            if($this->getBalance($data['account_no']) >= abs($data['amount'])){
                 $new_balance = $this->getBalance($data['account_no']) - abs($data['amount']);
                 $this->db->update(SavingsAccountModel::DB_TABLE,[
                     SavingsAccountModel::BALANCE=>$new_balance
@@ -240,6 +240,21 @@
                     AccountTransaction::DATETIME=>$meta['datetime']
                 ];
                 $this->registerTransaction($payload);
+
+                //check if account has unpaid loan to carry out loan update accordinly
+                if($this->db->has(LoanRecord::DB_TABLE,[
+                    LoanRecord::ACCOUNT_NO=>$this->account_no,
+                    LoanRecord::STATUS=>LoanRecord::$statuses['unpaid']
+                ])){
+                    //Check if new balance is negative and do nothing and if otherwise update loan status
+                    if($this->getBalance() >= 0){
+                        $this->db->update(LoanRecord::DB_TABLE,[
+                            LoanRecord::STATUS=>LoanRecord::$statuses['paid']
+                        ],[
+                            LoanRecord::ACCOUNT_NO=>$this->account_no
+                        ]);
+                    }
+                }
                 //initiate callback function
                 if(is_null($callback)){
                     //Do nothing
@@ -280,6 +295,21 @@
                 ],[
                     AccountTransaction::ID=>$transaction_id
                 ]);
+                
+                //check if account has unpaid loan to carry out loan update accordinly
+                if($this->db->has(LoanRecord::DB_TABLE,[
+                    LoanRecord::ACCOUNT_NO=>$this->account_no,
+                    LoanRecord::STATUS=>LoanRecord::$statuses['unpaid']
+                ])){
+                    //Check if new balance is negative and do nothing and if otherwise update loan status
+                    if($this->getBalance() >= 0){
+                        $this->db->update(LoanRecord::DB_TABLE,[
+                            LoanRecord::STATUS=>LoanRecord::$statuses['paid']
+                        ],[
+                            LoanRecord::ACCOUNT_NO=>$this->account_no
+                        ]);
+                    }
+                }
                 //initiate callback
                 if(is_null($callback)){
                     //Do nothing

@@ -37,6 +37,10 @@
                             <td>{{reciept.id}}</td>
                         </tr>
                         <tr>
+                            <th>Narration</th>
+                            <td>{{reciept.meta_data.narration}}</td>
+                        </tr>
+                        <tr>
                             <th>Date</th>
                             <td>{{reciept.timestamp | moment: 'format':'MMMM Do YYYY'}}</td>
                         </tr>
@@ -155,7 +159,7 @@
   .reciept-footer{
     background: #ffffff;
       position: absolute;
-      margin-top: 6cm;
+      margin-top: 5.5cm;
       margin-left: 0px;
       float: left;
   }

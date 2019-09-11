@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="(index,data) in lists">
-                                <td>{{index}}</td>
+                                <td>{{index + 1}}</td>
                                 <td>{{data.id}}</td>
                                 <td>{{data.timestamp | moment: 'format':'MMMM Do YYYY'}}</td>
                                 <td>{{data.account_no}}</td>

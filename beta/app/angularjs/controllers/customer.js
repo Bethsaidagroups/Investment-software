@@ -221,7 +221,7 @@ user.controller("centralListCustomerCtrl", function($scope, $location, httpReq, 
         page = $location.search().page;
     }
     if($location.search().query){
-        url = url + '/'+$scope.selected_office +'/'+$scope.query;
+        url = url +'/'+$scope.query;
     }
     url = url + '/' + page;
     //get customers from database

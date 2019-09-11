@@ -49,6 +49,7 @@ $router->map('GET|POST','/customer/central/list/[*:office]/[i:page]',array(
     'class'=>'\controllers\Customer',
     'method'=>'getCentralList'
 ));
+//Savings Route
 $router->map('GET|POST','/savings/get/init/[i:account]',array(
     'class'=>'\controllers\SavingsAccount',
     'method'=>'getPrimaryAccountDetails'
@@ -93,6 +94,28 @@ $router->map('GET|POST','/savings/central/list/[*:office]/[i:page]',array(
     'class'=>'\controllers\SavingsAccount',
     'method'=>'getCentralList'
 ));
+//Loan Routes
+$router->map('GET|POST','/loan/add/[i:account]',array(
+    'class'=>'\controllers\LoanManager',
+    'method'=>'addLoan'
+));
+$router->map('GET|POST','/loan/list/[*:query]/[i:page]',array(
+    'class'=>'\controllers\LoanManager',
+    'method'=>'getList'
+));
+$router->map('GET|POST','/loan/list/[i:page]',array(
+    'class'=>'\controllers\LoanManager',
+    'method'=>'getList'
+));
+$router->map('GET|POST','/loan/central/list/[*:office]/[*:query]/[i:page]',array(
+    'class'=>'\controllers\LoanManager',
+    'method'=>'getCentralList'
+));
+$router->map('GET|POST','/loan/central/list/[*:office]/[i:page]',array(
+    'class'=>'\controllers\LoanManager',
+    'method'=>'getCentralList'
+));
+//Transaction rounter
 $router->map('GET|POST','/transaction/list/[*:query]/[i:page]',array(
     'class'=>'\controllers\Transaction',
     'method'=>'getList'

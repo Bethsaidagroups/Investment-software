@@ -198,6 +198,10 @@ user.controller("listSavingsCtrl", function($scope, $location, httpReq, showAler
     $scope.debitBtn = function(account_no){
         $location.url('/savings/make-withdrawal?account=' + account_no);
     }
+     //loan action performed
+     $scope.loanBtn = function(account_no){
+        $location.url('/loan/add?account=' + account_no);
+    }
     //Edit action performed
     $scope.editBtn = function(account_no){
         $location.url('/savings/edit/?account_no=' + account_no);
@@ -446,7 +450,7 @@ user.controller("centralListSavingsCtrl", function($scope, $location, httpReq, s
         page = $location.search().page;
     }
     if($location.search().query){
-        url = url + '/'+$scope.selected_office +'/'+$scope.query;
+        url = url +'/'+$scope.query;
     }
     url = url + '/' + page;
     //get savings from database

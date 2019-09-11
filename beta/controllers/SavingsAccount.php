@@ -78,7 +78,7 @@
             $this->response->addMessage('The target account does not exist, please check and try again');
             $this->response->jsonResponse(null,400);
         }
-        if($savings_action->getBalance() > $data->amount){
+        if($savings_action->getBalance() >= abs($data->amount)){
             //initiate withdrawal
             //Add transaction to database
             $meta = ["narration"=>$data->narration];
@@ -86,7 +86,7 @@
                 AccountTransaction::ACCOUNT_NO=>$data->account_no,
                 AccountTransaction::CATEGORY=>AccountTransaction::$categories['savings'],
                 AccountTransaction::TYPE=>AccountTransaction::$types['debit'],
-                AccountTransaction::AMOUNT=>$data->amount,
+                AccountTransaction::AMOUNT=>abs($data->amount),
                 AccountTransaction::CHANNEL=>AccountTransaction::$channels[$data->channel],
                 AccountTransaction::AUTHORIZED_BY=>json_encode(['initial'=>Session::get('username')]),
                 AccountTransaction::STATUS=>AccountTransaction::$statuses['pending'],
@@ -122,7 +122,7 @@
                 AccountTransaction::ACCOUNT_NO=>$data->account_no,
                 AccountTransaction::CATEGORY=>AccountTransaction::$categories['savings'],
                 AccountTransaction::TYPE=>AccountTransaction::$types['credit'],
-                AccountTransaction::AMOUNT=>$data->amount,
+                AccountTransaction::AMOUNT=>abs($data->amount),
                 AccountTransaction::CHANNEL=>AccountTransaction::$channels[$data->channel],
                 AccountTransaction::AUTHORIZED_BY=>json_encode(['initial'=>Session::get('username')]),
                 AccountTransaction::STATUS=>AccountTransaction::$statuses['pending'],
@@ -162,6 +162,7 @@
         $this->response->addMessage('Savings account updated successfully');
         $this->response->jsonResponse();
     }
+    
     //get customers savings accounts list
     public function getList(){
         $this->authenticate(Permission::DEFAULT); //Authenticate with permission
@@ -254,10 +255,10 @@
         $bio_data = json_decode($this->db->get(CustomerModel::DB_TABLE,CustomerModel::BIO_DATA,[
             CustomerModel::ACCOUNT_NO=>$data->account_no
         ]));
-        if($savings_action->getBalance() >= $data->amount){
+        if($savings_action->getBalance() >= abs($data->amount)){
             //make withdrawal
             $meta = ["narration"=>$data->narration];
-            if($savings_action->makeWithdrawal($data->amount,[
+            if($savings_action->makeWithdrawal(abs($data->amount),[
                     'channel'=>$data->channel,
                     'authorized_by'=>json_encode(['final'=>Session::get('username')]),
                     'office'=>Session::get('office'),
@@ -266,7 +267,7 @@
                 ])){
                 //send sms to user
                 $alert_data = [
-                    'amount'=>number_format($data->amount,2),
+                    'amount'=>number_format(abs($data->amount),2),
                     'channel'=>$data->channel,
                     'account_number'=>$data->account_no,
                     'narration'=>$data->narration,
@@ -315,7 +316,7 @@
         ]));
             //make withdrawal
             $meta = ["narration"=>$data->narration];
-            if($savings_action->makeDeposit($data->amount,[
+            if($savings_action->makeDeposit(abs($data->amount),[
                     'channel'=>$data->channel,
                     'authorized_by'=>json_encode(['final'=>Session::get('username')]),
                     'office'=>Session::get('office'),
@@ -324,7 +325,7 @@
             ])){
                 //send sms to user
                 $alert_data = [
-                    'amount'=>number_format($data->amount,2),
+                    'amount'=>number_format(abs($data->amount),2),
                     'channel'=>$data->channel,
                     'account_number'=>$data->account_no,
                     'narration'=>$data->narration,

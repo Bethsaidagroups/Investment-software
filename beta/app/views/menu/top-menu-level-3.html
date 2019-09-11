@@ -15,7 +15,16 @@
                     <li><input ng-model="search.central_savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('savings')" class="btn-primary fa fa-search menu"></i></li>
                 </ul>
             </div>
-        </div>
+    </div>
+    <div class="menu-item">
+            <button class="drop-btn">Loan Manager <i class="fa fa-caret-down"></i></button>
+            <div class="menu-sub-item">
+                <ul>
+                    <li ng-click="dropDownMenuAction('/loan/central/list')"><i class="fa fa-eye"></i> View</li>
+                    <li><input ng-model="search.savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('loan')" class="btn-primary fa fa-search menu"></i></li>
+                </ul>
+            </div>
+    </div>
     <div class="menu-item">
         <button class="drop-btn">Transactions <i class="fa fa-caret-down"></i></button>
         <div class="menu-sub-item">

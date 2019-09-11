@@ -24,8 +24,14 @@ use includes\database\models\AccountTransaction;
      * @method: registerTransaction
      * @param: payload - transaction payload
      */
-    public function registerTransaction($payload){
-       $this->db->insert(AccountTransaction::DB_TABLE,$payload);
+    public function registerTransaction($payload,$db=null){
+       if(is_null($db)){
+         $this->db->insert(AccountTransaction::DB_TABLE,$payload);
+       }
+       else{
+          //Atomic
+         $db->insert(AccountTransaction::DB_TABLE,$payload);
+       }
     }
 
     /**

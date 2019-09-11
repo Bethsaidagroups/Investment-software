@@ -24,7 +24,37 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	
+	<div class="ver-modal" style="display: none">
+		<div class="ver-modal-box">
+			<div class="ver-modal-content">
+				<div class="icon"><i class="fa fa-code-fork"></i></div>
+				<h3>Software Update Notification!</h3>
+				<p class="sub-note">
+					A new version of Bethsaida Investment Partners software is available.
+					Your computer is currently running an older version. You are required to update to the new version 
+					before you can be granted access. Latest update is required for the smooth running of the application
+				</p>
+				<h5>How To Update</h5>
+				<p class="how-to-note">Follow the following steps to install the new version on your web browser:</p>
+				<h6 class="fa fa-firefox"> FireFox Browser</h6>
+				<ul>
+					<li>1. Navigate to your browser's <span class="fa fa-arrow-right"> History</span> and open the tray</li>
+					<li>2. Click on <span class="fa fa-hand-pointer-o"> Clear Recent History...</span></li>
+					<li>3. Set "Time range to clear: <span class="fa fa-sliders"> Everything</span></li>
+					<li>4. Mark Only the <span class="fa fa-check-square-o"> Cache</span> and <span class="fa fa-check-square-o"> Offline Website Data</span></li>
+					<li>5. Finaly, reload your browser</li>
+				</ul>
+				<h6 class="fa fa-chrome"> Google Chrome Browser</h6>
+				<ul>
+					<li>1. Navigate to your browser's <span class="fa fa-arrow-right">More tools</span> option and open the tray</li>
+					<li>2. Click on <span class="fa fa-hand-pointer-o"> Clear Browsing Data...</span></li>
+					<li>3. Under the basic options Set "Time range": <span class="fa fa-sliders"> All time</span></li>
+					<li>4. Mark Only the <span class="fa fa-check-square-o"> Cookies and other site data</span> and <span class="fa fa-check-square-o"> Cached images and files</span></li>
+					<li>5. Finaly, reload your browser</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -103,7 +133,7 @@
 			};
 		var hide = function(){
 	  		$('body').Wload('hide',{
-	    		time:1000 // auto close after 3 seconds
+	    		time:1000 // auto close after 1 seconds
 	 		 	})
 			};
 		//script for AJAX request
@@ -120,15 +150,40 @@
 					msg = JSON.parse(data);
 					$(".response").show();
 					if(msg.success){
-						$('#txt').addClass('success');
-						$("#txt").text(msg.success);
 						if(msg.module !== 'none'){
 							hide();
-							//set users basic info
-							localStorage.setItem('module', msg.module);
-							localStorage.setItem('username', msg.username);
-							localStorage.setItem('office', msg.office);
-							window.location = msg.link;
+							if(localStorage.getItem('app_version') || localStorage.getItem('username')){
+								if(!(localStorage.getItem('app_version'))){
+									//Version locals does not exist at all
+									$(".ver-modal").show()
+								}
+								else if((localStorage.getItem('app_version')) && (localStorage.getItem('app_version') !== msg.app_version)){
+									//version locals exist but new version is available
+									$(".ver-modal").show()
+								}
+								else{
+									//version locals exist and app is up to date
+									$('#txt').addClass('success');
+									$("#txt").text(msg.success);
+									//set users basic info
+									localStorage.setItem('module', msg.module);
+									localStorage.setItem('username', msg.username);
+									localStorage.setItem('office', msg.office);
+									localStorage.setItem('app_version',msg.app_version)
+									setTimeout(function(){window.location = msg.link;}, 2000);
+								}
+							}
+							else{
+								//app new on this browser, continue
+								$('#txt').addClass('success');
+								$("#txt").text(msg.success);
+								//set users basic info
+								localStorage.setItem('module', msg.module);
+								localStorage.setItem('username', msg.username);
+								localStorage.setItem('office', msg.office);
+								localStorage.setItem('app_version',msg.app_version)
+								setTimeout(function(){window.location = msg.link;}, 2000);
+							}
 						}
 						else{
 							alert("This service is not yet available");

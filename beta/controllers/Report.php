@@ -75,13 +75,22 @@ namespace controllers;
                 SavingsAccount::OFFICE=>Session::get("office")
             ]);
 
+            $office = Session::get("office");
+            $pdo = $this->db->db->pdo->prepare('SELECT SUM(CASE WHEN balance < 0 THEN ABS(balance) ELSE balance * 0 END) AS sum 
+                FROM ls_savings_account 
+                WHERE office=:office');
+            $pdo->bindParam(':office',$office,\PDO::PARAM_INT);
+            $pdo->execute();
+            $debit_balance = $pdo->fetch();
+
             $this->response->addMessage('Branch Manger home summary');
             $this->response->jsonResponse($this->response->NormalizeMysqlArray([
                 'date'=>$this->date,
                 'customer'=>$customer,
                 'transaction'=>$transaction,
                 'pending'=>$pending,
-                'balance'=>$balance
+                'balance'=>$balance,
+                'debit_balance'=>$debit_balance['sum']
             ]));
         }
 
@@ -126,11 +135,19 @@ namespace controllers;
             $customer = $this->db->db->count(CustomerModel::DB_TABLE,'*',[]);
             $offices = $this->db->select('offices','*',[]);
             $balance = $this->db->db->sum(SavingsAccount::DB_TABLE,SavingsAccount::BALANCE,[]);
+            
+            $office = Session::get("office");
+            $pdo = $this->db->db->pdo->prepare('SELECT SUM(CASE WHEN balance < 0 THEN ABS(balance) ELSE balance * 0 END) AS sum 
+                FROM ls_savings_account');
+            $pdo->execute();
+            $debit_balance = $pdo->fetch();
+
             $this->response->addMessage('Branch Manger home summary');
             $this->response->jsonResponse([
                 'date'=>$this->date,
                 'customer'=>$customer,
                 'balance'=>$balance,
+                'debit_balance'=>$debit_balance['sum'],
                 'offices'=>$this->response->NormalizeMysqlArray($offices)
             ]);
         }

@@ -399,6 +399,14 @@ Top menu Navigation
     background: #034f29;
     border-color: #034f29;
 }
+.btn-primary.sub{
+    background: #af9813;
+    border-color: #af9813;
+}
+.btn-primary.sub:hover{
+    background: #746202;
+    border-color: #746202;
+}
 .btn-primary.delete{
     background: #a90933;
     border-color: #a90933;
@@ -495,12 +503,12 @@ Top menu Navigation
 }
 .data-table tr .overlay div{
     position: absolute;
-    left: 10%;
+    left: 8%;
     right: 5%;
     z-index: 100;
     margin-top: 31px;
     background-color: #ffffff;
-    width: 300px;
+    width: 350px;
     margin-left: 30%;
     display: block;
     padding-top: 5px;

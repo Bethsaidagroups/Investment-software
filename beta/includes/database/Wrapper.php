@@ -10,7 +10,7 @@
 /**
  * Wrapper [Database Wrapper Class - Using Medoo].
  *
- * @package    bolt
+ * @package    laser
  * @subpackage includes/database
  * @author     Akosile Opeyemi Samuel <opeyemiakosile@gmail.com>
  * @version    Path: includes.database.Wrapper - v1.0
@@ -112,6 +112,14 @@ class Wrapper{
         else{
             throw new \Exception('Invalid number of arguments');
         }
-    } 
+    }
+    
+    /**
+     * Create atomic transaction
+     * @param: (callable) $actions
+     */
+    public function atomic_transaction($actions){
+        $this->db->action($actions);
+    }
 }
 ?>

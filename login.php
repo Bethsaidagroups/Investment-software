@@ -114,7 +114,8 @@ if(!empty($user)){
                      "module" => $module,
                      "username" => $user["username"],
                      "office" => $location["location"] .', '.$location["description"],
-                     "link"=> $major_link
+                     "link"=> $major_link,
+                     "app_version"=>'2.1.2'
                     ];
         echo json_encode($response);
         exit();
