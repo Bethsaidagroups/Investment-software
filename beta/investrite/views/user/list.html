@@ -1,0 +1,50 @@
+<div class="inner-view" ng-controller="listUserCtrl">
+    <div class="modal-div" ng-include="'views/customer/detail-modal.html'"></div>
+    <div class="container">
+        <h4 class="section-head">All Users</h4>
+        <div class="div-modal" ng-include="'views/include/search-bar.html'"></div>
+        <div class="view-content">
+                <div class="data-table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Full Name</th>
+                                    <th>Display Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>User Type</th>
+                                    <th>Last Login</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="(index,data) in users">
+                                    <td>{{data.username}}</td>
+                                    <td>{{data.first_name}} {{data.last_name}}</td>
+                                    <td>{{data.display_name}}</td>
+                                    <td>{{data.phone_number}}</td>
+                                    <td>{{data.email}}</td>
+                                    <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                                    <td>{{data.user_type}}</td>
+                                    <td>{{data.last_login}}</td>
+                                    
+                                    <td class="overlay">
+                                        <div>
+                                            <button class="btn-primary" ng-click="edit(data.username)" title="Edit"><i class="fa fa-pencil"></i> Edit</button>
+                                            <button class="btn-primary" ng-click="reset(data.username)" title="Reset Password"><i class="fa fa-key"></i> Reset</button>
+                                            <button ng-if="isActive(data.status)" class="btn-primary delete" ng-click="deactivate(data.username)" title="Deactivate User"><i class="fa fa-times"></i> Deactivate</button>
+                                            <button ng-if="isInactive(data.status)" class="btn-primary alt" ng-click="activate(data.username)" title="Activate User"><i class="fa fa-check"></i> Activate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+    </div>
+    <div id="pagination">
+            <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+            <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+    </div>
+</div>

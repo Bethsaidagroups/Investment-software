@@ -1,0 +1,8 @@
+<div class="inner-view" ng-controller="homeCtrl">
+        <div class="container">
+            <!--Main Menu-->
+            <div ng-if="admin" ng-include="'views/menu/main-menu-admin.html'"></div>
+            <div ng-if="manager" ng-include="'views/menu/main-menu-manager.html'"></div>
+            <div ng-if="support" ng-include="'views/menu/main-menu-support.html'"></div>
+        </div>
+</div>

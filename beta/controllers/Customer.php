@@ -121,10 +121,11 @@ namespace controllers;
               CustomerModel::CATEGORY=>$data->category,
               CustomerModel::OFFICE=>Session::get('office'),
               CustomerModel::BIO_DATA=>json_encode($data->bio_data),
-              CustomerModel::ID_DATA=>json_encode($data->id_data),
+              CustomerModel::ID_DATA=>@json_encode($data->id_data),
               CustomerModel::CRP_MODE=>json_encode($data->crp_mode),
-              CustomerModel::EMPLOYMENT_DATA=>json_encode($data->employment_data),
-              CustomerModel::KIN_DATA=>json_encode($data->kin_data),
+              CustomerModel::EMPLOYMENT_DATA=>@json_encode($data->employment_data),
+              CustomerModel::INVESTMENT_PLAN=>json_encode($data->investment),
+              CustomerModel::KIN_DATA=>@json_encode($data->kin_data),
               CustomerModel::REGISTERED_BY=>Session::get('username'),
               CustomerModel::MARKETER=>$data->marketer,
               CustomerModel::DATE=>date("Y-m-d"),
@@ -163,6 +164,7 @@ namespace controllers;
             CustomerModel::CRP_MODE=>json_encode($data->crp_mode),
             CustomerModel::EMPLOYMENT_DATA=>json_encode($data->employment_data),
             CustomerModel::KIN_DATA=>json_encode($data->kin_data),
+            CustomerModel::INVESTMENT_PLAN=>json_encode($data->investment_plan),
             CustomerModel::MARKETER=>$data->marketer,
         ],[
             CustomerModel::ACCOUNT_NO=>$this->request->getUrlParams()->account
@@ -181,6 +183,7 @@ namespace controllers;
             CustomerModel::CRP_MODE,
             CustomerModel::EMPLOYMENT_DATA,
             CustomerModel::KIN_DATA,
+            CustomerModel::INVESTMENT_PLAN,
             CustomerModel::MARKETER,
         ],[
             CustomerModel::ACCOUNT_NO=>$this->request->getUrlParams()->account

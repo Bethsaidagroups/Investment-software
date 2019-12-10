@@ -45,3 +45,20 @@ user.filter('database', function(){
         }
     };
 });
+
+//Date time filter
+user.filter('get_amount_left', function () {
+    return function (amount, balance, status) {
+      if(status == 'unpaid'){
+        if(balance >= 0){
+            return (0.00).toLocaleString()
+        }
+        else{
+            return Math.abs(parseFloat(balance)).toLocaleString()
+        }
+      }
+      else{
+            return (0.00).toLocaleString()
+      }
+    };
+  });

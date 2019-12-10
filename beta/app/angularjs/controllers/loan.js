@@ -126,6 +126,11 @@ user.controller("listLoanRecordCtrl", function($scope, $location, $route, httpRe
                     }
                 }
             }});
+            
+    //View btn action performed
+    $scope.viewBtn = function(account_no){
+        $location.url('/savings/list?query='+account_no);
+    }
     //Set next and previous action performed
     $scope.next = function(){
         var new_page = parseInt(page) + 1;
@@ -225,5 +230,10 @@ user.controller("centralListLoanCtrl", function($scope, $location, httpReq, show
         else{
             $location.url('/loan/central/list?office='  +  $scope.selected_office + "&page=" + new_page);
         }
+    }
+
+    //View btn action performed
+    $scope.viewBtn = function(account_no){
+        $location.url('/savings/list?query='+account_no);
     }
 });

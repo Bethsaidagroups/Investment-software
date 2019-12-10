@@ -264,6 +264,42 @@
             <div class="btn-div"><button ng-click="nextKin()" class="btn-primary right">Next <i class="fa fa-chevron-right"></i></button></div>
             
         </div>
+        <div class="savings-plan" ng-show="invest_data">
+            <div class="btn-div"><button ng-click="backInvest()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
+            <h5>Investment and Bank Details</h5>
+            <table class="table-form">
+                    <tr>
+                            <td class="title">INVESTMENT PLAN</td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment.plan" value="Flexi Save">Flexi Save
+                            </td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment.plan" value="Growth Investment">Growth Investment
+                            </td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment.plan" value="Investment Note">Investment Note
+                            </td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment.plan" value="Property Acquisition Note">Property Acquisition Note
+                            </td>
+                        </tr>
+                    <tr>
+                        <td title="title">ACCOUNT NAME</td>
+                        <td><input type="TEXT" ng-model="form.investment.bank_account_name"></td>
+                        <td title="title">BANK NAME</td>
+                        <td><input type="TEXT" ng-model="form.investment.bank_name"></td>
+                    </tr>
+                    <tr>
+                        <td title="title">BRANCH NAME</td>
+                        <td><input type="TEXT" ng-model="form.investment.bank_branch_name"></td>
+                        <td title="title">ACCOUNT NUMBER</td>
+                        <td><input type="number" ng-model="form.investment.bank_account_no"></td>
+                        <td title="title">ACCOUNT VERIFICATION NUMBER</td>
+                        <td><input type="number" ng-model="form.investment.bank_bvn"></td>
+                    </tr>
+            </table>
+            <div class="btn-div"><button ng-click="nextInvest()" class="btn-primary right">Next <i class="fa fa-chevron-right"></i></button></div>
+    </div>
         <div class="savings-plan" ng-show="savings_plan">
                 <div class="btn-div"><button ng-click="backPlan()" class="btn-primary"><i class="fa fa-chevron-left"></i> Back</button></div>
                 <h5>Customers Savings Plan</h5>

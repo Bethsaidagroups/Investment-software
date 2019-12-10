@@ -272,6 +272,41 @@
                 </table>
                 
             </div>
+            <div class="next-kin" >
+                <hr>
+                <h5>Investment and Bank Details</h5>
+                <table class="table-form">
+                    <tr>
+                            <td class="title">INVESTMENT PLAN</td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment_plan.plan" value="Flexi Save">Flexi Save
+                            </td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment_plan.plan" value="Growth Investment">Growth Investment
+                            </td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment_plan.plan" value="Investment Note">Investment Note
+                            </td>
+                            <td>
+                                <input type="radio" name="plan" ng-model="form.investment_plan.plan" value="Property Acquisition Note">Property Acquisition Note
+                            </td>
+                        </tr>
+                    <tr>
+                        <td title="title">ACCOUNT NAME</td>
+                        <td><input type="TEXT" ng-model="form.investment_plan.bank_account_name"></td>
+                        <td title="title">BANK NAME</td>
+                        <td><input type="TEXT" ng-model="form.investment_plan.bank_name"></td>
+                    </tr>
+                    <tr>
+                        <td title="title">BRANCH NAME</td>
+                        <td><input type="TEXT" ng-model="form.investment_plan.bank_branch_name"></td>
+                        <td title="title">ACCOUNT NUMBER</td>
+                        <td><input type="number" ng-model="form.investment_plan.bank_account_no"></td>
+                        <td title="title">ACCOUNT VERIFICATION NUMBER</td>
+                        <td><input type="number" ng-model="form.investment_plan.bank_bvn"></td>
+                    </tr>
+            </table>
+            </div>
                 <div class="btn-div"><button ng-click="update(form.id)" class="btn-primary right" ><i class="fa fa-save"></i> Update</button></div>
 
         </div>

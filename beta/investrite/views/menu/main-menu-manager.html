@@ -1,0 +1,88 @@
+<div class="work-summary">
+        <h4 class="home-head">Customers/Savings Account: </span></h4>
+        <div class="summary-box customer">
+            <div>
+                <span class="value">{{summary.all_customers | number}}</span><span class="tip">All Customers</span>
+            </div>
+        </div>
+        <div class="summary-box pending">
+            <div>
+                <span class="value">{{summary.pending_withdrawals | number}}</span><span class="tip">Pending Withdrawals</span>
+            </div>
+        </div>
+        <div class="summary-box approved">
+                <div>
+                    <span class="value">&#8358;{{summary.main_balance.main_balance | number}}</span><span class="tip">Balance</span>
+                </div>
+        </div>
+        <div class="summary-box approved">
+            <div>
+                <span class="value">&#8358;{{summary.interest_balance.interest_balance | number}}</span><span class="tip">Interest Balance</span>
+            </div>
+        </div>
+    </div>
+    <div class="work-summary">
+            <h4 class="home-head">Target Savings: </span></h4>
+            <div class="summary-box customer">
+                <div>
+                    <span class="value">{{summary.all_target | number}}</span><span class="tip">All Target Savings</span>
+                </div>
+            </div>
+            <div class="summary-box pending">
+                <div>
+                    <span class="value">{{summary.active_target | number}}</span><span class="tip">Active Target Savings</span>
+                </div>
+            </div>
+            <div class="summary-box approved">
+                    <div>
+                        <span class="value">&#8358;{{summary.target_balance.main_balance | number}}</span><span class="tip">Balance</span>
+                    </div>
+            </div>
+            <div class="summary-box approved">
+                <div>
+                    <span class="value">&#8358;{{summary.target_interest.interest_balance | number}}</span><span class="tip">Total Interest Paid</span>
+                </div>
+            </div>
+        </div>
+        <div class="work-summary">
+                <h4 class="home-head">Fixed Deposit: </span></h4>
+                <div class="summary-box customer">
+                    <div>
+                        <span class="value">{{summary.all_fixed | number}}</span><span class="tip">All Fixed Deposit</span>
+                    </div>
+                </div>
+                <div class="summary-box pending">
+                    <div>
+                        <span class="value">{{summary.active_fixed | number}}</span><span class="tip">Active Fixed Deposit</span>
+                    </div>
+                </div>
+                <div class="summary-box approved">
+                        <div>
+                            <span class="value">&#8358;{{summary.fixed_balance.main_balance | number}}</span><span class="tip">Balance</span>
+                        </div>
+                </div>
+                <div class="summary-box approved">
+                    <div>
+                        <span class="value">&#8358;{{summary.fixed_interest.interest_balance | number}}</span><span class="tip">Total Interest Paid</span>
+                    </div>
+                </div>
+            </div>
+    <div class="icon-menu">
+                <div class="main-menu-icon" ng-click="iconMenu('investment/add')">
+                    <i class="fa fa-group"></i>
+                    <p>Add Investment Class</p>
+                </div>
+                    <div class="main-menu-icon" ng-click="iconMenu('transaction/list?query=pending')">
+                        <i class="fa fa-hourglass"></i>
+                        <p>Pending Withdrawals</p>
+                    </div>
+                    <div class="main-menu-icon" ng-click="iconMenu('report/detailed')">
+                        <i class="fa fa-line-chart"></i>
+                        <p>Reports</p>
+                    </div>
+                    <div class="main-menu-icon" ng-click="iconMenu('settings')">
+                        <i class="fa fa-wrench"></i>
+                        <p>Settings</p>
+                    </div>
+        </div>
+    </div>

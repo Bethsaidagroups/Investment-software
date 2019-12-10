@@ -241,7 +241,7 @@
                 ];
                 $this->registerTransaction($payload);
 
-                //check if account has unpaid loan to carry out loan update accordinly
+                //check if account has unpaid loan to carry out loan update accordingly
                 if($this->db->has(LoanRecord::DB_TABLE,[
                     LoanRecord::ACCOUNT_NO=>$this->account_no,
                     LoanRecord::STATUS=>LoanRecord::$statuses['unpaid']
@@ -296,9 +296,9 @@
                     AccountTransaction::ID=>$transaction_id
                 ]);
                 
-                //check if account has unpaid loan to carry out loan update accordinly
+                //check if account has unpaid loan to carry out loan update accordingly
                 if($this->db->has(LoanRecord::DB_TABLE,[
-                    LoanRecord::ACCOUNT_NO=>$this->account_no,
+                    LoanRecord::ACCOUNT_NO=>$data['account_no'],
                     LoanRecord::STATUS=>LoanRecord::$statuses['unpaid']
                 ])){
                     //Check if new balance is negative and do nothing and if otherwise update loan status
@@ -306,7 +306,7 @@
                         $this->db->update(LoanRecord::DB_TABLE,[
                             LoanRecord::STATUS=>LoanRecord::$statuses['paid']
                         ],[
-                            LoanRecord::ACCOUNT_NO=>$this->account_no
+                            LoanRecord::ACCOUNT_NO=>$data['account_no']
                         ]);
                     }
                 }

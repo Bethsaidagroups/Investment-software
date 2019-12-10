@@ -92,6 +92,10 @@ function ($routeProvider,$locationProvider){
         templateUrl: 'views/report/central-detailed.html',
         controller:  'centralDetailedReportCtrl'
     })
+    .when('/investrite/login', {
+        templateUrl: 'views/investrite-login.html',
+        controller:  'investriteCtrl'
+    })
 
     $locationProvider.html5Mode(false).hashPrefix('!');
 }]);

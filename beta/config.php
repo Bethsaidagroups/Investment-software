@@ -81,12 +81,12 @@ define('MODULES',[
 ]);
 
 /**
- * Secret Pass Hash
+ * API Gateway Handshake key
  */
-define('SECRET_PASS_HASH', 'placeholder-secret_pass_hash');
+define('GATEWAY_HANDSHAKE_KEY', 'hszyuswhsyuqwuew7iuanxzbdyudsjkgYUianmaujuOOinhjkq0k&usnsjKJ');
 
 /**
- * License Key Hash
+ * DEBUG Variable
  */
-define('LICENSE_KEY_HASH', 'placeholder-license_key_hash');
+define('DEBUG', true);
 ?>

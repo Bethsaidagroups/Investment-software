@@ -165,13 +165,15 @@ class LoanManager extends Controller{
             $offset = ($page * $rows) - $rows;
             $data = $this->db->select(LoanRecord::DB_TABLE,[
                 "[>]offices"=>["office"=>"id"],
-                "[>]".CustomerModel::DB_TABLE=>["account_no"=>"account_no"]
+                "[>]".CustomerModel::DB_TABLE=>["account_no"=>"account_no"],
+                "[>]".SavingsAccountModel::DB_TABLE=>["account_no"=>"account_no"]
             ],[
                 LoanRecord::DB_TABLE.'.'.LoanRecord::ID,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::ACCOUNT_NO,
                 'offices.description',
                 'offices.location',
                 CustomerModel::DB_TABLE.'.'.CustomerModel::BIO_DATA,
+                SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::BALANCE,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::AMOUNT,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::STATUS,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::AUTHORIZED_BY,
@@ -184,7 +186,7 @@ class LoanManager extends Controller{
                     LoanRecord::DB_TABLE.'.'.LoanRecord::AUTHORIZED_BY => $this->request->getUrlParams()->query,
                     LoanRecord::DB_TABLE.'.'.LoanRecord::DATE => $this->request->getUrlParams()->query
                 ],
-                'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::DATE=>"DESC"],
+                'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::ID=>"DESC"],
                 'LIMIT'=>[$offset,$rows]
             ]);
             if(empty($data)){
@@ -205,20 +207,22 @@ class LoanManager extends Controller{
             $offset = ($page * $rows) - $rows;
             $data = $this->db->select(LoanRecord::DB_TABLE,[
                 "[>]offices"=>["office"=>"id"],
-                "[>]".CustomerModel::DB_TABLE=>["account_no"=>"account_no"]
+                "[>]".CustomerModel::DB_TABLE=>["account_no"=>"account_no"],
+                "[>]".SavingsAccountModel::DB_TABLE=>["account_no"=>"account_no"]
             ],[
                 LoanRecord::DB_TABLE.'.'.LoanRecord::ID,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::ACCOUNT_NO,
                 'offices.description',
                 'offices.location',
                 CustomerModel::DB_TABLE.'.'.CustomerModel::BIO_DATA,
+                SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::BALANCE,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::AMOUNT,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::STATUS,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::AUTHORIZED_BY,
                 LoanRecord::DB_TABLE.'.'.LoanRecord::DATE,
             ],[
                 LoanRecord::DB_TABLE.'.'.LoanRecord::OFFICE => Session::get('office'),   
-                'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::DATE=>"DESC"],
+                'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::ID=>"DESC"],
                 'LIMIT'=>[$offset,$rows]
             ]);
             if(empty($data)){
@@ -265,14 +269,14 @@ class LoanManager extends Controller{
                         LoanRecord::DB_TABLE.'.'.LoanRecord::AUTHORIZED_BY => $this->request->getUrlParams()->query,
                         LoanRecord::DB_TABLE.'.'.LoanRecord::DATE => $this->request->getUrlParams()->query
                     ],
-                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::DATE=>"DESC"],
+                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::ID=>"DESC"],
                     'LIMIT'=>[$offset,$rows]
                 ];
                 
             }
             else{
                 $where = [
-                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::DATE=>"DESC"],
+                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::ID=>"DESC"],
                     'LIMIT'=>[$offset,$rows]
                 ];
             }
@@ -288,14 +292,14 @@ class LoanManager extends Controller{
                         LoanRecord::DB_TABLE.'.'.LoanRecord::DATE => $this->request->getUrlParams()->query
                     ],
                     'AND'=>[LoanRecord::DB_TABLE.'.office'=>$this->request->getUrlParams()->office],
-                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::DATE=>"DESC"],
+                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::ID=>"DESC"],
                     'LIMIT'=>[$offset,$rows]
                 ];
             }
             else{
                 $where = [
                     'AND'=>[LoanRecord::DB_TABLE.'.office'=>$this->request->getUrlParams()->office],
-                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::DATE=>"DESC"],
+                    'ORDER'=>[LoanRecord::DB_TABLE.'.'.LoanRecord::ID=>"DESC"],
                     'LIMIT'=>[$offset,$rows]
                 ];
             }
@@ -303,12 +307,14 @@ class LoanManager extends Controller{
         //fetch customers with $where clause
         $data = $this->db->select(LoanRecord::DB_TABLE,[
             "[>]offices"=>["office"=>"id"],
-            "[>]".CustomerModel::DB_TABLE=>["account_no"=>"account_no"]
+            "[>]".CustomerModel::DB_TABLE=>["account_no"=>"account_no"],
+            "[>]".SavingsAccountModel::DB_TABLE=>["account_no"=>"account_no"]
         ],[
             LoanRecord::DB_TABLE.'.'.LoanRecord::ID,
             LoanRecord::DB_TABLE.'.'.LoanRecord::ACCOUNT_NO,
             'offices.description',
             'offices.location',
+            SavingsAccountModel::DB_TABLE.'.'.SavingsAccountModel::BALANCE,
             CustomerModel::DB_TABLE.'.'.CustomerModel::BIO_DATA,
             LoanRecord::DB_TABLE.'.'.LoanRecord::AMOUNT,
             LoanRecord::DB_TABLE.'.'.LoanRecord::STATUS,

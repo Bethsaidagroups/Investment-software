@@ -25,6 +25,8 @@ class Customer{
 
     const KIN_DATA = 'kin_data';
 
+    const INVESTMENT_PLAN = 'investment_plan';
+
     const REGISTERED_BY = 'registered_by';
     
     const MARKETER = 'marketer';

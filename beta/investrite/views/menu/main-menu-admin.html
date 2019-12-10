@@ -1,0 +1,29 @@
+<div class="work-summary">
+    <h4 class="home-head">Dashboard: <span>{{summary.date | moment: 'format':'MMMM Do YYYY'}}</span></h4>
+    <div class="summary-box customer">
+        <div>
+            <span class="value">{{summary.total_vistors | number}}</span><span class="tip">Total Vistors</span>
+        </div>
+    </div>
+    <div class="summary-box pending">
+        <div>
+            <span class="value">{{summary.bounce_rate | number}}</span><span class="tip">Bounce Rate</span>
+        </div>
+    </div>
+    <div class="summary-box approved">
+        <div>
+            <span class="value">{{summary.online | number}}</span><span class="tip">Online Visitors</span>
+        </div>
+    </div>
+</div>
+    <div class="icon-menu">
+        <div class="main-menu-icon" ng-click="iconMenu('/user/register')">
+            <i class="fa fa-user-plus"></i>
+            <p>Register Staff</p>
+        </div>
+        <div class="main-menu-icon" ng-click="iconMenu('/Settings')">
+            <i class="fa fa-wrench"></i>
+            <p>Initiate Withdrawal</p>
+        </div>
+        
+    </div>

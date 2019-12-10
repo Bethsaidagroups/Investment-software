@@ -1,0 +1,51 @@
+<div class="inner-view" ng-controller="listTargetCtrl">
+        <div class="container">
+            <h4 class="section-head">All Target Savings</h4>
+            <div ng-include="'views/include/search-bar.html'"></div>
+            <div class="view-content">
+                    <div class="data-table">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Reference Id</th>
+                                        <th>Account Id</th>
+                                        <th>Target Amount</th>
+                                        <th>Main Balance</th>
+                                        <th>Interest Balance</th>
+                                        <th>Payment Frquency</th>
+                                        <th>Date Started</th>
+                                        <th>Status</th>
+                                        <th>Recurrent Amount</th>
+                                        <th>Investment Class</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(index,data) in users">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.account_id}}</td>
+                                        <td>{{data.target_amount | number}}</td>
+                                        <td>{{data.main_balance | number}}</td>
+                                        <td>{{data.interest_balance | number}}</td>
+                                        <td>{{data.payment_frequency}}</td>
+                                        <td>{{data.start_date}}</td>
+                                        <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                                        <td>{{data.recurrent_amount | number}}</td>
+                                        <td>{{data.investment_class}}</td>
+                                        
+                                        <td class="overlay">
+                                            <div>
+                                                <button class="btn-primary" ng-click="profile(data.account_id)" title="View"><i class="fa fa-user"></i> Profile</button>
+                                                <button class="btn-primary" ng-click="record(data.id)" title="View"><i class="fa fa-list"></i> Records</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            </div>
+        </div>
+        <div id="pagination">
+                <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+        </div>
+    </div>

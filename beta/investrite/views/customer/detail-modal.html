@@ -1,0 +1,77 @@
+<div class="modal-box" ng-show="show_modal">
+        <div class="modal-content">
+            <div class="fixed-header">
+                <h4>Customer's Profile</h4>
+                <a ng-click="close()" class="fa fa-times"></a>
+            </div>
+            <div class="modal-body">
+                <img src="https://investrite.co{{customer.profile.image_url}}">
+                    <div class="data-table1">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th>Account Id</th>
+                                        <td>{{customer.account_id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Bethsaida Investment Ltd. Account Id</th>
+                                        <td>{{customer.bip_account}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <td>{{customer.profile.first_name}} {{customer.profile.last_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Account Verification Status</th>
+                                        <td>{{customer.status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email Address</th>
+                                        <td>{{customer.profile.email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email Address Verification Status</th>
+                                        <td>{{customer.profile.status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Gender</th>
+                                        <td>{{customer.profile.gender}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date Of Birth</th>
+                                        <td>{{customer.profile.date_of_birth}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>{{customer.profile.address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Country</th>
+                                        <td>{{customer.profile.country}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Identity Type</th>
+                                        <td>{{customer.profile.identity_type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Identity Number</th>
+                                        <td>{{customer.profile.identity_number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Account Manager</th>
+                                        <td>{{customer.profile.account_manager}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date Joined</th>
+                                        <td>{{customer.profile.join_date}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Referer</th>
+                                        <td>{{customer.profile.referer}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

@@ -1,0 +1,46 @@
+<div class="inner-view" ng-controller="listDirectTransCtrl">
+        <div class="container">
+            <h4 class="section-head">All Direct Transaction Record</h4>
+            <div ng-include="'views/include/search-bar.html'"></div>
+            <div class="view-content">
+                    <div class="data-table">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Reference Id</th>
+                                        <th>Account Id</th>
+                                        <th>Amount</th>
+                                        <th>Category</th>
+                                        <th>Section</th>
+                                        <th>Target Ref</th>
+                                        <th>Naration</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(index,data) in users">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.account_id}}</td>
+                                        <td>{{data.amount | number}}</td>
+                                        <td>{{data.category}}</td>
+                                        <td>{{data.section}}</td>
+                                        <td>{{data.target_ref}}</td>
+                                        <td>{{data.naration}}</td>
+                                        <td>{{data.timestamp}}</td>
+                                        
+                                        <td class="overlay">
+                                            <div>
+                                                <button class="btn-primary" ng-click="profile(data.account_id)" title="View"><i class="fa fa-list"></i> Profile</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            </div>
+        </div>
+        <div id="pagination">
+                <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+        </div>
+    </div>

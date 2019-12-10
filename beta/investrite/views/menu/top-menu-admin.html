@@ -1,0 +1,18 @@
+<div class="menu-item">
+        <button class="drop-btn">Manager Users <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/user/register')"><i class="fa fa-user-plus"></i> Register</li>
+                <li ng-click="dropDownMenuAction('/user/list')"><i class="fa fa-list"></i> View</li>
+                <li><input ng-model="search.user" value="" placeholder="keyword"> <i ng-click="dropSearch('user')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-item">
+        <button class="drop-btn">Settings <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/savings/init-withdrawal')"><i class="fa fa-wrench"></i> Site Options</li>
+            </ul>
+        </div>
+    </div>

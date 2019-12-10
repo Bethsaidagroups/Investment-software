@@ -1,0 +1,69 @@
+<div class="menu-item">
+        <button class="drop-btn">Customers <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/customer/list')"><i class="fa fa-list"></i> List</li>
+                <li><input ng-model="search.customer" value="" placeholder="keyword"> <i ng-click="dropSearch('customer')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-item">
+        <button class="drop-btn">Savings Account <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/savings/list')"><i class="fa fa-list"></i> List</li>
+                <li ng-click="dropDownMenuAction('/savings/record/list')"><i class="fa fa-history"></i> Transaction History</li>
+                <li ng-click="dropDownMenuAction('/direct/list')"><i class="fa fa-exchange"></i> Direct Transactions</li>
+                <li ng-click="dropDownMenuAction('/withdrawal/list')"><i class="fa fa-hourglass"></i> Pending Withdrwals</li>
+                <li><input ng-model="search.savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('savings')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-item">
+        <button class="drop-btn">Target Savings <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/target/list')"><i class="fa fa-list"></i> List</li>
+                <li ng-click="dropDownMenuAction('/target/record/list')"><i class="fa fa-history"></i> Transaction History</li>
+                <li><input ng-model="search.savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('savings')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-item">
+        <button class="drop-btn">Fixed Deposit <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/fixed/list')"><i class="fa fa-list"></i> List</li>
+                <li ng-click="dropDownMenuAction('/fixed/record/list')"><i class="fa fa-history"></i> Transaction History</li>
+                <li><input ng-model="search.savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('savings')" class="btn-primary fa fa-search menu"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-item">
+            <button class="drop-btn">Investment <i class="fa fa-caret-down"></i></button>
+            <div class="menu-sub-item">
+                <ul>
+                    <li ng-click="dropDownMenuAction('/investment/add')"><i class="fa fa-plus"></i> Add Investment Class</li>
+                    <li ng-click="dropDownMenuAction('/investment/list')"><i class="fa fa-list"></i> List Investment Classes</li>
+                    <li><input ng-model="search.savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('savings')" class="btn-primary fa fa-search menu"></i></li>
+                </ul>
+            </div>
+        </div>
+        <div class="menu-item">
+                <button class="drop-btn">Notification <i class="fa fa-caret-down"></i></button>
+                <div class="menu-sub-item">
+                    <ul>
+                        <li ng-click="dropDownMenuAction('/notification/add')"><i class="fa fa-bell"></i> Notify All</li>
+                        <li ng-click="dropDownMenuAction('/notification/list')"><i class="fa fa-history"></i> Notification History</li>
+                        <li><input ng-model="search.savings" value="" placeholder="Account No."> <i  ng-click="dropSearch('savings')" class="btn-primary fa fa-search menu"></i></li>
+                    </ul>
+                </div>
+            </div>
+    <div class="menu-item">
+        <button class="drop-btn">Settings <i class="fa fa-caret-down"></i></button>
+        <div class="menu-sub-item">
+            <ul>
+                <li ng-click="dropDownMenuAction('/settings/options')"><i class="fa fa-cogs"></i> Edit Option</li>
+            </ul>
+        </div>
+    </div>

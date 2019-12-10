@@ -1,0 +1,23 @@
+<div class="modal-box" ng-show="show_modal_noti">
+        <div class="modal-content">
+            <div class="fixed-header">
+                <h4>Send Notification to - {{this_customer.profile.first_name}} {{this_customer.profile.last_name}}</h4>
+                <a ng-click="close()" class="fa fa-times"></a>
+            </div>
+            <div class="modal-body">
+                <div class="view-content">
+                <form id="add-user">
+                    <div class="form-set">
+                        <label>Subject</label>
+                        <input type="text" name="subject" ng-model="$parent.data.subject" value="" required>
+                    </div>
+                    <div class="form-set">
+                        <label>Body</label>
+                        <textarea name="message" ng-model="$parent.data.message"></textarea>
+                    </div>
+                    <div class="btn-div"><button ng-click="send()" class="btn-primary alt" ><i class="fa fa-envelope"></i> Send</button></div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>

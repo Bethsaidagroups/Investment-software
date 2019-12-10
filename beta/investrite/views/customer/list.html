@@ -1,0 +1,53 @@
+<div class="inner-view" ng-controller="listCustomerCtrl">
+        <div ng-include="'views/customer/detail-modal.html'"></div>
+        <div ng-include="'views/notification/add-single.html'"></div>
+        <div class="container">
+            <h4 class="section-head">All Customers</h4>
+            <div ng-include="'views/include/search-bar.html'"></div>
+            <div class="view-content">
+                    <div class="data-table">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Account ID</th>
+                                        <th>Telephone</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>BIP Account</th>
+                                        <th>Gender</th>
+                                        <th>Status</th>
+                                        <th>Access</th>
+                                        <th>Country</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(index,data) in users">
+                                        <td>{{data.account_id}}</td>
+                                        <td>{{data.mobile}}</td>
+                                        <td>{{data.profile.first_name}} {{data.profile.last_name}}</td>
+                                        <td>{{data.profile.email}}</td>
+                                        <td>{{data.bip_account}}</td>
+                                        <td>{{data.profile.gender}}</td>
+                                        <td class="status {{data.status}}">&#8226;{{data.status}}</td>
+                                        <td>{{data.has_access}}</td>
+                                        <td>{{data.profile.country}}</td>
+                                        
+                                        <td class="overlay">
+                                            <div>
+                                                <button class="btn-primary" ng-click="view(index)" title="View"><i class="fa fa-eye"></i> View</button>
+                                                <button class="btn-primary" ng-click="send_noti(index)" title="Send Notification"><i class="fa fa-bell"></i> Notify</button>
+                                                <button ng-if="isActive(data.has_access)" class="btn-primary delete" ng-click="deactivate(data.account_id)" title="Deactivate User"><i class="fa fa-times"></i> Deactivate</button>
+                                                <button ng-if="isInactive(data.has_access)" class="btn-primary alt" ng-click="activate(data.account_id)" title="Activate User"><i class="fa fa-check"></i> Activate</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            </div>
+        </div>
+        <div id="pagination">
+                <button class="btn-primary prev" ng-click="prev()" ng-show="show_prev"><i class="fa fa-chevron-left"></i> Previous</button>
+                <button class="btn-primary next" ng-click="next()" ng-show="show_next">Next <i class="fa fa-chevron-right"></i></button>
+        </div>
+    </div>

@@ -174,7 +174,7 @@ namespace controllers;
                 AccountTransaction::STATUS=>AccountTransaction::$statuses['completed'],
                 AccountTransaction::ACCOUNT_NO=>$data->account_no
             ],
-            'ORDER'=>[AccountTransaction::DB_TABLE.'.'.AccountTransaction::ID=>"ASC"]
+            'ORDER'=>[AccountTransaction::DB_TABLE.'.'.AccountTransaction::DATETIME=>"ASC"]
         ]);
 
         if(empty($soa)){
@@ -232,7 +232,7 @@ namespace controllers;
                     AccountTransaction::OFFICE=>$office_id,
                     AccountTransaction::CATEGORY=>$data->category
                 ],
-                'ORDER'=>[AccountTransaction::DB_TABLE.'.'.AccountTransaction::ID=>"ASC"]
+                'ORDER'=>[AccountTransaction::DB_TABLE.'.'.AccountTransaction::DATETIME=>"ASC"]
             ]);
         }
         else{
@@ -244,7 +244,7 @@ namespace controllers;
                     AccountTransaction::CATEGORY=>$data->category,
                     AccountTransaction::TYPE=>$data->type
                 ],
-                'ORDER'=>[AccountTransaction::DB_TABLE.'.'.AccountTransaction::ID=>"ASC"]
+                'ORDER'=>[AccountTransaction::DB_TABLE.'.'.AccountTransaction::DATETIME=>"ASC"]
             ]);
         }
 

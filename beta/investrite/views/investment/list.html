@@ -1,0 +1,40 @@
+<div class="inner-view" ng-controller="listInvestmentCtrl">
+    <div class="container">
+        <h4 class="section-head">All Investment Classes</h4>
+        <div class="view-content">
+                <div class="data-table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Class Name</th>
+                                    <th>Class Type</th>
+                                    <th>Duration</th>
+                                    <th>Minimum Amount</th>
+                                    <th>Interest Rate</th>
+                                    <th>Penalty Charge</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="(index,data) in users">
+                                    <td>{{index + 1}}</td>
+                                    <td>{{data.class_name}}</td>
+                                    <td>{{data.class_type}}</td>
+                                    <td>{{data.duration}}</td>
+                                    <td>{{data.min_amount}}</td>
+                                    <td>{{data.interest_rate}}</td>
+                                    <td>{{data.penalty_charge}}</td>
+                                    
+                                    <td class="overlay">
+                                        <div>
+                                            <button class="btn-primary" ng-click="edit(data.id)" title="Edit"><i class="fa fa-pencil"></i> Edit</button>
+                                            <button class="btn-primary delete" ng-click="delete(data.id)" title="Reset Password"><i class="fa fa-trash"></i> Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+    </div>
+</div>

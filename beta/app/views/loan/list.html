@@ -12,6 +12,7 @@
                             <th>Account No</th>
                             <th>Full Name</th>
                             <th>Amount</th>
+                            <th>Amount Left</th>
                             <th>Approved By</th>
                             <th>Status</th>
                             <th>Office</th>
@@ -24,14 +25,15 @@
                             <td>{{data.account_no}}</td>
                             <td>{{data.bio_data.surname}} {{data.bio_data.first_name}}</td>
                             <th>&#8358;{{data.amount | number}}</th>
+                            <th>&#8358;{{data.amount | get_amount_left:data.balance:data.status}}</th>
                             <td>{{data.authorized_by}}</td>
                             <td class="status {{data.status}}">&#8226;{{data.status}}</td>
                             <td>{{data.description}}, {{data.location}}</td>
                             <td>{{data.date | moment: 'format':'MMMM Do YYYY'}}</td>
                             
-                            <td class="overlay" style="display: none">
+                            <td class="overlay">
                                 <div>
-                                    
+                                    <button class="btn-primary" ng-click="viewBtn(data.account_no)" title="Savings {{data.account_no}}"><i class="fa fa-exchange"></i> View</button>
                                 </div>
                             </td>
                         </tr>

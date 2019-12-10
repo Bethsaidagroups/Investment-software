@@ -1,0 +1,26 @@
+<div class="inner-view" ng-controller="optionsCtrl">
+        <div class="container">
+            <h4 class="section-head">Options Manager</h4>
+            <div class="view-content">
+                <form id="add-user">
+                    <div class="form-set">
+                        <label>Customer Login Access</label>
+                        <select ng-model="login_access">
+                            <option value="true" ng-selected="login_access == 'true'">True</option>
+                            <option value="false" ng-selected="login_access == 'false'">False</option>
+                        </select>
+                        <button ng-click="update_login_access()" class="btn-primary alt" ><i class="fa fa-arrow-up"></i> Update</button>
+                    </div>
+                    <div class="form-set">
+                            <label>Customer Registration Access</label>
+                            <select ng-model="register_access">
+                                <option value="true" ng-selected="register_access == 'true'">True</option>
+                                <option value="false" ng-selected="register_access == 'false'">False</option>
+                            </select>
+                            <button ng-click="update_register_access()" class="btn-primary alt" ><i class="fa fa-arrow-up"></i> Update</button>
+                        </div>
+                    <div class="btn-div"></div>
+                </form>
+            </div>
+        </div>
+    </div>

@@ -60,7 +60,7 @@ user.controller("addCustomerCtrl", function($scope, $location, httpReq, showAler
 
     //nextKin action performed
     $scope.nextKin = function(){
-        $scope.savings_plan = true;
+        $scope.invest_data = true;
         $scope.kin_data = false;
     }
     //backKin action performed
@@ -69,10 +69,21 @@ user.controller("addCustomerCtrl", function($scope, $location, httpReq, showAler
         $scope.employment_data = true;
     }
 
+    //nextInvest action performed
+    $scope.nextInvest = function(){
+        $scope.savings_plan = true;
+        $scope.invest_data = false;
+    }
+    //backInvest action performed
+    $scope.backInvest = function(){
+        $scope.invest_data = false;
+        $scope.kin_data = true;
+    }
+
     //backKin action performed
     $scope.backPlan = function(){
         $scope.savings_plan = false;
-        $scope.kin_data = true;
+        $scope.invest_data = true;
     }
     //submit button action performed
     $scope.submit = function(){

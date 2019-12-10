@@ -1,0 +1,37 @@
+<div class="inner-view" ng-controller="addInvestmentCtrl">
+    <div class="container">
+        <h4 class="section-head">Add New Investment class</h4>
+        <div class="view-content">
+            <form id="add-user">
+                <div class="form-set">
+                    <label>Class Name</label>
+                    <input type="text" name="class_name" ng-model="data.class_name" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Class Type</label>
+                    <select name="class_type" ng-model="data.class_type">
+                        <option value="fixed">Fixed Deposit</option>
+                        <option value="target">Target Savings</option>
+                    </select>
+                </div>
+                <div class="form-set">
+                    <label>Duration (in days)</label>
+                    <input type="number" name="duration" ng-model="data.duration" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Minimun Amount</label>
+                    <input type="number" name="min_amount" ng-model="data.min_amount" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Interest Rate (max=100%)</label>
+                    <input type="number" name="interest_rate" ng-model="data.interest_rate" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Penalty Charge (max=100%)</label>
+                    <input type="number" name="penalty_charge" ng-model="data.penalty_charge" value="" required>
+                </div>
+                <div class="btn-div"><button ng-click="register()" class="btn-primary" ><i class="fa fa-plus"></i> Register</button></div>
+            </form>
+        </div>
+    </div>
+</div>

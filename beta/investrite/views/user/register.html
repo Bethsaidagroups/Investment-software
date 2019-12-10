@@ -1,0 +1,46 @@
+<div class="inner-view" ng-controller="registerUserCtrl">
+    <div class="container">
+        <h4 class="section-head">Register New User</h4>
+        <div class="view-content">
+            <form id="add-user">
+                <div class="form-set">
+                    <label>Username</label>
+                    <input type="text" name="username" ng-model="data.username" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Email</label>
+                    <input type="email" name="email" ng-model="data.email" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" ng-model="data.first_name" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Last Name</label>
+                    <input type="text" name="last_name" ng-model="data.last_name" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone_number" ng-model="data.phone_number" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Display Name</label>
+                    <input type="text" name="display_name" ng-model="data.display_name" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>Password</label>
+                    <input type="text" name="password" ng-model="data.password" value="" required>
+                </div>
+                <div class="form-set">
+                    <label>User Type</label>
+                    <select name="user_type" ng-model="data.user_type">
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option>
+                        <option value="customer_support">Customer Support</option>
+                    </select>
+                </div>
+                <div class="btn-div"><button ng-click="register()" class="btn-primary" ><i class="fa fa-plus"></i> Register</button></div>
+            </form>
+        </div>
+    </div>
+</div>

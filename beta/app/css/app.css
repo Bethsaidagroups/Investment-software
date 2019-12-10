@@ -292,6 +292,7 @@ Top menu Navigation
     font-size: 18px;
     font-weight: 600;
     margin-left: 25px;
+    margin-bottom: 10px;
  }
  .container .section-head::before{
     content:"";
@@ -852,4 +853,10 @@ h5{
 }
 .spinner{
     text-align: center;
+}
+.icon-menu .main-menu-icon.investrite{
+    background: #003b7e;
+}
+.icon-menu .main-menu-icon.investrite:hover{
+    background: #07236a;
 }

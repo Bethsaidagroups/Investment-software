@@ -173,6 +173,22 @@ $router->map('GET|POST','/user/profile/pwd/[*:username]',array(
     'method'=>'updatePassword'
 ));
 
+//API url
+$router->map('GET','/api/import/[i:account]',array(
+    'class'=>'\controllers\InvestriteImport',
+    'method'=>'init_import'
+));
+$router->map('GET','/api/hook/[i:account]',array(
+    'class'=>'\controllers\InvestriteHook',
+    'method'=>'account_history'
+));
+
+//Cron Tasks
+$router->map('GET','/cron/task/message',array(
+    'class'=>'\controllers\MessageCronTask',
+    'method'=>'run_task'
+));
+
 //----------------------
 //End Url route/map
 //----------------------

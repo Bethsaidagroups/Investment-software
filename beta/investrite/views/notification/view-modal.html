@@ -1,0 +1,37 @@
+<div class="modal-box" ng-show="show_modal">
+        <div class="modal-content">
+            <div class="fixed-header">
+                <h4>View Notification</h4>
+                <a ng-click="close()" class="fa fa-times"></a>
+            </div>
+            <div class="modal-body">
+                <img src="https://investrite.co{{customer.profile.image_url}}">
+                    <div class="data-table1">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th>Recipient Account Id</th>
+                                        <td>{{view_data.account_id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Read Status</th>
+                                        <td>{{view_data.is_read}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Composer</th>
+                                        <td>{{view_data.composer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <td>{{view_data.subject}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Body</th>
+                                        <td>{{view_data.message}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

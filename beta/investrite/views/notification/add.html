@@ -1,0 +1,18 @@
+<div class="inner-view" ng-controller="addNotificationCtrl">
+        <div class="container">
+            <h4 class="section-head">Add New General Notification</h4>
+            <div class="view-content">
+                <form id="add-user">
+                    <div class="form-set">
+                        <label>Subject</label>
+                        <input type="text" name="subject" ng-model="data.subject" value="" required>
+                    </div>
+                    <div class="form-set">
+                        <label>Body</label>
+                        <textarea name="message" ng-model="data.message"></textarea>
+                    </div>
+                    <div class="btn-div"><button ng-click="send()" class="btn-primary" ><i class="fa fa-envelope"></i> Send</button></div>
+                </form>
+            </div>
+        </div>
+    </div>

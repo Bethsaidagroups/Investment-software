@@ -17,7 +17,7 @@
 
         private $curl = null;
 
-        public function __construct($reciepient, $message=null){
+        public function __construct($reciepient=null, $message=null){
             $this->reciepient = $reciepient;
             $this->message = $message;
             //initialize c_URL parameters
@@ -50,7 +50,7 @@
 
         public function sendNewAccountMessage(array $data){
             $this->message = 'We are happy to notify you... '.$data['surname'].' '.$data['first_name'].
-            'that your account...'.$data['account_number'].' with Bethsaida Ivestment Patners has been opened successfully';
+            ' that your account... '.$data['account_number'].' with Bethsaida Investment Patners has been opened successfully';
             $this->init();
             $this->send();
         }
@@ -65,6 +65,35 @@
         public function sendNewDebitMessage(array $data){
             $this->message = "BIP-Debit>>>Amt:NGN ".$data['amount']." Acc:" .$data['account_number']." Chn:".$data['channel']. 
             " Nar: ".$data['narration']." Date:".$data['datetime'] . " PMBal:NGN ".$data['balance'];
+            $this->init();
+            $this->send();
+        }
+
+        public function sendBirthdayMessage($mobile){
+            $this->message = "Sincerely wishing you the best of celebrations on this wonderful day of yours. May your home be filled with all 
+            that you need to be comfortable in life. Happy Birthday! BETHSAIDA CARES";
+            $this->reciepient = $mobile;
+            $this->init();
+            $this->send();
+        }
+
+        public function sendNewMonthMessage($mobile){
+            $this->message = "Happy new month! BETHSAIDA values you";
+            $this->reciepient = $mobile;
+            $this->init();
+            $this->send();
+        }
+
+        public function sendNewYearMessage($mobile){
+            $this->message = "Happy New Year, May this year be a blessing to your life. Thank you for choosing BETHSAIDA INVESTMENT PARTNERS LIMITED";
+            $this->reciepient = $mobile;
+            $this->init();
+            $this->send();
+        }
+
+        public function sendChristmasMessage($mobile){
+            $this->message = "We wish you a Happy Holiday season and a prosperous and peaceful New Year. Thank you for choosing BETHSAIDA INVESTMENT PARTNERS LIMITED";
+            $this->reciepient = $mobile;
             $this->init();
             $this->send();
         }
